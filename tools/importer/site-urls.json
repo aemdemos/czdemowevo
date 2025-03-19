@@ -1,0 +1,57 @@
+{
+  "originUrl": "https://www.wheatleyvodka.com/",
+  "urls": [
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/about-wheatley",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cucumber-collins",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/flatiron-flip",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/la-luna-rossa",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/romapolitan",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/locator",
+      "source": "CRAWL"
+    }
+  ],
+  "crawlOptions": {
+    "timeout": 64800000,
+    "inclusionPatterns": [],
+    "exclusionPatterns": [],
+    "limit": -1,
+    "sameDomain": true,
+    "keepHash": false,
+    "strategy": "crawl",
+    "logger": {}
+  },
+  "extractionErrors": [
+    {
+      "url": "https://www.wheatleyvodka.com/site.webmanifest",
+      "status": "content type is not text/html"
+    }
+  ]
+}
