@@ -14,7 +14,51 @@
       "source": "CRAWL"
     },
     {
+      "url": "https://www.wheatleyvodka.com/cocktails/all-you-can-wheat",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/beetopolitan",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/bottoms-up",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/chasing-waterfalls",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cheap-sunglasses",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cocktails-of-the-castaway",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cran-holiday-punch",
+      "source": "CRAWL"
+    },
+    {
       "url": "https://www.wheatleyvodka.com/cocktails/cucumber-collins",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/dad-joke",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/dont-touch-my-bowl",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/down-the-rabbit-hole",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/fire-on-the-water",
       "source": "CRAWL"
     },
     {
@@ -22,7 +66,39 @@
       "source": "CRAWL"
     },
     {
+      "url": "https://www.wheatleyvodka.com/cocktails/garden-of-eden",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/gone-with-the-wind",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/green-jacket",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/green-machine",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/its-always-sunny",
+      "source": "CRAWL"
+    },
+    {
       "url": "https://www.wheatleyvodka.com/cocktails/la-luna-rossa",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/my-pizza-is-sour",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/quince-md",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/raspberry-lemonade",
       "source": "CRAWL"
     },
     {
@@ -30,7 +106,119 @@
       "source": "CRAWL"
     },
     {
+      "url": "https://www.wheatleyvodka.com/cocktails/snooze-alarm",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/spiced-punch",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/spiced-winter-punch",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/summertime-romp",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-buck-stops-here",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-gallagher",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-khaleesi",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-new-caledonia",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-pineapple-bottom",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/village-mary",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/waltzing-back",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-75",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-bloody-mary",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-far-east-mule",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-shandy",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-blackberry-mint-julep",
+      "source": "CRAWL"
+    },
+    {
       "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club-2",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-greyhound",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-martini",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-mint-lemonade",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-moscow-mule",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-pineapple-mint-julep",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-rhubarb-mint-julep",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-screwdriver",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-sweet-tea-mint-julep",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-apple-sangria",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-russian",
+      "source": "CRAWL"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-winter-wonderful",
       "source": "CRAWL"
     },
     {
@@ -45,13 +233,8 @@
     "limit": -1,
     "sameDomain": true,
     "keepHash": false,
-    "strategy": "crawl",
+    "strategy": "SITEMAPS",
     "logger": {}
   },
-  "extractionErrors": [
-    {
-      "url": "https://www.wheatleyvodka.com/site.webmanifest",
-      "status": "content type is not text/html"
-    }
-  ]
+  "extractionErrors": []
 }
