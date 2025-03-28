@@ -33,28 +33,6 @@
 
 /* fallback fonts */
 @font-face {
-  font-family:"HCo Ringside Extra Wide Fallback";
-  font-style:normal;
-  font-weight:900;
-  src:local("Arial Bold");
-  ascent-override:78.99%;
-  descent-override:16.46%;
-  line-gap-override:3.29%;
-  size-adjust:121.54%;
-}
-
-@font-face {
-  font-family:"proxima-nova-condensed Fallback";
-  font-style:normal;
-  font-weight:400;
-  src:local("Arial");
-  ascent-override:108.50%;
-  descent-override:46.26%;
-  line-gap-override:0.00%;
-  size-adjust:83.87%;
-}
-
-@font-face {
   font-family:"proxima-nova-condensed Fallback";
   font-style:normal;
   font-weight:700;
@@ -74,6 +52,28 @@
   descent-override:16.79%;
   line-gap-override:3.36%;
   size-adjust:119.14%;
+}
+
+@font-face {
+  font-family:"proxima-nova-condensed Fallback";
+  font-style:normal;
+  font-weight:400;
+  src:local("Arial");
+  ascent-override:108.50%;
+  descent-override:46.26%;
+  line-gap-override:0.00%;
+  size-adjust:83.87%;
+}
+
+@font-face {
+  font-family:"HCo Ringside Extra Wide Fallback";
+  font-style:normal;
+  font-weight:900;
+  src:local("Arial Bold");
+  ascent-override:78.99%;
+  descent-override:16.46%;
+  line-gap-override:3.29%;
+  size-adjust:121.54%;
 }
 
 @media (width>=900px) {
