@@ -4,4 +4,4 @@ Fix #<gh-issue-id>
 
 Test URLs:
 - Before: https://main--czdemowevo--aemdemos.aem.live/
-- After: https://main--czdemowevo--aemdemos.aem.live/
+- After: https://<branch>--czdemowevo--aemdemos.aem.live/
