@@ -1,3 +1,4 @@
+
 .columns > div {
   display: flex;
   flex-direction: column;
@@ -30,4 +31,147 @@
     flex: 1;
     order: unset;
   }
+}
+
+/* ---- start generated CSS (except .columns.columns1) ---- */
+
+.columns.columns1 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 36px;
+  min-height: 420px;
+}
+
+.columns.columns1 > div > div:first-child {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.columns.columns1 .columns-img-col {
+  flex: 0 0 430px;
+  max-width: 48%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-width: 0;
+  position: relative;
+  padding-right: 18px;
+  z-index: 1;
+  height: 100%;
+}
+
+.columns.columns1 .columns-img-col picture,
+.columns.columns1 .columns-img-col img {
+  display: block;
+  width: 100%;
+  max-width: 430px;
+  min-width: 230px;
+  height: auto;
+  margin: 0;
+}
+
+.columns.columns1 .columns-img-col img {
+  transform: rotate(-13deg);
+  border-radius: 4px;
+  box-shadow: none;
+  margin-top: -52px;
+  margin-bottom: -78px;
+  margin-right: -32px;
+}
+
+.columns.columns1 h2 {
+  font-family: var(--heading-font-family);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #002a4e;
+  line-height: 1.1;
+  margin-top: 0;
+  margin-bottom: 22px;
+  letter-spacing: 0;
+}
+
+.columns.columns1 p {
+  color: #232323;
+  font-size: 1.07rem;
+  margin-top: 0;
+  margin-bottom: 11px;
+}
+
+.columns.columns1 p.button-container {
+  margin-top: 0;
+  margin-bottom: 0;
+  display: block;
+}
+
+.columns.columns1 .button {
+  background: linear-gradient(90deg, #f7e4d2, #b3845a);
+  color: #002a4e;
+  font-weight: 700;
+  font-family: var(--body-font-family);
+  border-radius: 8px;
+  padding: 13px 30px;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  border: none;
+  outline: none;
+  text-decoration: none;
+  margin: 0;
+  transition: box-shadow 0.15s;
+  display: inline-block;
+}
+
+.columns.columns1 .button:hover,
+.columns.columns1 .button:focus {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: linear-gradient(90deg, #f7e4d2, #b77a3d);
+  color: #002a4e;
+}
+
+@media (max-width: 900px) {
+  .columns.columns1 {
+    padding: 18px 4vw 24px 4vw;
+    max-width: 98vw;
+  }
+  .columns.columns1 > div {
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+    min-height: unset;
+  }
+  .columns.columns1 > div > div:first-child,
+  .columns.columns1 .columns-img-col {
+    max-width: 100%;
+    flex: unset;
+    padding-right: 0;
+    height: unset;
+  }
+  .columns.columns1 .columns-img-col img {
+    max-width: 90vw;
+    margin: 24px auto 0 auto;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 0;
+  }
+  .columns.columns1 h2 {
+    font-size: 2rem;
+  }
+}
+
+/* ---- end generated CSS (except .columns.columns1) ---- */
+
+/* ---- merged .columns.columns1 ---- */
+.columns.columns1 {
+  background: #fff;
+  border: 1px solid #6f4e1e;
+  border-radius: 12px;
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 40px 40px 32px 40px;
+  box-sizing: border-box;
 }
