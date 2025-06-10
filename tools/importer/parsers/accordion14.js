@@ -1,51 +1,54 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Locate the container with all the FAQ items
-  const faqQuestions = element.querySelector('#faq-replace-questions-container');
-  if (!faqQuestions) return;
+  // Helper constants for node types (avoid 'Node' reference)
+  const ELEMENT_NODE = 1;
+  const TEXT_NODE = 3;
 
-  // Get all direct children (each question block)
-  const questionBlocks = Array.from(faqQuestions.children);
-  const rows = [];
+  // Accordion block header: must match example exactly
+  const headerRow = ['Accordion (accordion14)'];
 
-  // Add the block header row (as in the example)
-  rows.push(['Accordion (accordion14)']);
+  // Find the FAQ container with all accordion items
+  const faqContainer = element.querySelector('#faq-replace-questions-container');
+  if (!faqContainer) return;
 
-  // Each question accordion: image (optional) + title, and content
-  questionBlocks.forEach((block) => {
-    // The structure appears to be: <picture> (optional) [text node, maybe inline el] <div>content</div>
-    const blockNodes = Array.from(block.childNodes);
-    let picture = null;
-    let titleParts = [];
-    let contentDiv = null;
-    blockNodes.forEach((node) => {
-      if (node.nodeType === 1 && node.tagName === 'PICTURE') {
-        picture = node;
-      } else if (node.nodeType === 1 && node.tagName === 'DIV' && !contentDiv) {
-        contentDiv = node;
-      } else if (node.nodeType === 3 && node.textContent.trim()) {
-        // Text part of the title
-        titleParts.push(node);
-      } else if (node.nodeType === 1 && node.tagName !== 'DIV' && node.tagName !== 'PICTURE') {
-        // Inline element, e.g., <span>
-        titleParts.push(node);
+  // Each child DIV inside #faq-replace-questions-container is an accordion item
+  const accordionItems = Array.from(faqContainer.children).filter(
+    (div) => div.tagName === 'DIV'
+  );
+
+  // For each item, build a row: [title cell, content cell]
+  const rows = accordionItems.map((item) => {
+    // The structure is: <picture> (optional), text node (question), <div> (answer)
+    const children = Array.from(item.childNodes);
+    let titleText = '';
+    let answerDiv = null;
+    // Find the answer <div>
+    for (const child of children) {
+      if (child.nodeType === ELEMENT_NODE && child.tagName === 'DIV') {
+        answerDiv = child;
+        break;
       }
-    });
-    // Title cell: image (if exists) + title text/inline elements
-    const titleCell = [];
-    if (picture) titleCell.push(picture);
-    if (titleParts.length) {
-      titleParts.forEach(part => titleCell.push(part));
     }
-    // Content cell: content div if exists
-    const contentCell = contentDiv ? [contentDiv] : [];
-    rows.push([
-      titleCell.length === 1 ? titleCell[0] : titleCell,
-      contentCell.length === 1 ? contentCell[0] : contentCell
-    ]);
+    // Find the question text node (first non-empty text node after picture)
+    let foundPicture = true;
+    for (const child of children) {
+      if (child.nodeType === ELEMENT_NODE && child.tagName === 'PICTURE') {
+        foundPicture = true;
+        continue;
+      }
+      if (foundPicture && child.nodeType === TEXT_NODE && child.textContent.trim()) {
+        titleText = child.textContent.trim();
+        break;
+      }
+    }
+    // Compose title cell: only the question text (no picture)
+    let titleCell = titleText;
+    // Compose content cell: always reference the existing answerDiv
+    let contentCell = answerDiv ? answerDiv : '';
+    return [titleCell, contentCell];
   });
 
-  // Create and swap the block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const tableRows = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(table);
 }

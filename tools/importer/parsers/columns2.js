@@ -1,35 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Safety: Find the main content block
-  const wrapper = element.querySelector('.pocketguide-wrapper');
-  if (!wrapper) return;
-  const pocketguideBlock = wrapper.querySelector('.pocketguide.block');
-  if (!pocketguideBlock) return;
-  // The .pocketguide.block's first div contains a div (with all content)
-  const blockOuterDiv = pocketguideBlock.querySelector(':scope > div');
-  if (!blockOuterDiv) return;
-  const blockInnerDiv = blockOuterDiv.querySelector(':scope > div');
-  if (!blockInnerDiv) return;
-  
-  // Get all immediate children (should be: h2, p (desc), p.button-container, p picture)
-  // We'll put all except the picture in the left column, and the image in the right
-  const left = [];
-  let right = null;
-  Array.from(blockInnerDiv.children).forEach((child) => {
-    // Find the element containing the image (picture inside p, or picture directly)
-    if ((child.tagName === 'P' && child.querySelector('picture')) || child.tagName === 'PICTURE') {
-      right = child;
-    } else {
-      left.push(child);
+  // Collect the two columns. For this block, columns are the first-level children of the columns block.
+  // We expect two columns: left (text) and right (image)
+  const columnsBlock = element.querySelector(':scope > div');
+  let leftCol = null;
+  let rightCol = null;
+
+  // Defensive: check if columnsBlock found and has children
+  if (columnsBlock) {
+    const children = columnsBlock.querySelectorAll(':scope > div');
+    // First child is left column, second is right (has image)
+    if (children.length === 2) {
+      leftCol = children[0];
+      rightCol = children[1];
+    } else if (children.length === 1) {
+      leftCol = children[0];
+      rightCol = null;
     }
-  });
+  }
 
-  // If no image found, make right an empty string
-  if (!right) right = '';
+  // The right column may be a wrapper for the picture; extract the picture if present
+  let rightColContent = rightCol;
+  if (rightCol && rightCol.classList.contains('columns-img-col')) {
+    const pic = rightCol.querySelector('picture');
+    if (pic) rightColContent = pic;
+  }
 
-  // Table header must match the block name exactly
+  // The block name for the header row should exactly match the specification
   const headerRow = ['Columns (columns2)'];
-  const columnsRow = [left, right];
-  const table = WebImporter.DOMUtils.createTable([headerRow, columnsRow], document);
+  // Each cell should reference the DOM element directly, preserving all nested structure and children
+  const contentRow = [leftCol, rightColContent];
+
+  // Build the table for the columns block
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow,
+  ], document);
+
+  // Replace the original element with the structured table
   element.replaceWith(table);
 }
