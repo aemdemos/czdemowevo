@@ -13,8 +13,8 @@
         {
           "url": "https://www.wheatleyvodka.com/cocktails",
           "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
-          "uuid": "002405dd-01-85cd4579b6f7e6d4726df9bd07408d48a8a21634",
-          "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[2]/div[2]"
+          "uuid": "002405dd-01-1043e21f51a00adb8d6584df49c47388be0401a9",
+          "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[1]"
         },
         {
           "url": "https://www.wheatleyvodka.com/cocktails/my-pizza-is-sour",
@@ -1023,11 +1023,11 @@
   ],
   "blocks": [
     {
-      "name": "Hero",
+      "name": "Modal",
       "cluster": 1,
-      "source": "Hero",
-      "target": "Hero (hero1)",
-      "key": "hero1",
+      "source": "Show disclaimers",
+      "target": "Show disclaimers (modal1)",
+      "key": "modal1",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/cocktails",
@@ -1344,11 +1344,221 @@
       ]
     },
     {
-      "name": "Cards",
+      "name": "Columns",
       "cluster": 2,
-      "source": "Cards",
-      "target": "Cards (cards2)",
-      "key": "cards2",
+      "source": "Columns",
+      "target": "Columns (columns2)",
+      "key": "columns2",
+      "instances": [
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-martini",
+          "urlHash": "38f22ce2766203b39af877b6df30baaa540d943f",
+          "uuid": "38f22ce2-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-mint-lemonade",
+          "urlHash": "674c9ad730a0dd14178a28ef2c98b375a4b0df86",
+          "uuid": "674c9ad7-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club",
+          "urlHash": "8c017c20f81f29c6c1810d401d98471c279c8cad",
+          "uuid": "8c017c20-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-moscow-mule",
+          "urlHash": "997b397579ee88f5ef440fd840a85c8e0ace124d",
+          "uuid": "997b3975-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/cucumber-collins",
+          "urlHash": "b4aa8b0a750140f4d7207bc30b760e285885deb2",
+          "uuid": "b4aa8b0a-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-greyhound",
+          "urlHash": "c66fc8db9413d259253c69535878ef700653c39e",
+          "uuid": "c66fc8db-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-russian",
+          "urlHash": "cd68b141dcbd009bf946631b274ac67340dd414c",
+          "uuid": "cd68b141-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-screwdriver",
+          "urlHash": "e9d11b12fda0eda3ad725a0a88dae50542924263",
+          "uuid": "e9d11b12-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club-2",
+          "urlHash": "ea5be8bb47460c5278c71fdc57823d7794922ece",
+          "uuid": "ea5be8bb-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        }
+      ]
+    },
+    {
+      "name": "Columns",
+      "cluster": 3,
+      "source": "Columns",
+      "target": "Columns (columns3)",
+      "key": "columns3",
+      "instances": [
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/green-machine",
+          "urlHash": "08f005be7b8aad9fb095a0e069f42761f6c50b2a",
+          "uuid": "08f005be-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-winter-wonderful",
+          "urlHash": "0d7cf3538fffa00fca3b693487ed7a065f7199dd",
+          "uuid": "0d7cf353-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/green-jacket",
+          "urlHash": "3e64e1504c09d081922c814adbc48d2505b7f023",
+          "uuid": "3e64e150-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/cheap-sunglasses",
+          "urlHash": "47db468c573b59b17ff5780331c9813bc7f323ba",
+          "uuid": "47db468c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-75",
+          "urlHash": "47f4f99c74142d94ae09fc1fe527dd4844fb01fa",
+          "uuid": "47f4f99c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/waltzing-back",
+          "urlHash": "485d5ec3661b3a4ed6b3b471c77e4c24bcc85c6c",
+          "uuid": "485d5ec3-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/the-pineapple-bottom",
+          "urlHash": "55fc23386f88ae3d8614ce6edae8582d66673a48",
+          "uuid": "55fc2338-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-shandy",
+          "urlHash": "5f704db21f25c098d1c994c6b3652436605bb6fb",
+          "uuid": "5f704db2-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/raspberry-lemonade",
+          "urlHash": "6675dd5befdabd44208191829adabf0095847781",
+          "uuid": "6675dd5b-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/chasing-waterfalls",
+          "urlHash": "67c3a1dd046150242e443187238d1057ebef720f",
+          "uuid": "67c3a1dd-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/cran-holiday-punch",
+          "urlHash": "68e5253c84075e9ad971eb37413b61d81082b0bc",
+          "uuid": "68e5253c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/the-khaleesi",
+          "urlHash": "6a7f22777966b19b60ed48432782b49549e2dbad",
+          "uuid": "6a7f2277-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/dad-joke",
+          "urlHash": "7f5b0a3f9e982d218105d28fc26c5e8990696814",
+          "uuid": "7f5b0a3f-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-apple-sangria",
+          "urlHash": "80e1bc5b343dbcbbe6d85768e523cf410ba9f634",
+          "uuid": "80e1bc5b-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-far-east-mule",
+          "urlHash": "a5f8873b2d29fbd4fecfcbf15ee6c65cc7c1860e",
+          "uuid": "a5f8873b-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-bloody-mary",
+          "urlHash": "a6e236a290619740080da2c1ddfcbf5ebaee7443",
+          "uuid": "a6e236a2-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/the-new-caledonia",
+          "urlHash": "b1fec93c764856b973372093d68a3cbef6846065",
+          "uuid": "b1fec93c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/spiced-winter-punch",
+          "urlHash": "b3b44763666637d409c28e72b9fc6ecf1fed69c3",
+          "uuid": "b3b44763-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/the-gallagher",
+          "urlHash": "b74dcbafbd69baaa6c658cf49844b3d40b94841c",
+          "uuid": "b74dcbaf-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/down-the-rabbit-hole",
+          "urlHash": "bf3d69cf40aaf3038083d83cc17730d89f3e9410",
+          "uuid": "bf3d69cf-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/its-always-sunny",
+          "urlHash": "c717a2d60386192c8e931b546351c9356c0d85af",
+          "uuid": "c717a2d6-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/spiced-punch",
+          "urlHash": "ed87c3a131edea3a06253b8220cc83d66d018fbf",
+          "uuid": "ed87c3a1-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        },
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails/quince-md",
+          "urlHash": "f216ae61389c5a76ca8e334e759b892244254336",
+          "uuid": "f216ae61-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "cluster": 4,
+      "source": "Tabs",
+      "target": "Tabs (tabs4)",
+      "key": "tabs4",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/cocktails",
@@ -1689,218 +1899,11 @@
       ]
     },
     {
-      "name": "Columns",
-      "cluster": 3,
-      "source": "Columns",
-      "target": "Columns (columns3)",
-      "key": "columns3",
-      "instances": [
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-martini",
-          "urlHash": "38f22ce2766203b39af877b6df30baaa540d943f",
-          "uuid": "38f22ce2-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-mint-lemonade",
-          "urlHash": "674c9ad730a0dd14178a28ef2c98b375a4b0df86",
-          "uuid": "674c9ad7-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club",
-          "urlHash": "8c017c20f81f29c6c1810d401d98471c279c8cad",
-          "uuid": "8c017c20-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-moscow-mule",
-          "urlHash": "997b397579ee88f5ef440fd840a85c8e0ace124d",
-          "uuid": "997b3975-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/cucumber-collins",
-          "urlHash": "b4aa8b0a750140f4d7207bc30b760e285885deb2",
-          "uuid": "b4aa8b0a-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-greyhound",
-          "urlHash": "c66fc8db9413d259253c69535878ef700653c39e",
-          "uuid": "c66fc8db-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-russian",
-          "urlHash": "cd68b141dcbd009bf946631b274ac67340dd414c",
-          "uuid": "cd68b141-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-screwdriver",
-          "urlHash": "e9d11b12fda0eda3ad725a0a88dae50542924263",
-          "uuid": "e9d11b12-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club-2",
-          "urlHash": "ea5be8bb47460c5278c71fdc57823d7794922ece",
-          "uuid": "ea5be8bb-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        }
-      ]
-    },
-    {
-      "name": "Columns",
-      "cluster": 4,
-      "source": "Columns",
-      "target": "Columns (columns4)",
-      "key": "columns4",
-      "instances": [
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/green-machine",
-          "urlHash": "08f005be7b8aad9fb095a0e069f42761f6c50b2a",
-          "uuid": "08f005be-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-winter-wonderful",
-          "urlHash": "0d7cf3538fffa00fca3b693487ed7a065f7199dd",
-          "uuid": "0d7cf353-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/green-jacket",
-          "urlHash": "3e64e1504c09d081922c814adbc48d2505b7f023",
-          "uuid": "3e64e150-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/cheap-sunglasses",
-          "urlHash": "47db468c573b59b17ff5780331c9813bc7f323ba",
-          "uuid": "47db468c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-75",
-          "urlHash": "47f4f99c74142d94ae09fc1fe527dd4844fb01fa",
-          "uuid": "47f4f99c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/waltzing-back",
-          "urlHash": "485d5ec3661b3a4ed6b3b471c77e4c24bcc85c6c",
-          "uuid": "485d5ec3-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/the-pineapple-bottom",
-          "urlHash": "55fc23386f88ae3d8614ce6edae8582d66673a48",
-          "uuid": "55fc2338-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-shandy",
-          "urlHash": "5f704db21f25c098d1c994c6b3652436605bb6fb",
-          "uuid": "5f704db2-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/raspberry-lemonade",
-          "urlHash": "6675dd5befdabd44208191829adabf0095847781",
-          "uuid": "6675dd5b-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/chasing-waterfalls",
-          "urlHash": "67c3a1dd046150242e443187238d1057ebef720f",
-          "uuid": "67c3a1dd-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/cran-holiday-punch",
-          "urlHash": "68e5253c84075e9ad971eb37413b61d81082b0bc",
-          "uuid": "68e5253c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/the-khaleesi",
-          "urlHash": "6a7f22777966b19b60ed48432782b49549e2dbad",
-          "uuid": "6a7f2277-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/dad-joke",
-          "urlHash": "7f5b0a3f9e982d218105d28fc26c5e8990696814",
-          "uuid": "7f5b0a3f-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-apple-sangria",
-          "urlHash": "80e1bc5b343dbcbbe6d85768e523cf410ba9f634",
-          "uuid": "80e1bc5b-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-far-east-mule",
-          "urlHash": "a5f8873b2d29fbd4fecfcbf15ee6c65cc7c1860e",
-          "uuid": "a5f8873b-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/wheatley-bloody-mary",
-          "urlHash": "a6e236a290619740080da2c1ddfcbf5ebaee7443",
-          "uuid": "a6e236a2-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/the-new-caledonia",
-          "urlHash": "b1fec93c764856b973372093d68a3cbef6846065",
-          "uuid": "b1fec93c-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/spiced-winter-punch",
-          "urlHash": "b3b44763666637d409c28e72b9fc6ecf1fed69c3",
-          "uuid": "b3b44763-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/the-gallagher",
-          "urlHash": "b74dcbafbd69baaa6c658cf49844b3d40b94841c",
-          "uuid": "b74dcbaf-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/down-the-rabbit-hole",
-          "urlHash": "bf3d69cf40aaf3038083d83cc17730d89f3e9410",
-          "uuid": "bf3d69cf-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/its-always-sunny",
-          "urlHash": "c717a2d60386192c8e931b546351c9356c0d85af",
-          "uuid": "c717a2d6-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/spiced-punch",
-          "urlHash": "ed87c3a131edea3a06253b8220cc83d66d018fbf",
-          "uuid": "ed87c3a1-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com/cocktails/quince-md",
-          "urlHash": "f216ae61389c5a76ca8e334e759b892244254336",
-          "uuid": "f216ae61-03-516bd61c849c9e46833f85a0f2c9b3ecf6eeafe8",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]"
-        }
-      ]
-    },
-    {
-      "name": "unknown",
+      "name": "Modal",
       "cluster": 5,
+      "source": "Show disclaimers",
+      "target": "Show disclaimers (modal5)",
+      "key": "modal5",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/cocktails",
@@ -2241,47 +2244,47 @@
       ]
     },
     {
-      "name": "Columns (three columns)",
+      "name": "Quote (with attribution)",
       "cluster": 6,
-      "source": "Columns",
-      "target": "Columns (columnsThreeColumns6)",
-      "key": "columnsThreeColumns6",
+      "source": "Quote",
+      "target": "Quote (quoteWithAttribution6)",
+      "key": "quoteWithAttribution6",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com/cocktails",
-          "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
-          "uuid": "002405dd-04-7fdd2b4f0f950f88f30b01c875ca8e93b42e4d0e",
-          "xpath": "/html[1]/body[1]/main[1]/div[3]/div[2]"
+          "url": "https://www.wheatleyvodka.com/about-wheatley",
+          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
+          "uuid": "4e8d6504-07-ae2bdf034519b8b4db063a10ec4a1b53e6e33779",
+          "xpath": "/html[1]/body[1]/main[1]/div[6]"
+        }
+      ]
+    },
+    {
+      "name": "Quote (with attribution)",
+      "cluster": 7,
+      "source": "Quote",
+      "target": "Quote (quoteWithAttribution7)",
+      "key": "quoteWithAttribution7",
+      "instances": [
+        {
+          "url": "https://www.wheatleyvodka.com/about-wheatley",
+          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
+          "uuid": "4e8d6504-08-ac2e8bbd7c8831a5258ff52117328fd77c4de5bd",
+          "xpath": "/html[1]/body[1]/main[1]/div[7]"
         }
       ]
     },
     {
       "name": "Columns (three columns)",
-      "cluster": 7,
-      "source": "Columns",
-      "target": "Columns (columnsThreeColumns7)",
-      "key": "columnsThreeColumns7",
-      "instances": [
-        {
-          "url": "https://www.wheatleyvodka.com/locator",
-          "urlHash": "0399066659d1a722ecf895ff94f11840e8050288",
-          "uuid": "03990666-04-0b4de3ff95f8cfc598842f879bfcd2b8d336956c",
-          "xpath": "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]"
-        }
-      ]
-    },
-    {
-      "name": "Cards",
       "cluster": 8,
-      "source": "Cards",
-      "target": "Cards (cards8)",
-      "key": "cards8",
+      "source": "Columns",
+      "target": "Columns (columnsThreeColumns8)",
+      "key": "columnsThreeColumns8",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com/",
-          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
-          "uuid": "2c37b00e-05-d70c6e6ca8d70ee1f6c77e1030748587e67c4882",
-          "xpath": "/html[1]/body[1]/main[1]/div[5]"
+          "url": "https://www.wheatleyvodka.com/about-wheatley",
+          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
+          "uuid": "4e8d6504-12-87247b0a926f58c4c756e00fdb40e930a8d33d5a",
+          "xpath": "/html[1]/body[1]/main[1]/div[9]/div[2]"
         }
       ]
     },
@@ -2424,47 +2427,47 @@
       ]
     },
     {
-      "name": "Hero",
+      "name": "Cards",
       "cluster": 11,
-      "source": "Hero",
-      "target": "Hero (hero11)",
-      "key": "hero11",
+      "source": "Cards",
+      "target": "Cards (cards11)",
+      "key": "cards11",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/",
           "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
-          "uuid": "2c37b00e-02-3ab9b21ef6cb3a018359b9f0daf1c63ecf73c7c1",
-          "xpath": "/html[1]/body[1]/main[1]/div[2]"
+          "uuid": "2c37b00e-05-d70c6e6ca8d70ee1f6c77e1030748587e67c4882",
+          "xpath": "/html[1]/body[1]/main[1]/div[5]"
         }
       ]
     },
     {
-      "name": "Accordion",
+      "name": "Columns",
       "cluster": 12,
-      "source": "Accordion",
-      "target": "Accordion (accordion12)",
-      "key": "accordion12",
+      "source": "Columns",
+      "target": "Columns (columns12)",
+      "key": "columns12",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com/about-wheatley",
-          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
-          "uuid": "4e8d6504-10-b2b8660487a53370f7e8af4f9819f3e133c3896f",
-          "xpath": "/html[1]/body[1]/main[1]/div[8]/div[2]"
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-07-8adc313ebabc6c1bda45a5240cb1d81ddf7d54f5",
+          "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[1]/div[2]"
         }
       ]
     },
     {
-      "name": "Quote (with attribution)",
+      "name": "Columns",
       "cluster": 13,
-      "source": "Quote",
-      "target": "Quote (quoteWithAttribution13)",
-      "key": "quoteWithAttribution13",
+      "source": "Columns",
+      "target": "Columns (columns13)",
+      "key": "columns13",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
           "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
-          "uuid": "4e8d6504-07-ae2bdf034519b8b4db063a10ec4a1b53e6e33779",
-          "xpath": "/html[1]/body[1]/main[1]/div[6]"
+          "uuid": "4e8d6504-04-28b4d3c63d2ccd41cb54740341e225ebae6698c5",
+          "xpath": "/html[1]/body[1]/main[1]/div[3]"
         }
       ]
     },
@@ -2493,23 +2496,23 @@
         {
           "url": "https://www.wheatleyvodka.com/",
           "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
-          "uuid": "2c37b00e-04-ac18c7f4ff0dda41caddc17273e87ac35c820487",
-          "xpath": "/html[1]/body[1]/main[1]/div[4]"
+          "uuid": "2c37b00e-03-28b4d3c63d2ccd41cb54740341e225ebae6698c5",
+          "xpath": "/html[1]/body[1]/main[1]/div[3]"
         }
       ]
     },
     {
-      "name": "Quote (with attribution)",
+      "name": "Hero",
       "cluster": 16,
-      "source": "Quote",
-      "target": "Quote (quoteWithAttribution16)",
-      "key": "quoteWithAttribution16",
+      "source": "Hero",
+      "target": "Hero (hero16)",
+      "key": "hero16",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com/about-wheatley",
-          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
-          "uuid": "4e8d6504-08-ac2e8bbd7c8831a5258ff52117328fd77c4de5bd",
-          "xpath": "/html[1]/body[1]/main[1]/div[7]"
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-04-ac18c7f4ff0dda41caddc17273e87ac35c820487",
+          "xpath": "/html[1]/body[1]/main[1]/div[4]"
         }
       ]
     },
@@ -2523,32 +2526,17 @@
         {
           "url": "https://www.wheatleyvodka.com/",
           "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
-          "uuid": "2c37b00e-03-28b4d3c63d2ccd41cb54740341e225ebae6698c5",
-          "xpath": "/html[1]/body[1]/main[1]/div[3]"
+          "uuid": "2c37b00e-02-3ab9b21ef6cb3a018359b9f0daf1c63ecf73c7c1",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]"
         }
       ]
     },
     {
-      "name": "Columns (three columns)",
+      "name": "Modal",
       "cluster": 18,
-      "source": "Columns",
-      "target": "Columns (columnsThreeColumns18)",
-      "key": "columnsThreeColumns18",
-      "instances": [
-        {
-          "url": "https://www.wheatleyvodka.com/about-wheatley",
-          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
-          "uuid": "4e8d6504-12-87247b0a926f58c4c756e00fdb40e930a8d33d5a",
-          "xpath": "/html[1]/body[1]/main[1]/div[9]/div[2]"
-        }
-      ]
-    },
-    {
-      "name": "Cards",
-      "cluster": 19,
-      "source": "Cards",
-      "target": "Cards (cards19)",
-      "key": "cards19",
+      "source": "Show disclaimers",
+      "target": "Show disclaimers (modal18)",
+      "key": "modal18",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/cocktails",
@@ -2559,26 +2547,11 @@
       ]
     },
     {
-      "name": "Search",
-      "cluster": 20,
-      "source": "Search",
-      "target": "Search (search20)",
-      "key": "search20",
-      "instances": [
-        {
-          "url": "https://www.wheatleyvodka.com/",
-          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
-          "uuid": "2c37b00e-07-8adc313ebabc6c1bda45a5240cb1d81ddf7d54f5",
-          "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[1]/div[2]"
-        }
-      ]
-    },
-    {
-      "name": "Carousel",
-      "cluster": 21,
-      "source": "Carousel",
-      "target": "Carousel (carousel21)",
-      "key": "carousel21",
+      "name": "Hero",
+      "cluster": 19,
+      "source": "Hero",
+      "target": "Hero (hero19)",
+      "key": "hero19",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/cocktails",
@@ -2589,17 +2562,47 @@
       ]
     },
     {
-      "name": "Cards",
+      "name": "Columns",
+      "cluster": 20,
+      "source": "Columns",
+      "target": "Columns (columns20)",
+      "key": "columns20",
+      "instances": [
+        {
+          "url": "https://www.wheatleyvodka.com/cocktails",
+          "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
+          "uuid": "002405dd-04-3ab9b21ef6cb3a018359b9f0daf1c63ecf73c7c1",
+          "xpath": "/html[1]/body[1]/main[1]/div[2]"
+        }
+      ]
+    },
+    {
+      "name": "Fragment",
+      "cluster": 21,
+      "source": "Fragment",
+      "target": "Fragment (fragment21)",
+      "key": "fragment21",
+      "instances": [
+        {
+          "url": "https://www.wheatleyvodka.com/locator",
+          "urlHash": "0399066659d1a722ecf895ff94f11840e8050288",
+          "uuid": "03990666-04-0b4de3ff95f8cfc598842f879bfcd2b8d336956c",
+          "xpath": "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]"
+        }
+      ]
+    },
+    {
+      "name": "Accordion",
       "cluster": 22,
-      "source": "Cards",
-      "target": "Cards (cards22)",
-      "key": "cards22",
+      "source": "Accordion",
+      "target": "Accordion (accordion22)",
+      "key": "accordion22",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
           "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
-          "uuid": "4e8d6504-04-28b4d3c63d2ccd41cb54740341e225ebae6698c5",
-          "xpath": "/html[1]/body[1]/main[1]/div[3]"
+          "uuid": "4e8d6504-10-b2b8660487a53370f7e8af4f9819f3e133c3896f",
+          "xpath": "/html[1]/body[1]/main[1]/div[8]/div[2]"
         }
       ]
     }
@@ -2608,20 +2611,20 @@
     {
       "url": "https://www.wheatleyvodka.com/cocktails",
       "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
-      "uuid": "002405dd-01-85cd4579b6f7e6d4726df9bd07408d48a8a21634",
-      "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[2]/div[2]"
+      "uuid": "002405dd-01-1043e21f51a00adb8d6584df49c47388be0401a9",
+      "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[1]"
     },
     {
       "url": "https://www.wheatleyvodka.com/cocktails",
       "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
-      "uuid": "002405dd-02-3ab9b21ef6cb3a018359b9f0daf1c63ecf73c7c1",
-      "xpath": "/html[1]/body[1]/main[1]/div[2]"
-    },
-    {
-      "url": "https://www.wheatleyvodka.com/cocktails",
-      "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
-      "uuid": "002405dd-03-58ba820679040862b94ffd9804d9204b6c03e429",
+      "uuid": "002405dd-02-58ba820679040862b94ffd9804d9204b6c03e429",
       "xpath": "/html[1]/body[1]/main[1]/div[3]/div[1]"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails",
+      "urlHash": "002405ddd482c452d57f80616792bc7ea3524cfe",
+      "uuid": "002405dd-03-85cd4579b6f7e6d4726df9bd07408d48a8a21634",
+      "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[2]/div[2]"
     },
     {
       "url": "https://www.wheatleyvodka.com/cocktails",
