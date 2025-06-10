@@ -1,37 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header row, matches exactly: Accordion (accordion12)
-  const headerRow = ['Accordion (accordion12)'];
-  const rows = [headerRow];
+  // We'll first gather all Q&A pairs into an array, then build the rows
+  let block = element;
+  if (block.classList.contains('faq-inplace-wrapper')) {
+    const inner = block.querySelector('.faq-inplace.block');
+    if (inner) block = inner;
+  }
 
-  // Find the inner block container
-  const blockDiv = element.querySelector('.faq-inplace.block');
-  if (!blockDiv) return;
+  // Get both columns (each is a direct child div)
+  const columns = Array.from(block.children).filter((child) => child.tagName === 'DIV');
 
-  // Two main columns: each is a <div> with multiple Q&A pairs
-  // These columns are direct children of blockDiv
-  const columnDivs = Array.from(blockDiv.children).filter(
-    (child) => child.tagName === 'DIV'
-  );
-
-  // Each column has multiple Q&A pairs, each as <div> with two child divs
-  columnDivs.forEach((colDiv) => {
-    const qaPairs = Array.from(colDiv.children).filter(
-      (child) => child.tagName === 'DIV'
-    );
-    qaPairs.forEach((qaDiv) => {
-      const parts = Array.from(qaDiv.children).filter(
-        (child) => child.tagName === 'DIV'
-      );
-      if (parts.length >= 2) {
-        const title = parts[0]; // existing element, not cloned
-        const content = parts[1]; // existing element, not cloned
-        rows.push([title, content]);
+  // Gather all Q&A pairs
+  const qaRows = [];
+  columns.forEach((column) => {
+    const qapairs = Array.from(column.children).filter((child) => child.tagName === 'DIV');
+    qapairs.forEach((pair) => {
+      const children = Array.from(pair.children).filter((el) => el.tagName === 'DIV');
+      if (children.length >= 2) {
+        qaRows.push([children[0], children[1]]);
       }
     });
   });
 
-  // Create the block table
+  // Build the final rows: header as single cell, then each Q&A pair as two cells
+  const rows = [["Accordion (accordion12)"]];
+  rows.push(...qaRows);
+
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

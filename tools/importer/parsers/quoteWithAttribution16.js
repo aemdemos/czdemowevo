@@ -1,46 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to build attribution (author/source, optionally with image)
-  function extractAttribution(aphorist) {
-    if (!aphorist) return '';
-    // get the <picture> element, if any
-    const pic = aphorist.querySelector('picture');
-    // get the attribution text from ul > li
-    const lis = aphorist.querySelectorAll('ul li');
-    const text = Array.from(lis).map(li => li.textContent.trim()).filter(Boolean).join(', ');
-    // Compose: [picture(if present), text(if present)]
-    if (pic && text) {
-      // picture and text (separated by single space)
-      const frag = document.createDocumentFragment();
-      frag.append(pic);
-      frag.append(' ' + text);
-      return frag;
-    } else if (pic) {
-      return pic;
-    } else {
-      return text;
+  // Find the quote-carousel block, then the active quotecard
+  const quoteCarousel = element.querySelector('.quote-carousel');
+  if (!quoteCarousel) return;
+  const activeCard = quoteCarousel.querySelector('.quotecard.active');
+  if (!activeCard) return;
+
+  // Get the quote text (<p> element)
+  const quoteP = activeCard.querySelector('p');
+  if (!quoteP) return;
+
+  // Get attribution (the .aphorist block), ONLY use text, do NOT include image
+  let attributionText = '';
+  const aphorist = activeCard.querySelector('.aphorist');
+  if (aphorist) {
+    const ul = aphorist.querySelector('ul');
+    if (ul) {
+      const lis = ul.querySelectorAll('li');
+      if (lis.length === 2) {
+        attributionText = lis[0].textContent.trim() + ', ' + lis[1].textContent.trim();
+      } else if (lis.length === 1) {
+        attributionText = lis[0].textContent.trim();
+      }
     }
   }
+  // Create attribution element (text only)
+  let attributionEl = null;
+  if (attributionText) {
+    attributionEl = document.createElement('div');
+    attributionEl.textContent = attributionText;
+  }
 
-  // Find the active quotecard (should always be present)
-  const card = element.querySelector('.quotecard.active, .quotecard[aria-selected="true"]');
-  if (!card) return;
-
-  // Get the quote paragraph (required)
-  const quote = card.querySelector('p');
-
-  // Get the attribution, if available
-  const aphorist = card.querySelector('.aphorist');
-  const attribution = extractAttribution(aphorist);
-
-  // Construct the block table as per guidance
+  // Build table structure as per the guidelines
   const headerRow = ['Quote (quoteWithAttribution16)'];
-  const quoteRow = [quote];
-  const attributionRow = [attribution];
-  const cells = [headerRow, quoteRow, attributionRow];
+  const contentRow = [quoteP];
+  const attributionRow = attributionEl ? [attributionEl] : [''];
+  const cells = [headerRow, contentRow, attributionRow];
 
-  // Generate the block table
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  // Replace the original element with the table
   element.replaceWith(table);
 }

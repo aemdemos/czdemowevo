@@ -1,38 +1,23 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   const headerRow = ['Cards (cards19)'];
-  const rows = [headerRow];
+  const cards = Array.from(element.querySelectorAll(':scope > .recipe')).filter(card => card.style.display !== 'none');
 
-  // Only select visible .recipe elements
-  const recipeDivs = Array.from(element.querySelectorAll(':scope > .recipe')).filter(div => div.style.display !== 'none');
-
-  recipeDivs.forEach(recipe => {
-    const link = recipe.querySelector('a');
-    const picture = link ? link.querySelector('picture') : null;
-    const span = link ? link.querySelector('span') : null;
-
-    // IMAGE cell
-    const imageCell = picture || '';
-
-    // TEXT cell: strong (title, inside link), then description (if any)
-    let textCell = '';
-    if (span && link) {
-      // Create a div to hold strong+description
-      const cellDiv = document.createElement('div');
-      // Title as <strong><a></a></strong>
-      const strong = document.createElement('strong');
-      const a = document.createElement('a');
-      a.href = link.href;
-      a.textContent = span.textContent.trim();
-      strong.appendChild(a);
-      cellDiv.appendChild(strong);
-      // Optionally, add description if present (for future extensibility)
-      // In this HTML, there is no description, so this is skipped
-      textCell = cellDiv;
+  const rows = cards.map(card => {
+    // Image cell
+    const picture = card.querySelector('picture');
+    const img = picture ? picture.querySelector('img') : null;
+    // Title cell (bold, not a link, no div wrapper)
+    let textEl = document.createTextNode('');
+    const span = card.querySelector('span');
+    if (span && span.textContent && span.textContent.trim()) {
+      textEl = document.createElement('strong');
+      textEl.textContent = span.textContent.trim();
     }
-    rows.push([imageCell, textCell]);
+    return [img, textEl];
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const tableRows = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(table);
 }

@@ -1,55 +1,59 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract the background image from the data attribute
-  const bgUrl = element.getAttribute('data-background-image');
-  let bgImgEl = null;
-  if (bgUrl) {
-    bgImgEl = document.createElement('img');
-    bgImgEl.src = bgUrl;
-    bgImgEl.alt = '';
-  }
+  // Header row
+  const headerRow = ['Hero (hero15)'];
 
-  // Find the .columns-wrapper > .columns.block > div (columns)
+  // Find the columns-wrapper and columns block
   const columnsWrapper = element.querySelector('.columns-wrapper');
   if (!columnsWrapper) return;
   const columnsBlock = columnsWrapper.querySelector('.columns.block');
   if (!columnsBlock) return;
+
+  // Get the two main columns (left: image, right: content)
   const columns = columnsBlock.querySelectorAll(':scope > div');
-  // columns[0] = left (image), columns[1] = right (content)
-  if (columns.length < 2) return;
 
-  // Find the prominent image in the left column
-  let prominentImg = null;
-  const imgCol = columns[0].querySelector('.columns-img-col');
-  if (imgCol) {
-    // Use the <picture> element if available, else the <img>
-    prominentImg = imgCol.querySelector('picture') || imgCol.querySelector('img');
-  }
-
-  // Compose output from right column
-  const rightCol = columns[1];
-
-  // Find heading (required)
-  const heading = rightCol.querySelector('h2');
-  // Find first paragraph as subheading/description (optional)
-  const desc = rightCol.querySelector('h2 + p, p');
-  // Find CTA button (optional)
-  let cta = null;
-  const buttonContainer = rightCol.querySelector('.button-container');
-  if (buttonContainer) {
-    cta = buttonContainer.querySelector('a');
-  }
-
-  // Compose the cell: prominent image, background image, heading, description, CTA as present
+  // Prepare content array
   const cellContent = [];
-  if (prominentImg) cellContent.push(prominentImg);
-  if (bgImgEl) cellContent.push(bgImgEl);
-  if (heading) cellContent.push(heading);
-  if (desc) cellContent.push(desc);
-  if (cta) cellContent.push(cta);
 
+  // 1. Background image (optional)
+  // The background image for this block is in the section's data-background-image attribute OR in the right column picture
+  const bgImgUrl = element.getAttribute('data-background-image');
+  if (bgImgUrl) {
+    // Create a picture element using the background image URL (as the example uses an <img> for background)
+    const picture = document.createElement('picture');
+    const img = document.createElement('img');
+    img.src = bgImgUrl;
+    img.alt = '';
+    picture.appendChild(img);
+    cellContent.push(picture);
+  }
+
+  // 2. Title (mandatory): find heading in right column
+  let heading = null;
+  if (columns.length > 1) {
+    const rightCol = columns[1];
+    heading = rightCol.querySelector('h1, h2, h3, h4, h5, h6');
+    if (heading) {
+      cellContent.push(heading);
+    }
+    // 3. Subheading (optional): find the first <p> excluding button-container
+    const paragraphs = rightCol.querySelectorAll('p');
+    let desc = null;
+    for (const p of paragraphs) {
+      if (!p.classList.contains('button-container')) {
+        desc = p;
+        break;
+      }
+    }
+    if (desc) cellContent.push(desc);
+    // 4. Call-to-action (optional): look for .button-container
+    const cta = rightCol.querySelector('.button-container');
+    if (cta) cellContent.push(cta);
+  }
+
+  // Compose table as single column, two rows (header, content)
   const cells = [
-    ['Hero (hero15)'],
+    headerRow,
     [cellContent]
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);

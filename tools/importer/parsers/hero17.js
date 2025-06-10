@@ -1,36 +1,29 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the inner block with the main content
-  let block = element;
-  // Handle section/callout-wrapper wrappers
-  if (block.classList.contains('section') && block.querySelector('.callout.block')) {
-    block = block.querySelector('.callout.block');
-  }
+  // Find the innermost block containing the hero content
+  const block = element.querySelector('.callout.block');
+  if (!block) return;
 
-  // Get all immediate child elements of the block
-  const children = Array.from(block.children);
+  // Collect all direct children of the hero block in order
+  // This will typically include the main image, heading, and possibly a decorative image
+  const children = Array.from(block.children).filter(child => {
+    // Only include elements that are not empty
+    if (child.tagName === 'PICTURE') return true;
+    if (child.tagName.match(/^H[1-6]$/) && child.textContent.trim()) return true;
+    // Could have CTA, etc. For now, include all children
+    return true;
+  });
+  
+  // Defensive: If no children, do not replace
+  if (!children.length) return;
 
-  // Find the first picture (background/main image)
-  const firstPicture = children.find((el) => el.tagName === 'PICTURE');
-  // Find the first heading (h1-h6)
-  const heading = children.find((el) => /^H[1-6]$/.test(el.tagName));
-  // Find the second picture (decorative or badge image), if present
-  const pictures = children.filter((el) => el.tagName === 'PICTURE');
-  const secondPicture = pictures.length > 1 ? pictures[1] : null;
-
-  // Compose the cell content in order, only if they exist
-  const cellContent = [];
-  if (firstPicture) cellContent.push(firstPicture);
-  if (heading) cellContent.push(heading);
-  if (secondPicture) cellContent.push(secondPicture);
-
-  // Build the table rows as per instructions
+  // Compose the table rows
   const cells = [
     ['Hero (hero17)'],
-    [cellContent]
+    [children]
   ];
 
-  // Create the table and replace the original element
+  // Create and replace with the block table
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
