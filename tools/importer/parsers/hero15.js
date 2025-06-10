@@ -1,27 +1,57 @@
 /* global WebImporter */
- export default function parse(element, { document }) {
-    const headerRow = ['Hero (hero15)'];
+export default function parse(element, { document }) {
+  // Extract the background image from the data attribute
+  const bgUrl = element.getAttribute('data-background-image');
+  let bgImgEl = null;
+  if (bgUrl) {
+    bgImgEl = document.createElement('img');
+    bgImgEl.src = bgUrl;
+    bgImgEl.alt = '';
+  }
 
-    const backgroundImageColumn = element.querySelector('.background-image-column');
-    const backgroundImage = backgroundImageColumn.querySelector('img');
+  // Find the .columns-wrapper > .columns.block > div (columns)
+  const columnsWrapper = element.querySelector('.columns-wrapper');
+  if (!columnsWrapper) return;
+  const columnsBlock = columnsWrapper.querySelector('.columns.block');
+  if (!columnsBlock) return;
+  const columns = columnsBlock.querySelectorAll(':scope > div');
+  // columns[0] = left (image), columns[1] = right (content)
+  if (columns.length < 2) return;
 
-    const title = backgroundImageColumn.querySelector('h2');
-    const subheading = backgroundImageColumn.querySelector('p:not(.button-container)');
-    const ctaContainer = backgroundImageColumn.querySelector('.button-container');
-    const cta = ctaContainer ? ctaContainer.querySelector('a') : null;
+  // Find the prominent image in the left column
+  let prominentImg = null;
+  const imgCol = columns[0].querySelector('.columns-img-col');
+  if (imgCol) {
+    // Use the <picture> element if available, else the <img>
+    prominentImg = imgCol.querySelector('picture') || imgCol.querySelector('img');
+  }
 
-    const content = document.createElement('div');
-    if (backgroundImage) content.append(backgroundImage);
-    if (title) content.append(title);
-    if (subheading) content.append(subheading);
-    if (cta) content.append(cta);
+  // Compose output from right column
+  const rightCol = columns[1];
 
-    const cells = [
-        headerRow,
-        [content],
-    ];
+  // Find heading (required)
+  const heading = rightCol.querySelector('h2');
+  // Find first paragraph as subheading/description (optional)
+  const desc = rightCol.querySelector('h2 + p, p');
+  // Find CTA button (optional)
+  let cta = null;
+  const buttonContainer = rightCol.querySelector('.button-container');
+  if (buttonContainer) {
+    cta = buttonContainer.querySelector('a');
+  }
 
-    const block = WebImporter.DOMUtils.createTable(cells, document);
+  // Compose the cell: prominent image, background image, heading, description, CTA as present
+  const cellContent = [];
+  if (prominentImg) cellContent.push(prominentImg);
+  if (bgImgEl) cellContent.push(bgImgEl);
+  if (heading) cellContent.push(heading);
+  if (desc) cellContent.push(desc);
+  if (cta) cellContent.push(cta);
 
-    element.replaceWith(block);
+  const cells = [
+    ['Hero (hero15)'],
+    [cellContent]
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

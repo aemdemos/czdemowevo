@@ -1,27 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
+  // Find the accordion questions container
+  const questionsContainer = element.querySelector('#faq-replace-questions-container');
+  if (!questionsContainer) return;
+
+  // Get all question/answer accordion items (div children, e.g., .active, .inactive)
+  const questionDivs = Array.from(questionsContainer.children);
+
+  // Build block header
   const headerRow = ['Accordion (accordion14)'];
 
-  // Extract all rows dynamically from the HTML structure
-  const rows = Array.from(element.querySelectorAll(':scope > div > div.faq-replace.block > #faq-replace-questions-container > div')).map(question => {
-    const title = question.textContent.split('?')[0].trim() + '?'; // Extracts the title dynamically
-    const content = question.querySelector('div')?.innerHTML.trim(); // Extract the content dynamically
-
-    // Create title and content elements
-    const titleElement = document.createElement('div');
-    titleElement.textContent = title; 
-
-    const contentElement = document.createElement('div');
-    contentElement.innerHTML = content;
-
-    return [titleElement, contentElement];
+  // Compose each row: [title cell, content cell]
+  const rows = questionDivs.map(qDiv => {
+    // Find the answer div (must be a direct child)
+    let answerDiv = null;
+    for (const child of qDiv.children) {
+      if (child.tagName === 'DIV') {
+        answerDiv = child;
+        break;
+      }
+    }
+    // Title is everything except the answerDiv
+    const titleNodes = [];
+    for (const node of qDiv.childNodes) {
+      if (node !== answerDiv) {
+        titleNodes.push(node);
+      }
+    }
+    // If no answer div, create an empty div
+    const answerCell = answerDiv || document.createElement('div');
+    return [titleNodes, answerCell];
   });
 
-  const cells = [headerRow, ...rows]; // Combine header row with extracted rows
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows
+  ], document);
 
-  // Create the table using WebImporter helper function
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Replace the original element with the new table structure
   element.replaceWith(table);
 }

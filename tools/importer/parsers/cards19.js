@@ -1,24 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   const headerRow = ['Cards (cards19)'];
+  const rows = [headerRow];
 
-  // Extract recipe elements
-  const recipes = Array.from(element.querySelectorAll(':scope > div.recipe')).filter(
-    (recipe) => recipe.style.display !== 'none'
-  );
+  // Only select visible .recipe elements
+  const recipeDivs = Array.from(element.querySelectorAll(':scope > .recipe')).filter(div => div.style.display !== 'none');
 
-  // Map recipes to table rows
-  const rows = recipes.map((recipe) => {
-    const image = recipe.querySelector('picture');
-    const title = recipe.querySelector('span');
+  recipeDivs.forEach(recipe => {
+    const link = recipe.querySelector('a');
+    const picture = link ? link.querySelector('picture') : null;
+    const span = link ? link.querySelector('span') : null;
 
-    return [image, title];
+    // IMAGE cell
+    const imageCell = picture || '';
+
+    // TEXT cell: strong (title, inside link), then description (if any)
+    let textCell = '';
+    if (span && link) {
+      // Create a div to hold strong+description
+      const cellDiv = document.createElement('div');
+      // Title as <strong><a></a></strong>
+      const strong = document.createElement('strong');
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.textContent = span.textContent.trim();
+      strong.appendChild(a);
+      cellDiv.appendChild(strong);
+      // Optionally, add description if present (for future extensibility)
+      // In this HTML, there is no description, so this is skipped
+      textCell = cellDiv;
+    }
+    rows.push([imageCell, textCell]);
   });
 
-  // Create the table block
-  const tableData = [headerRow, ...rows];
-  const block = WebImporter.DOMUtils.createTable(tableData, document);
-
-  // Replace original element with the block
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }
