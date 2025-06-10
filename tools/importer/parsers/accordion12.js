@@ -1,30 +1,37 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
+  // Table header row, matches exactly: Accordion (accordion12)
   const headerRow = ['Accordion (accordion12)'];
+  const rows = [headerRow];
 
-  // Extract all direct parent divs that contain the question-answer pairs
-  const rows = Array.from(element.querySelectorAll(':scope > div > div > div'));
+  // Find the inner block container
+  const blockDiv = element.querySelector('.faq-inplace.block');
+  if (!blockDiv) return;
 
-  // Transform each pair of question and answer into table rows
-  const tableRows = rows.map((row) => {
-    const [question, answer] = row.children;
+  // Two main columns: each is a <div> with multiple Q&A pairs
+  // These columns are direct children of blockDiv
+  const columnDivs = Array.from(blockDiv.children).filter(
+    (child) => child.tagName === 'DIV'
+  );
 
-    // Ensure the existence of both question and answer for each row
-    return [
-      question || '',
-      answer || ''
-    ];
+  // Each column has multiple Q&A pairs, each as <div> with two child divs
+  columnDivs.forEach((colDiv) => {
+    const qaPairs = Array.from(colDiv.children).filter(
+      (child) => child.tagName === 'DIV'
+    );
+    qaPairs.forEach((qaDiv) => {
+      const parts = Array.from(qaDiv.children).filter(
+        (child) => child.tagName === 'DIV'
+      );
+      if (parts.length >= 2) {
+        const title = parts[0]; // existing element, not cloned
+        const content = parts[1]; // existing element, not cloned
+        rows.push([title, content]);
+      }
+    });
   });
 
-  // Combine header and content rows
-  const tableData = [
-    headerRow,
-    ...tableRows
-  ];
-
   // Create the block table
-  const block = WebImporter.DOMUtils.createTable(tableData, document);
-
-  // Replace the element with the new block table
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

@@ -1,31 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-    // Extract relevant elements from the given HTML
-    const quoteWrapper = element.querySelector(':scope > div > div > div > div');
+  // Block name header exactly as specified
+  const headerRow = ['Quote (quoteWithAttribution13)'];
 
-    // Extract the quote text from the paragraph element
-    const quoteParagraph = quoteWrapper.querySelector('p');
-    const quoteText = quoteParagraph ? quoteParagraph.cloneNode(true) : null;
+  // Attempt to get .quote.block inside the given element
+  const quoteBlock = element.querySelector('.quote.block');
 
-    // Extract the image element for the quote
-    const imageElement = quoteWrapper.querySelector('img');
+  let quoteText = null;
+  let attribution = null;
 
-    // Prepare the header row
-    const headerRow = ['Quote (quoteWithAttribution13)'];
-
-    // Prepare the content rows
-    const quoteRow = [quoteText];
-    const imageRow = imageElement ? [imageElement] : [];
-
-    // Create the table using WebImporter.DOMUtils.createTable
-    const cells = [headerRow, quoteRow];
-
-    if (imageRow.length > 0) {
-        cells.push(imageRow);
+  if (quoteBlock) {
+    // Find the first div > div (structure is: .quote.block > div > div)
+    const inner = quoteBlock.querySelector('div > div');
+    if (inner) {
+      const paragraphs = inner.querySelectorAll('p');
+      // First p is the quote text; can include <br>, formatting etc.
+      if (paragraphs.length > 0) {
+        quoteText = paragraphs[0];
+      }
+      // Second p, if any, is attribution (may contain a picture/signature)
+      if (paragraphs.length > 1) {
+        attribution = paragraphs[1];
+      }
     }
+  }
 
-    const blockTable = WebImporter.DOMUtils.createTable(cells, document);
+  // Fallbacks in case expected structure is missing
+  if (!quoteText) {
+    // Try to find a p in the element as a last resort
+    quoteText = element.querySelector('p');
+  }
+  // If still no attribution, leave null (empty row)
 
-    // Replace the original element with the new structured block table
-    element.replaceWith(blockTable);
+  // Compose cells. Each row is a single cell as per requirements.
+  const cells = [
+    headerRow,
+    [quoteText],
+    [attribution]
+  ];
+
+  // Create the block table and replace the original element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }
