@@ -1,45 +1,67 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block name header exactly as specified
+  // Table header must match exactly
   const headerRow = ['Quote (quoteWithAttribution13)'];
 
-  // Attempt to get .quote.block inside the given element
-  const quoteBlock = element.querySelector('.quote.block');
-
+  // Extract quote and attribution
+  // The structure: .quote-container > .quote-wrapper > .quote.block > div > div > (p, p/picture)
   let quoteText = null;
-  let attribution = null;
+  let attribution = '';
 
-  if (quoteBlock) {
-    // Find the first div > div (structure is: .quote.block > div > div)
-    const inner = quoteBlock.querySelector('div > div');
-    if (inner) {
-      const paragraphs = inner.querySelectorAll('p');
-      // First p is the quote text; can include <br>, formatting etc.
-      if (paragraphs.length > 0) {
-        quoteText = paragraphs[0];
+  // Find the main content div inside the block
+  const quoteInner = element.querySelector('.quote.block > div > div')
+    || element.querySelector('.quote.block > div')
+    || element.querySelector('.quote.block');
+
+  let ps = [];
+  if (quoteInner) {
+    // Only direct children p's for stability
+    ps = Array.from(quoteInner.querySelectorAll(':scope > p'));
+  }
+
+  // The quote is always the first <p>
+  if (ps.length > 0) {
+    quoteText = ps[0];
+  }
+
+  // Attribution: usually the next sibling <p> if it contains an image/signature, or a signature image by itself
+  // Start with anything after the quote <p> in the DOM tree
+  let attributionElems = [];
+  if (quoteText) {
+    let next = quoteText.nextElementSibling;
+    while (next) {
+      // Only include if it's not empty
+      if (next.textContent.trim() || next.querySelector('img, picture')) {
+        attributionElems.push(next);
       }
-      // Second p, if any, is attribution (may contain a picture/signature)
-      if (paragraphs.length > 1) {
-        attribution = paragraphs[1];
-      }
+      next = next.nextElementSibling;
     }
   }
-
-  // Fallbacks in case expected structure is missing
-  if (!quoteText) {
-    // Try to find a p in the element as a last resort
-    quoteText = element.querySelector('p');
+  // If nothing found, look for pictures or images directly under quoteInner
+  if (attributionElems.length === 0 && quoteInner) {
+    const directPictures = Array.from(quoteInner.querySelectorAll(':scope > picture, :scope > img'));
+    directPictures.forEach(pic => {
+      // Avoid duplicates if already in attributionElems
+      if (!attributionElems.includes(pic)) {
+        attributionElems.push(pic);
+      }
+    });
   }
-  // If still no attribution, leave null (empty row)
 
-  // Compose cells. Each row is a single cell as per requirements.
+  // Clean up attribution: only keep non-empty or images
+  attributionElems = attributionElems.filter(el => el.textContent.trim() || el.querySelector('img, picture'));
+  if (attributionElems.length === 1) attribution = attributionElems[0];
+  else if (attributionElems.length > 1) attribution = attributionElems;
+  else attribution = '';
+
+  // Compose the cells: always 1 column, 3 rows
   const cells = [
     headerRow,
     [quoteText],
-    [attribution]
+    [attribution],
   ];
 
-  // Create the block table and replace the original element
+  // Build the table and replace the element
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

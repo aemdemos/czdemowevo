@@ -1,39 +1,18 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the steps block (the immediate child with class 'steps block')
-  const stepsBlock = element.querySelector('.steps.block');
-  if (!stepsBlock) return;
+  // Each step is within .steps-wrapper > div > div (the second div)
+  // So, get all :scope > div > div
+  const stepContainers = Array.from(element.querySelectorAll(':scope > div > div'));
 
-  // Each immediate child <div> of .steps.block is a step column (with one step)
-  const stepDivs = Array.from(stepsBlock.querySelectorAll(':scope > div'));
-  if (stepDivs.length === 0) return;
-
-  // Group the steps into 3 columns, each column gets 2 steps
-  const columnsCount = 3;
-  const stepsPerColumn = Math.ceil(stepDivs.length / columnsCount);
-  const columns = [];
-  for (let i = 0; i < columnsCount; i++) {
-    // For each column, collect its step divs
-    const start = i * stepsPerColumn;
-    const end = start + stepsPerColumn;
-    const group = stepDivs.slice(start, end)
-      .map(colDiv => {
-        const inner = colDiv.firstElementChild;
-        if (!inner) return '';
-        return Array.from(inner.childNodes);
-      });
-    // Flatten nested arrays into a single array per column
-    columns.push(group.flat());
+  // We expect 6 steps; group into rows of 3
+  const rows = [];
+  for (let i = 0; i < stepContainers.length; i += 3) {
+    const row = stepContainers.slice(i, i + 3);
+    while (row.length < 3) row.push(''); // pad if needed
+    rows.push(row);
   }
 
-  // Build table rows
-  const headerRow = ['Columns (columnsThreeColumns18)'];
-  const columnsRow = columns;
-
-  const cells = [
-    headerRow,
-    columnsRow
-  ];
+  const cells = [['Columns (columnsThreeColumns18)'], ...rows];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);

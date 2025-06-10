@@ -1,27 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract elements dynamically from the element
-  const title = element.querySelector(':scope .hero h1') || document.createTextNode('');
-  const subtitle = element.querySelector(':scope .hero h2') || document.createTextNode('');
-  const cta = element.querySelector(':scope .hero a.button') || document.createTextNode('');
-  const image = element.querySelector(':scope .hero img') || document.createTextNode('');
-  const footerText = element.querySelector(':scope .hero-footer h3') || document.createTextNode('');
+  // Find the main hero block and its internal structure
+  const heroWrapper = element.querySelector('.hero-wrapper');
+  let heroBlock = null;
+  let heroFooter = null;
+  if (heroWrapper) {
+    heroBlock = heroWrapper.querySelector('.hero.block');
+    heroFooter = element.querySelector('.hero-footer');
+  }
 
-  // Create the table structure dynamically
-  const headerRow = ['Hero (hero11)'];
+  const cellContent = [];
 
-  const contentRow = [
-    [
-      title,
-      subtitle,
-      cta,
-      image,
-      footerText
-    ].filter(el => el.textContent.trim() !== '' || el.tagName)
+  // Extract image on right side, if present
+  if (heroBlock) {
+    const right = heroBlock.querySelector('.right');
+    if (right) {
+      const picture = right.querySelector('picture');
+      if (picture) {
+        cellContent.push(picture);
+      }
+    }
+    // Extract title, subtitle, CTA in order from left
+    const left = heroBlock.querySelector('.left');
+    if (left) {
+      Array.from(left.children).forEach(child => {
+        cellContent.push(child);
+      });
+    }
+  }
+
+  // Extract hero-footer (additional subheading)
+  if (heroFooter) {
+    Array.from(heroFooter.children).forEach(child => {
+      cellContent.push(child);
+    });
+  }
+
+  // Compose the table as specified
+  const rows = [
+    ['Hero (hero11)'],
+    [cellContent]
   ];
 
-  const table = WebImporter.DOMUtils.createTable([headerRow, contentRow], document);
-
-  // Replace the original element with the table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
