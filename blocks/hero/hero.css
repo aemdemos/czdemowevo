@@ -1,3 +1,4 @@
+
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
@@ -33,5 +34,142 @@
 @media (width >= 900px) {
   .hero {
     padding: 40px 32px;
+  }
+}
+
+/* --- Start of merged block for .hero.hero1 --- */
+.hero.hero1 {
+  background: #fff;
+  border: 1px solid #6C4A23;
+  border-radius: 16px;
+  max-width: 1120px;
+  margin: 48px auto;
+  box-shadow: 0 2px 24px rgb(44 32 11 / 5%);
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 400px;
+  box-sizing: border-box;
+}
+
+/* --- End of merged block for .hero.hero1 --- */
+
+.hero.hero1 > div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 48px;
+  padding: 56px 48px;
+}
+
+.hero.hero1 > div > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 520px;
+  z-index: 1;
+}
+
+.hero.hero1 h2 {
+  margin: 0 0 28px;
+  color: #002147;
+  font-size: 48px;
+  font-family: Montserrat, Arial, sans-serif;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero.hero1 p:not(.button-container) {
+  color: #222;
+  font-size: 18px;
+  font-family: Montserrat, Arial, sans-serif;
+  line-height: 1.5;
+  margin: 0 0 32px;
+}
+
+.hero.hero1 .button-container {
+  margin-bottom: 36px;
+}
+
+.hero.hero1 .button-container .button {
+  display: inline-block;
+  background: linear-gradient(90deg, #f4e1cc 0%, #b78e63 100%);
+  color: #002147;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 16px 38px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 12px rgb(44 32 11 / 7%);
+  text-align: center;
+  line-height: 1.1;
+  margin: 0;
+  transition: filter .2s;
+}
+
+.hero.hero1 .button-container .button:hover,
+.hero.hero1 .button-container .button:focus {
+  filter: brightness(0.95);
+  text-decoration: none;
+}
+
+.hero.hero1 p:last-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 0;
+  margin: 0;
+  min-width: 0;
+  z-index: 2;
+}
+
+.hero.hero1 p:last-of-type picture,
+.hero.hero1 p:last-of-type img {
+  display: block;
+  max-width: 340px;
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.hero.hero1 p:last-of-type img {
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgb(44 32 11 / 13%);
+  transform: rotate(-10deg);
+  object-fit: cover;
+}
+
+@media (width <= 900px) {
+  .hero.hero1 {
+    flex-direction: column;
+    max-width: 97vw;
+    padding: 0;
+    min-height: unset;
+  }
+
+  .hero.hero1 > div {
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 12px;
+  }
+
+  .hero.hero1 p:last-of-type {
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .hero.hero1 p:last-of-type picture,
+  .hero.hero1 p:last-of-type img {
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .hero.hero1 h2 {
+    font-size: 32px;
   }
 }
