@@ -1,45 +1,54 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const headerRow = ['Quote (quoteWithAttribution7)'];
-  const activeCard = element.querySelector('.quotecard.active');
-  if (!activeCard) return;
+  // Get the quote-carousel block in the section
+  const quoteCarousel = element.querySelector('.quote-carousel.block');
+  if (!quoteCarousel) return;
 
-  // Get the quote <p>
-  const quoteP = activeCard.querySelector('p');
-  const quoteCell = quoteP ? [quoteP] : [document.createElement('div')];
+  // Find the active quotecard (should always be present)
+  let activeQuoteCard = quoteCarousel.querySelector('.quotecard.active');
+  if (!activeQuoteCard) {
+    activeQuoteCard = quoteCarousel.querySelector('.quotecard[aria-selected="true"]');
+  }
+  if (!activeQuoteCard) return;
 
-  // Attribution (plain text, with source in <em> if available)
-  let attributionCell;
-  const aphorist = activeCard.querySelector('.aphorist');
+  // Quote text (inside <p>)
+  const quoteP = activeQuoteCard.querySelector('p');
+
+  // Attribution: inside aphorist ul li elements
+  let attributionCell = '';
+  const aphorist = activeQuoteCard.querySelector('.aphorist');
   if (aphorist) {
     const lis = aphorist.querySelectorAll('ul li');
-    let name = lis[0] ? lis[0].textContent.trim() : '';
-    let source = lis[1] ? lis[1].textContent.trim() : '';
-    const attributionDiv = document.createElement('div');
-    if (name && source) {
-      // Compose as: Name, <em>Source</em>
-      attributionDiv.append(document.createTextNode(name + ', '));
-      const em = document.createElement('em');
-      em.textContent = source;
-      attributionDiv.append(em);
-    } else if (name) {
-      attributionDiv.textContent = name;
-    } else if (source) {
-      const em = document.createElement('em');
-      em.textContent = source;
-      attributionDiv.append(em);
-    } else {
-      attributionDiv.textContent = '';
+    if (lis.length > 0) {
+      // First li: name (plain text), Second li: source (emphasized)
+      const name = lis[0]?.textContent.trim();
+      let source = lis[1]?.textContent.trim();
+      if (source) {
+        // Emphasize (as in example: <em>Source</em>)
+        const em = document.createElement('em');
+        em.textContent = source;
+        // Construct: Name, <em>Source</em>
+        // Insert a comma and space between name and source if both present
+        attributionCell = [];
+        if (name) {
+          attributionCell.push(name);
+        }
+        if (name && source) {
+          attributionCell.push(', ');
+        }
+        if (source) {
+          attributionCell.push(em);
+        }
+      } else if (name) {
+        attributionCell = name;
+      }
     }
-    attributionCell = [attributionDiv];
-  } else {
-    attributionCell = [document.createElement('div')];
   }
 
   const cells = [
-    headerRow,
-    quoteCell,
-    attributionCell,
+    ['Quote (quoteWithAttribution7)'],
+    [quoteP || ''],
+    [attributionCell || '']
   ];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);

@@ -1,57 +1,60 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the columns-wrapper (should always exist in the structure)
+  // Header row from example
+  const headerRow = ['Hero (hero16)'];
+
+  // Find the columns wrapper (guaranteed present in this structure)
   const columnsWrapper = element.querySelector('.columns-wrapper');
   if (!columnsWrapper) return;
-
-  // Get the .columns.block container
+  // Find columns block
   const columnsBlock = columnsWrapper.querySelector('.columns.block');
   if (!columnsBlock) return;
+  // Get the direct children columns
+  const columns = Array.from(columnsBlock.querySelectorAll(':scope > div'));
 
-  // Get columns inside the block (should be two: left image, right text)
-  const columns = columnsBlock.querySelectorAll(':scope > div');
-  if (columns.length < 2) return;
-  const leftCol = columns[0];
-  const rightCol = columns[1];
-
-  // Extract the main image (picture preferred, otherwise img)
-  let mainImage = leftCol.querySelector('picture');
-  if (!mainImage) {
-    mainImage = leftCol.querySelector('img');
+  // Left: image column
+  let mainImage = null;
+  const imgCol = columns.find(div => div.classList.contains('columns-img-col'));
+  if (imgCol) {
+    // picture preferred for semantic structure
+    mainImage = imgCol.querySelector('picture') || imgCol.querySelector('img');
   }
 
-  // Extract heading (mandatory)
-  let heading = rightCol.querySelector('h1, h2, h3, h4, h5, h6');
-
-  // Extract subheading (first <p> after the heading)
-  let subheading = null;
-  if (heading) {
-    let node = heading.nextElementSibling;
-    while (node && node.tagName !== 'P') node = node.nextElementSibling;
-    if (node && node.tagName === 'P') subheading = node;
-  }
-
-  // Extract CTA (button or prominent link)
+  // Right: content column
+  const contentCol = columns.find(div => div.classList.contains('background-image-column'));
+  let bgPicture = null;
+  let heading = null;
+  let textParas = [];
   let cta = null;
-  const buttonP = rightCol.querySelector('p.button-container');
-  if (buttonP) {
-    const a = buttonP.querySelector('a');
-    if (a) cta = a;
+  if (contentCol) {
+    // Background image (optional)
+    const bgImgDiv = contentCol.querySelector('.background-image');
+    if (bgImgDiv) {
+      bgPicture = bgImgDiv.querySelector('picture');
+    }
+    // Heading (mandatory)
+    heading = contentCol.querySelector('h1, h2, h3, h4, h5, h6');
+    // Subheading (optional): first non-button paragraph(s)
+    textParas = Array.from(contentCol.querySelectorAll('p:not(.button-container)'));
+    // CTA (optional)
+    const btnContainer = contentCol.querySelector('p.button-container');
+    if (btnContainer) cta = btnContainer;
   }
 
-  // Compose content cell: image, heading, subheading, CTA (in this order, only if present)
-  const content = [];
-  if (mainImage) content.push(mainImage);
-  if (heading) content.push(heading);
-  if (subheading) content.push(subheading);
-  if (cta) content.push(cta);
+  // Compose the content cell, preserving order as in contentCol
+  const cellContent = [];
+  if (bgPicture) cellContent.push(bgPicture);
+  if (mainImage) cellContent.push(mainImage);
+  if (heading) cellContent.push(heading);
+  if (textParas.length) cellContent.push(...textParas);
+  if (cta) cellContent.push(cta);
 
-  // Build the block table as per the specification
+  // Only create table if there's meaningful content
+  if (!cellContent.length) return;
+
   const table = WebImporter.DOMUtils.createTable([
-    ['Hero (hero16)'],
-    [content],
+    headerRow,
+    [cellContent]
   ], document);
-
-  // Replace the original element with the new table
   element.replaceWith(table);
 }
