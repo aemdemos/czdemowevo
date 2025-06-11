@@ -33,17 +33,6 @@
 
 /* fallback fonts */
 @font-face {
-  font-family:"HCo Ringside Extra Wide Fallback";
-  font-style:normal;
-  font-weight:900;
-  src:local("Arial Bold");
-  ascent-override:78.99%;
-  descent-override:16.46%;
-  line-gap-override:3.29%;
-  size-adjust:121.54%;
-}
-
-@font-face {
   font-family:"proxima-nova-condensed Fallback";
   font-style:normal;
   font-weight:700;
@@ -52,6 +41,17 @@
   descent-override:47.22%;
   line-gap-override:0.00%;
   size-adjust:82.16%;
+}
+
+@font-face {
+  font-family:"HCo Ringside Extra Wide Fallback";
+  font-style:normal;
+  font-weight:900;
+  src:local("Arial Bold");
+  ascent-override:78.99%;
+  descent-override:16.46%;
+  line-gap-override:3.29%;
+  size-adjust:121.54%;
 }
 
 @font-face {
