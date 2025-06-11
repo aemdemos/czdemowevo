@@ -1,46 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the columns block. The element may be 'columns-wrapper' or the '.columns.block' itself
-  let columnsBlock = element;
-  if (!columnsBlock.classList.contains('columns')) {
-    columnsBlock = element.querySelector('.columns.block');
-    if (!columnsBlock) return;
+  // Find the direct columns block inside the wrapper
+  const columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) return;
+
+  // Find the two top-level columns (should be two direct children)
+  const columnDivs = Array.from(columnsBlock.children);
+  if (columnDivs.length < 2) return;
+
+  // Left column: drill down to main content
+  let leftCol = columnDivs[0];
+  // Drill through single-child div wrappers to get to the content
+  while (leftCol && leftCol.children.length === 1 && leftCol.firstElementChild.tagName === 'DIV') {
+    leftCol = leftCol.firstElementChild;
   }
 
-  // Find the main row container inside the columns block
-  // Usually the direct child, but sometimes the only <div> child
-  let mainRow = columnsBlock.querySelector(':scope > div');
-  if (!mainRow) mainRow = columnsBlock;
+  // Right column: find the picture or img in the right column
+  let rightCol = columnDivs[1];
+  let imgEl = rightCol.querySelector('picture, img');
+  // If not found, try the whole rightCol (for safety, e.g. if markup changes)
+  if (!imgEl && rightCol.firstElementChild) {
+    imgEl = rightCol.firstElementChild;
+  }
 
-  // The columns are the direct children of this row/main block
-  // Sometimes there are single wrappers, so flatten one level if necessary
-  let columns = Array.from(mainRow.children);
+  // Table header exactly as specified
+  const headerRow = ['Columns (columns3)'];
+  // Table content row: left is all content block, right is image (if present)
+  const contentRow = [leftCol, imgEl];
 
-  // Defensive: filter out empty columns, if any
-  columns = columns.filter(col => col && (col.children.length > 0 || col.textContent.trim().length > 0));
+  const rows = [
+    headerRow,
+    contentRow,
+  ];
 
-  // For each column, extract the real content: either the picture, or the full content node
-  const columnContents = columns.map((col) => {
-    // If the column has a 'columns-img-col' child (image), use the <picture> or <img>
-    const picture = col.querySelector('picture');
-    if (picture) {
-      return picture;
-    }
-    // Otherwise, if this column is just a wrapper, unwrap it
-    let node = col;
-    while (node.children.length === 1 && node.firstElementChild.tagName.toLowerCase() === 'div') {
-      node = node.firstElementChild;
-    }
-    return node;
-  });
-
-  // Compose the table cells array with the correct header (fix: header must be exactly 'Columns block')
-  const header = ['Columns block'];
-  const cells = [header, columnContents];
-
-  // Create the table
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Replace the original block
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

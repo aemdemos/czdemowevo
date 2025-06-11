@@ -1,30 +1,28 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the columns-wrapper within the section
-  const columnsWrapper = element.querySelector('.columns-wrapper');
-  if (!columnsWrapper) return;
-
-  // Find the columns.block inside columnsWrapper
-  const columnsBlock = columnsWrapper.querySelector('.columns.block');
-  if (!columnsBlock) return;
-
-  // The columns block contains a single row div. Its children are the columns (normally two columns for columns13)
-  const rowDiv = columnsBlock.querySelector(':scope > div');
-  if (!rowDiv) return;
-  const columnDivs = Array.from(rowDiv.children);
-  if (!columnDivs.length) return;
-
-  // Header row must be a single column
-  const headerRow = ['Columns (columns13)'];
-  // Second row: as many columns as there are columns in the block (usually 2, but should be dynamic)
-  const columnsRow = columnDivs;
-
-  // Pass headerRow as a single array for the header, columnsRow as an array for the second row
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    columnsRow
-  ], document);
-
-  // Replace the original element
+  // Find the columns block (may be nested)
+  let columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) {
+    columnsBlock = element;
+  }
+  // Find the first row with column content
+  let colsRow = null;
+  for (const child of columnsBlock.children) {
+    if (child.children.length > 1) {
+      colsRow = child;
+      break;
+    }
+  }
+  if (!colsRow) colsRow = columnsBlock;
+  // Gather all columns in this row
+  const columns = Array.from(colsRow.children);
+  // Combine the actual columns into a single cell (single array)
+  // This ensures the table has one header column and one cell column, as per example
+  const combinedCell = columns.length > 0 ? columns : [columnsBlock];
+  const cells = [
+    ['Columns (columns13)'],
+    [combinedCell]
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

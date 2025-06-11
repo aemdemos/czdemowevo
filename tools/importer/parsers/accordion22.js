@@ -1,41 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the block div with class 'faq-inplace block' (child of wrapper)
-  const block = element.querySelector('.faq-inplace.block');
-  if (!block) return;
+  // Find the FAQ block inside the wrapper
+  const faqBlock = element.querySelector('.faq-inplace.block');
+  if (!faqBlock) return;
 
-  // Each immediate child of block is a column (for multi-column FAQ layouts)
-  const columns = Array.from(block.children);
+  // We expect two columns (for left/right FAQ columns), but content may be in one or both
+  const columns = Array.from(faqBlock.children);
 
-  // We'll collect all accordion items as [title, content]
-  const items = [];
+  // Build table rows
+  const rows = [];
+  // Header row: matches the required block name exactly
+  rows.push(['Accordion (accordion22)']);
+
+  // Each column (could be 1 or 2), each is a list of question-answer pairs
   columns.forEach(col => {
-    // Each column has several accordion items as its children
-    // Each such item is a <div> with 2 <div>s: title and content
-    // Use :scope > div to get immediate children
-    const accordionItems = Array.from(col.querySelectorAll(':scope > div'));
-    accordionItems.forEach(item => {
-      // Each item has two children: title and content
-      const children = Array.from(item.children);
-      if (children.length === 2) {
-        const title = children[0];
-        const content = children[1];
-        items.push([title, content]);
-      } else if (children.length === 1) {
-        // Handle potential edge case where only a title exists
-        items.push([children[0], document.createElement('div')]);
+    // Each child of col is a question/answer pair DIV
+    const pairs = Array.from(col.children);
+    pairs.forEach(pair => {
+      // Each pair should have 2 children: [question, answer]
+      const qa = Array.from(pair.children);
+      if (qa.length >= 2) {
+        // Reference the actual DOM nodes, do not clone or new
+        rows.push([qa[0], qa[1]]);
       }
-      // If children.length === 0, skip (completely empty accordion item)
+      // If question or answer is missing, still add row with what is available
+      else if (qa.length === 1) {
+        rows.push([qa[0], document.createTextNode('')]);
+      }
     });
   });
 
-  // Prepare the cells for the block table
-  const headerRow = ['Accordion (accordion22)'];
-  const cells = [headerRow];
-  items.forEach(([title, content]) => {
-    cells.push([title, content]);
-  });
+  // Create the accordion block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Replace the original element with the block table
   element.replaceWith(table);
 }

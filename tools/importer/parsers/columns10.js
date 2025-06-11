@@ -1,34 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the actual columns block inside the wrapper
-  const columnsBlock = element.querySelector('.columns.block');
-  if (!columnsBlock) return;
+  // Header row as specified in the example
+  const headerRow = ['Columns (columns10)'];
 
-  // The columns block contains a row div, whose children are the column divs
-  const rowDiv = columnsBlock.firstElementChild;
-  if (!rowDiv) return;
-
-  // Find the first (text) and second (image) columns
-  let textCol = null;
-  let imageCol = null;
-  const children = Array.from(rowDiv.children);
-  if (children.length === 2) {
-    // Assume: first is text, second is image
-    textCol = children[0];
-    imageCol = children[1];
-  } else {
-    // Fallback: find by class
-    textCol = children.find(col => !col.classList.contains('columns-img-col'));
-    imageCol = children.find(col => col.classList.contains('columns-img-col'));
+  // Find the columns block (handle optional wrapper)
+  let columnsBlock = element;
+  if (!columnsBlock.classList.contains('columns')) {
+    const maybeBlock = columnsBlock.querySelector('.columns.block');
+    if (maybeBlock) columnsBlock = maybeBlock;
   }
-  if (!textCol || !imageCol) return;
 
-  // Build the table: header row, then one row with two cells
-  const cells = [
-    ['Columns (columns10)'],
-    [textCol, imageCol]
-  ];
+  // Get all direct column divs
+  const columnDivs = Array.from(columnsBlock.querySelectorAll(':scope > div'));
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Defensive: if we don't have at least 2, fallback to all content in one cell
+  if (columnDivs.length < 2) {
+    const table = WebImporter.DOMUtils.createTable([
+      headerRow,
+      [element]
+    ], document);
+    element.replaceWith(table);
+    return;
+  }
+
+  // The correct structure: first table data row should have 2 cells, one per column
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    [columnDivs[0], columnDivs[1]]
+  ], document);
   element.replaceWith(table);
 }

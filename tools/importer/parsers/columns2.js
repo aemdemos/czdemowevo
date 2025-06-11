@@ -1,27 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the actual columns block inside the wrapper
-  const columnsBlock = element.querySelector('.columns.block');
-  if (!columnsBlock) return;
-
-  // Get the immediate column containers
-  const columnDivs = Array.from(columnsBlock.querySelectorAll(':scope > div'));
-  // Defensive: If there are not enough columns, abort
-  if (columnDivs.length < 2) return;
-
-  // For robustness, always reference the highest level column content
-  // Left column: typically the first child div
-  // Right column: typically the second child div, might have images or similar
-  const leftColumn = columnDivs[0];
-  const rightColumn = columnDivs[1];
-
-  // The block header must match the provided format
+  // The block name as per instructions and example
   const headerRow = ['Columns (columns2)'];
 
-  // Compose the columns row referencing the original column elements
-  const columnsRow = [leftColumn, rightColumn];
+  // Find the columns block
+  let columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) {
+    // fallback: sometimes .columns.block isn't present, just use the element
+    columnsBlock = element;
+  }
+  // Get the immediate children, which are the columns
+  const columns = Array.from(columnsBlock.querySelectorAll(':scope > div'));
 
-  // Build the table
-  const table = WebImporter.DOMUtils.createTable([headerRow, columnsRow], document);
+  // If there are not exactly 2 columns, default to a single cell with all content
+  if (columns.length < 2) {
+    const table = WebImporter.DOMUtils.createTable([
+      headerRow,
+      [columnsBlock]
+    ], document);
+    element.replaceWith(table);
+    return;
+  }
+
+  // Use the entire first and second column contents as cells (reference, not clone)
+  const firstCol = columns[0];
+  const secondCol = columns[1];
+
+  const tableRows = [
+    headerRow,
+    [firstCol, secondCol]
+  ];
+
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(table);
 }

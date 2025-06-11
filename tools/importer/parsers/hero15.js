@@ -1,42 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main callout block within the section
-  const callout = element.querySelector('.callout.block');
-  if (!callout) return;
+  // Find the main hero content block
+  let heroBlock = element.querySelector('.callout.block') || element;
+  
+  // Collect all direct children for flexible extraction
+  const children = Array.from(heroBlock.children);
 
-  // Get all direct children of the callout block
-  const directChildren = Array.from(callout.children);
-
-  // We'll gather, in order: background image, heading, and optional foreground image.
-  let bgPicture = null;
-  let heading = null;
-  let fgPicture = null;
-
-  for (let i = 0; i < directChildren.length; i++) {
-    const child = directChildren[i];
-    if (child.tagName === 'PICTURE') {
-      if (!bgPicture) {
-        bgPicture = child;
-      } else if (!fgPicture) {
-        fgPicture = child;
-      }
-    } else if (child.tagName.match(/^H[1-6]$/)) {
-      heading = child;
-    }
+  // The first <picture>: typically background or main image
+  const firstPicture = children.find(el => el.tagName === 'PICTURE');
+  // The first heading: title
+  const heading = children.find(el => /^H[1-6]$/.test(el.tagName));
+  // A second <picture> may exist (decorative/foreground asset)
+  let secondPicture = null;
+  if (firstPicture) {
+    const fpIdx = children.indexOf(firstPicture);
+    // Find the next picture after the first
+    secondPicture = children.slice(fpIdx + 1).find(el => el.tagName === 'PICTURE');
   }
 
-  // Compose the content: background image (if present), heading (required), foreground image (if present)
-  const content = [];
-  if (bgPicture) content.push(bgPicture);
-  if (heading) content.push(heading);
-  if (fgPicture) content.push(fgPicture);
+  // Compose single cell: background image, heading, decorative (if present)
+  const cellContent = [];
+  if (firstPicture) cellContent.push(firstPicture);
+  if (heading) cellContent.push(heading);
+  if (secondPicture) cellContent.push(secondPicture);
 
-  // If heading is missing, do not output (the block requires a heading)
-  if (!heading) return;
+  // Resiliency: if all content is missing, insert an empty cell
+  if (cellContent.length === 0) cellContent.push('');
 
   const cells = [
     ['Hero (hero15)'],
-    [content]
+    [cellContent]
   ];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);

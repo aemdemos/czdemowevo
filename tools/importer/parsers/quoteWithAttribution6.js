@@ -1,38 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   // Header row as specified
-  const rows = [['Quote (quoteWithAttribution6)']];
+  const headerRow = ['Quote (quoteWithAttribution6)'];
 
-  // Find the innermost div containing the actual quote and attribution
-  let quoteBlock = element.querySelector('.quote.block');
-  if (!quoteBlock) quoteBlock = element;
-
-  // Descend until we find the deepest div with children that are not divs
-  let workingDiv = quoteBlock;
-  while (
-    workingDiv &&
-    workingDiv.children.length === 1 &&
-    workingDiv.children[0].tagName === 'DIV'
-  ) {
-    workingDiv = workingDiv.children[0];
+  // Find the quote content
+  // Structure: .quote-wrapper > .quote.block > div > div > p (quote) + p (image)
+  const quoteWrapper = element.querySelector('.quote-wrapper');
+  let contentDiv = null;
+  if (quoteWrapper) {
+    const quoteBlock = quoteWrapper.querySelector('.quote.block');
+    if (quoteBlock) {
+      // The innermost content is in quoteBlock > div > div
+      const blockDiv = quoteBlock.querySelector('div');
+      if (blockDiv) {
+        contentDiv = blockDiv.querySelector('div') || blockDiv;
+      }
+    }
   }
 
-  // Now, workingDiv should contain the quote and possibly attribution
-  // Collect all direct child elements
-  const children = Array.from(workingDiv.children);
-  if (children.length === 0) {
-    // Fallback: use all childNodes if no element children (edge case)
-    rows.push([Array.from(workingDiv.childNodes)]);
-    rows.push(['']);
-  } else if (children.length === 1) {
-    rows.push([children[0]]);
-    rows.push(['']);
-  } else {
-    // Most likely: first child is quote, second is attribution or image/signature
-    rows.push([children[0]]);
-    rows.push([children[1]]);
+  let quoteRow = [''];
+  if (contentDiv) {
+    // Collect all children of contentDiv (should be <p>s with text and picture)
+    const quoteContent = Array.from(contentDiv.children);
+    if (quoteContent.length) {
+      quoteRow = [quoteContent];
+    }
   }
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Attribution row: no explicit attribution present in this HTML, so empty string
+  const attributionRow = [''];
+
+  const cells = [
+    headerRow,
+    quoteRow,
+    attributionRow
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

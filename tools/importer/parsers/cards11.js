@@ -1,62 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const headerRow = ['Cards (cards11)'];
-  const cells = [headerRow];
-
-  // Find the block with the featured cards
-  const featuredBlock = element.querySelector('.featured');
+  // Identify the actual cards block
+  const featuredBlock = element.querySelector('.featured.block');
   if (!featuredBlock) return;
-  const recipes = featuredBlock.querySelector('.featured-recipes');
-  if (!recipes) return;
+  const featuredRecipes = featuredBlock.querySelector('.featured-recipes');
+  if (!featuredRecipes) return;
 
-  // Get all card elements
-  const recipeNodes = Array.from(recipes.children).filter((node) => node.classList.contains('featured-recipe'));
+  // Get all direct child card elements
+  const recipeNodes = Array.from(featuredRecipes.children).filter(child => child.classList.contains('featured-recipe'));
 
-  recipeNodes.forEach((node) => {
-    // Check if this is the all-cocktails button card
-    if (node.classList.contains('button-container')) {
-      const imgPic = node.querySelector('picture');
-      const btn = node.querySelector('a.button');
-      if (imgPic && btn) {
-        cells.push([imgPic, btn]);
-      }
+  // Table header as in example
+  const rows = [['Cards (cards11)']];
+
+  recipeNodes.forEach(recipe => {
+    // Is this the final button card? (button-container class)
+    const isButtonCard = recipe.classList.contains('button-container');
+    // First cell: picture element (image)
+    const picture = recipe.querySelector('picture');
+    const imgCell = picture || '';
+
+    // Second cell: heading (from span) or button (for special card)
+    let textCell = '';
+    if (isButtonCard) {
+      // This card contains a picture and a link styled as a button
+      const button = recipe.querySelector('a.button');
+      if (button) textCell = button;
     } else {
-      const link = node.querySelector('a');
-      if (!link) return;
-      const pic = link.querySelector('picture');
-      const span = link.querySelector('span');
-      if (!pic || !span) return;
-
-      // Create text cell: clickable title (strong) as heading, wrapped in a link
-      const strong = document.createElement('strong');
-      strong.textContent = span.textContent.trim();
-      const textA = document.createElement('a');
-      textA.href = link.getAttribute('href');
-      textA.appendChild(strong);
-
-      // Attempt to extract a description if present (e.g. aria-label, title, data-description)
-      // In the provided HTML, there is no description, but we must preserve structure for future-proofing
-      let desc = '';
-      if (link.getAttribute('aria-label')) {
-        desc = link.getAttribute('aria-label');
-      } else if (link.getAttribute('title')) {
-        desc = link.getAttribute('title');
-      } else if (span.getAttribute('data-description')) {
-        desc = span.getAttribute('data-description');
+      // Regular card
+      const link = recipe.querySelector('a');
+      if (link) {
+        const span = link.querySelector('span');
+        if (span) {
+          // Use a heading element for the card title
+          const heading = document.createElement('strong');
+          heading.textContent = span.textContent.trim();
+          textCell = heading;
+        }
       }
-      let textCell;
-      if (desc) {
-        const descDiv = document.createElement('div');
-        descDiv.textContent = desc;
-        textCell = [textA, descDiv];
-      } else {
-        textCell = textA; // Only a title if no description
-      }
-      cells.push([pic, textCell]);
+    }
+    if (imgCell && textCell) {
+      rows.push([imgCell, textCell]);
     }
   });
 
-  // Generate the table and replace the element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Build and replace with block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
