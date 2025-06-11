@@ -1,44 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as specified in guidelines
-  const headerRow = ['Accordion (accordion22)'];
-  const rows = [headerRow];
+  // Find the block div with class 'faq-inplace block' (child of wrapper)
+  const block = element.querySelector('.faq-inplace.block');
+  if (!block) return;
 
-  // Find the main block containing the accordion items
-  let block = element.querySelector('.faq-inplace.block');
-  if (!block) block = element;
-
-  // Expecting two columns/divs under the block (for left/right), but fallback allowed
+  // Each immediate child of block is a column (for multi-column FAQ layouts)
   const columns = Array.from(block.children);
-  // For edge case: if block is flat and not two columns
-  const isFlat = columns.length && columns[0].children && columns[0].children.length && columns[0].children[0].tagName === 'DIV' && columns[0].children.length > 1;
-  let qaParents;
-  if (
-    columns.length === 2 &&
-    Array.from(columns[0].children).length &&
-    Array.from(columns[0].children)[0].children.length === 2
-  ) {
-    // two columns, each with multiple QAs
-    qaParents = columns;
-  } else if (isFlat) {
-    // single column with direct QA wrappers
-    qaParents = [block];
-  } else {
-    // fallback: treat all children as QA wrappers
-    qaParents = [block];
-  }
 
-  // For each QA wrapper (each item is a Q/A block)
-  qaParents.forEach((col) => {
-    Array.from(col.children).forEach((qaWrapper) => {
-      // Each QA wrapper should have 2 children: question and answer
-      const [question, answer] = qaWrapper.children ? Array.from(qaWrapper.children) : [null, null];
-      if (question && answer) {
-        rows.push([question, answer]);
+  // We'll collect all accordion items as [title, content]
+  const items = [];
+  columns.forEach(col => {
+    // Each column has several accordion items as its children
+    // Each such item is a <div> with 2 <div>s: title and content
+    // Use :scope > div to get immediate children
+    const accordionItems = Array.from(col.querySelectorAll(':scope > div'));
+    accordionItems.forEach(item => {
+      // Each item has two children: title and content
+      const children = Array.from(item.children);
+      if (children.length === 2) {
+        const title = children[0];
+        const content = children[1];
+        items.push([title, content]);
+      } else if (children.length === 1) {
+        // Handle potential edge case where only a title exists
+        items.push([children[0], document.createElement('div')]);
       }
+      // If children.length === 0, skip (completely empty accordion item)
     });
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Prepare the cells for the block table
+  const headerRow = ['Accordion (accordion22)'];
+  const cells = [headerRow];
+  items.forEach(([title, content]) => {
+    cells.push([title, content]);
+  });
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

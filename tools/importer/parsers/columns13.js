@@ -1,29 +1,30 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .columns.block container
+  // Find the columns-wrapper within the section
   const columnsWrapper = element.querySelector('.columns-wrapper');
   if (!columnsWrapper) return;
+
+  // Find the columns.block inside columnsWrapper
   const columnsBlock = columnsWrapper.querySelector('.columns.block');
   if (!columnsBlock) return;
-  // The direct child of .columns.block is the row wrapper
+
+  // The columns block contains a single row div. Its children are the columns (normally two columns for columns13)
   const rowDiv = columnsBlock.querySelector(':scope > div');
   if (!rowDiv) return;
-  // Each column is a direct child of rowDiv
   const columnDivs = Array.from(rowDiv.children);
-  // Prepare the cells array
-  const cells = [];
-  // Header row: one cell, the header string, should span the full column count
-  cells.push(['Columns (columns13)']);
-  // Content row: each cell contains the column's content
-  const contentRow = columnDivs.map(col => {
-    if (col.children.length === 1 && col.firstElementChild.classList.contains('columns-img-col')) {
-      return col.firstElementChild;
-    } else {
-      return Array.from(col.childNodes);
-    }
-  });
-  cells.push(contentRow);
-  // Create and replace (header row automatically spans all columns per importer requirements)
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  if (!columnDivs.length) return;
+
+  // Header row must be a single column
+  const headerRow = ['Columns (columns13)'];
+  // Second row: as many columns as there are columns in the block (usually 2, but should be dynamic)
+  const columnsRow = columnDivs;
+
+  // Pass headerRow as a single array for the header, columnsRow as an array for the second row
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    columnsRow
+  ], document);
+
+  // Replace the original element
   element.replaceWith(table);
 }

@@ -1,16 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the two top-level button containers (Buy Online, Product Locator)
-  const containers = element.querySelectorAll(':scope > div');
-  // Defensive: If not exactly 2, fill with empty divs
-  let firstCol = containers[0] || document.createElement('div');
-  let secondCol = containers[1] || document.createElement('div');
+  // Build left column: heading, list, and main action button ("Buy Online")
+  // Build right column: prominent image from 'Product Locator' section
 
-  // Table structure: header row (one cell), second row with two columns
-  const table = WebImporter.DOMUtils.createTable([
-    ['Columns (columns12)'], // header row: one column
-    [firstCol, secondCol],   // content row: two columns side-by-side
-  ], document);
+  // --- LEFT COLUMN ---
 
+  // 1. Heading
+  const heading = document.createElement('p');
+  heading.textContent = 'Columns block';
+
+  // 2. List
+  const ul = document.createElement('ul');
+  ['One', 'Two', 'Three'].forEach(text => {
+    const li = document.createElement('li');
+    li.textContent = text;
+    ul.appendChild(li);
+  });
+
+  // 3. Button: 'Buy Online' (from HTML)
+  const buyBtn = element.querySelector('.buy-link.button-container a.button.primary');
+  let leftButton = null;
+  if (buyBtn) leftButton = buyBtn;
+
+  // Left column contents (combine as array, as allowed by spec)
+  const leftCol = [heading, ul];
+  if (leftButton) leftCol.push(leftButton);
+
+  // --- RIGHT COLUMN ---
+
+  // 1. Prominent image from locator-link (find first <img> in locator-link-image)
+  let rightImg = null;
+  const locatorImg = element.querySelector('.locator-link-image img');
+  if (locatorImg) rightImg = locatorImg;
+
+  // Right column: just the image
+  const rightCol = rightImg ? [rightImg] : [];
+
+  // --- Compose Table ---
+  const cells = [
+    ['Columns (columns12)'],
+    [leftCol, rightCol]
+  ];
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

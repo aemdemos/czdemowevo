@@ -1,27 +1,29 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header must exactly match the block/component name
+  // Header row: block name as required
   const headerRow = ['Hero (hero19)'];
 
-  // Extract CTA
-  const cta = element.querySelector('a');
-
-  // Since the source has no heading, create one using the button CTA text, as a heading element
-  let heading;
-  if (cta && cta.textContent.trim()) {
-    heading = document.createElement('h1');
-    heading.textContent = cta.textContent.trim();
+  // The block requires at minimum a heading/title in the cell.
+  // The source HTML only contains a CTA button.
+  // To preserve semantic meaning, we should synthesize a placeholder title (could use button text)
+  // and include the button as the CTA.
+  // This meets the minimal block requirements: Title (mandatory), CTA (optional)
+  const button = element.querySelector('a');
+  let content;
+  if (button) {
+    // Use the button text as the title if nothing else exists
+    const title = document.createElement('h1');
+    title.textContent = button.textContent;
+    content = [title, button];
   } else {
-    // Fallback to a default placeholder heading if nothing is found (not ideal, but maintains structure)
-    heading = document.createElement('h1');
-    heading.textContent = 'Title';
+    // In the absence of any content, use a generic placeholder title
+    const title = document.createElement('h1');
+    title.textContent = 'Hero Title';
+    content = [title];
   }
-
-  // Content row: heading plus CTA (as per block guidelines: heading is mandatory, CTA is optional)
-  const contentRow = [cta ? [heading, cta] : [heading]];
+  const contentRow = [content];
 
   const cells = [headerRow, contentRow];
-
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

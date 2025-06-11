@@ -1,25 +1,22 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find all step containers (six in total)
-  const stepContainers = Array.from(element.querySelectorAll(':scope > .steps.block > div'));
-
-  // Group steps into 3 columns (as in the screenshot: two steps per column)
+  // Get all direct child divs (each holds one step)
+  const stepDivs = Array.from(element.querySelectorAll(':scope > div'));
+  // There are six steps, but the screenshot and prompt want three columns (so 2 steps per column)
+  // Distribute steps into three columns
   const columns = [[], [], []];
-  stepContainers.forEach((container, idx) => {
-    const contentDiv = container.firstElementChild;
+  stepDivs.forEach((stepDiv, idx) => {
+    // Each stepDiv holds a content div
+    const contentDiv = stepDiv.querySelector(':scope > div');
     if (contentDiv) {
-      columns[Math.floor(idx / 2)].push(...Array.from(contentDiv.childNodes));
+      columns[idx % 3].push(contentDiv);
     }
   });
-
-  // Each cell is an array of step content for that column
+  // Now each columns[i] holds 2 step divs (for a total of 6)
+  // The cells for the content row are arrays of these divs
   const headerRow = ['Columns (columnsThreeColumns8)'];
-  const columnRow = columns;
-
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    columnRow,
-  ], document);
-
+  const contentRow = [columns[0], columns[1], columns[2]];
+  const cells = [headerRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

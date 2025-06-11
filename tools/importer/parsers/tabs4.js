@@ -1,46 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the nav element (main navigation)
-  const nav = element.querySelector('nav');
+  // This function assumes the navigation menu matches a tabs (tabs4) block with only tab labels and no tab content.
+  // If you want to produce a valid tabs (tabs4) block per the markdown example, you must extract both tab labels and tab content.
+  // However, for a navigation bar (as in the given HTML), only tab labels exist, so the correct structure is:
+  // - Header row: ['Tabs (tabs4)']
+  // - Second row: [tab label 1, tab label 2, ...]
+  // - Third row: [empty, empty, ...] (not very meaningful)
+  // For true content tabs, you'd extract actual content for each tab.
+
+  // Defensive: get the navigation wrapper
+  const navWrapper = element.querySelector('.nav-wrapper');
+  if (!navWrapper) return;
+  const nav = navWrapper.querySelector('nav');
   if (!nav) return;
+  // Find the nav-sections for tabs
   const navSections = nav.querySelector('.nav-sections');
   if (!navSections) return;
   const ul = navSections.querySelector('ul');
   if (!ul) return;
-  // Extract all immediate li > a (tab labels)
-  const tabLinks = Array.from(ul.children)
-    .map(li => li.querySelector('a'))
-    .filter(Boolean);
+  const tabLinks = Array.from(ul.querySelectorAll(':scope > li > a'));
   if (tabLinks.length === 0) return;
 
-  // If the current page nav implies 'active' tab, provide demo content for the active tab only,
-  // or if matches the markdown example, otherwise leave empty
-  // Find which tab is active, if any
-  let activeIdx = tabLinks.findIndex(a => a.classList.contains('active'));
-  if (activeIdx === -1) activeIdx = 0; // default, fallback to first tab
-
-  // Example tab content for the first tab as in the markdown sample
-  const exampleContent = [
-    [
-      document.createTextNode('Aliquando sadipscing eum ea, aliquid postulant qui in. Option '),
-      (() => { let el = document.createElement('strong'); el.textContent = 'vulputate'; return el; })(),
-      document.createTextNode(' an ius, everti '),
-      (() => { let el = document.createElement('em'); el.textContent = 'efficiendi'; return el; })(),
-      document.createTextNode(' ex qui, inimicus liberavisse reprehendunt sit ei.')
-    ]
+  // Try to find tab content for each tab (look for next sibling or a known pattern)
+  // In the provided HTML, there is NO tab content; it's only links. So we just output the label row.
+  // But per prompt, if no content exists, don't add an empty content row.
+  // The correct structure for a navigation bar, as tabs4, is just header row, then tab label row.
+  const cells = [
+    ['Tabs (tabs4)'],
+    tabLinks.map(link => link.textContent.trim())
   ];
 
-  const cells = [];
-  // Header row: single cell with block name
-  cells.push(['Tabs (tabs4)']);
-  // Each tab is its own row: [tab label, tab content]
-  tabLinks.forEach((a, idx) => {
-    // Only the first tab has example content, others empty as in the example markdown
-    const tabLabel = a.textContent.trim();
-    const tabContent = idx === 0 ? exampleContent[0] : '';
-    cells.push([tabLabel, tabContent]);
-  });
-  // Create the table and replace the element
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
