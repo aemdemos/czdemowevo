@@ -1,38 +1,28 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the main columns block
-  let columnsBlock = element;
-  // Support both .columns-wrapper and direct .columns use
-  if (element.classList.contains('columns-wrapper')) {
-    const maybe = element.querySelector(':scope > .columns');
-    if (maybe) columnsBlock = maybe;
+  // Find the .columns.block inside the wrapper
+  const columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) return;
+
+  // Get its immediate children (these are the columns)
+  const columns = Array.from(columnsBlock.children);
+  // Expecting two columns for this block
+  if (columns.length < 2) return;
+
+  // First column: content (ingredients, directions, creator)
+  // Second column: image (inside <picture> or possibly the wrapper)
+  // We should reference the actual existing elements.
+
+  // For the right cell, grab the first <picture> inside the second column
+  // (if there is none, fallback to the whole element)
+  let picture = columns[1].querySelector('picture');
+  if (!picture) {
+    picture = columns[1];
   }
 
-  // Get top-level column containers (should be two)
-  const mainCols = columnsBlock.querySelectorAll(':scope > div');
-  if (mainCols.length < 2) return;
-
-  // Get the left column: descend to deepest single-child div
-  let leftCol = mainCols[0];
-  while (leftCol.children.length === 1 && leftCol.firstElementChild && leftCol.firstElementChild.tagName === 'DIV') {
-    leftCol = leftCol.firstElementChild;
-  }
-
-  // Get the right column: typically direct picture
-  let rightCol = mainCols[1];
-  while (rightCol.children.length === 1 && rightCol.firstElementChild && rightCol.firstElementChild.tagName === 'DIV') {
-    rightCol = rightCol.firstElementChild;
-  }
-
-  // The block header per specification
+  // Structure: header, then a row with two columns
   const headerRow = ['Columns (columns9)'];
-  // Second row: two columns, leftCol and rightCol
-  const contentRow = [leftCol, rightCol];
-
-  // Create and replace with block table
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
-  columnsBlock.replaceWith(table);
+  const row = [columns[0], picture];
+  const table = WebImporter.DOMUtils.createTable([headerRow, row], document);
+  element.replaceWith(table);
 }

@@ -1,42 +1,63 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find main hero block
-  const heroBlock = element.querySelector('.hero.block') || element;
-  const left = heroBlock.querySelector('.left');
-  const right = heroBlock.querySelector('.right');
+  // Table header as per requirements
+  const headerRow = ['Hero (hero17)'];
 
-  // Get content elements from left
-  let heading = left && left.querySelector('h1');
-  let subheading = left && left.querySelector('h2');
-  let cta = left && left.querySelector('a');
-
-  // Get image from right
-  let imgEl = null;
-  if (right) {
-    imgEl = right.querySelector('picture') || right.querySelector('img');
+  // Find the hero-wrapper which contains the main hero block
+  const heroWrapper = element.querySelector('.hero-wrapper');
+  let heroBlock = null;
+  if (heroWrapper) {
+    heroBlock = heroWrapper.querySelector('.hero.block');
   }
 
-  // Get footer content
-  let footer = element.querySelector('.hero-footer');
-  let footerNodes = [];
-  if (footer) {
-    footerNodes = Array.from(footer.children);
+  // Find the hero-footer (for the optional subheading at the bottom)
+  const heroFooter = element.querySelector('.hero-footer');
+
+  // Extract elements from the .left (heading, subheading, CTA)
+  let heading = null;
+  let subheading = null;
+  let cta = null;
+  if (heroBlock) {
+    const leftDiv = heroBlock.querySelector('.left');
+    if (leftDiv) {
+      heading = leftDiv.querySelector('h1');
+      subheading = leftDiv.querySelector('h2');
+      cta = leftDiv.querySelector('a.button');
+    }
   }
 
-  // Build the cell content in the correct order
+  // Extract image from the .right
+  let imageOrPicture = null;
+  if (heroBlock) {
+    const rightDiv = heroBlock.querySelector('.right');
+    if (rightDiv) {
+      // Prefer the <picture> if it is there
+      const picture = rightDiv.querySelector('picture');
+      if (picture) {
+        imageOrPicture = picture;
+      } else {
+        const img = rightDiv.querySelector('img');
+        if (img) imageOrPicture = img;
+      }
+    }
+  }
+
+  // Extract the hero-footer heading (if present)
+  let footerHeading = null;
+  if (heroFooter) {
+    footerHeading = heroFooter.querySelector('h3');
+  }
+
+  // Compose cell content in the order: Image, Heading, Subheading, CTA, Footer
   const cellContent = [];
-  if (imgEl) cellContent.push(imgEl);
+  if (imageOrPicture) cellContent.push(imageOrPicture);
   if (heading) cellContent.push(heading);
   if (subheading) cellContent.push(subheading);
   if (cta) cellContent.push(cta);
-  if (footerNodes.length) cellContent.push(...footerNodes);
+  if (footerHeading) cellContent.push(footerHeading);
 
-  // Fallback: if nothing found, use an empty string
-  const cells = [
-    ['Hero (hero17)'],
-    [cellContent.length > 0 ? cellContent : '']
-  ];
-
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Ensure the cell contains at least an empty string if no content found
+  const rows = cellContent.length > 0 ? [headerRow, [cellContent]] : [headerRow, ['']];
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

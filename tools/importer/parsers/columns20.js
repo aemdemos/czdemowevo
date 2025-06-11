@@ -1,31 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The block to extract is: a single hero image inside nested divs
-  // 1. Table header must match exactly: 'Columns (columns20)'
-  // 2. Only 1 column, 2 rows (header, image)
-  // 3. Only reference existing elements, don't clone or create new
+  // Find the image or any meaningful content that represents a column
+  // In this HTML, it is the <picture> (or <img>)
+  let columns = [];
 
-  // Find .hero.block inside this section
-  const heroBlock = element.querySelector('.hero.block');
-  if (!heroBlock) return;
+  // Query all <picture> or <img> elements under element
+  const pictures = Array.from(element.querySelectorAll('picture'));
+  const imgs = Array.from(element.querySelectorAll('img'));
 
-  // Find the image (picture or img) inside the block, robust to a variety of wrappers
-  let imgEl = null;
-  // Look for any descendant image or picture
-  imgEl = heroBlock.querySelector('picture') || heroBlock.querySelector('img');
-
-  // If not found, fallback: search for img anywhere in descendants
-  if (!imgEl) {
-    imgEl = heroBlock.querySelector('img');
+  // Prefer picture elements, otherwise use images
+  if (pictures.length > 0) {
+    columns = pictures;
+  } else if (imgs.length > 0) {
+    columns = imgs;
   }
 
-  // If no image is found, fallback to an empty cell
-  const headerRow = ['Columns (columns20)'];
-  const cells = [
-    headerRow,
-    [imgEl ? imgEl : '']
-  ];
+  // Fallback: if there are no images, look for non-empty divs as columns
+  if (columns.length === 0) {
+    const innerDivs = Array.from(element.querySelectorAll('div')).filter(div => div.textContent.trim().length > 0);
+    if (innerDivs.length > 0) {
+      columns = innerDivs;
+    }
+  }
 
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  // If still nothing, fallback to the element itself
+  if (columns.length === 0) {
+    columns = [element];
+  }
+
+  const headerRow = ['Columns (columns20)'];
+  const contentRow = columns;
+
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
+
+  element.replaceWith(table);
 }

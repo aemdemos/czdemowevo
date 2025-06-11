@@ -1,34 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The block header, as specified
-  const headerRow = ['Quote (quoteWithAttribution6)'];
+  // Header row as specified
+  const rows = [['Quote (quoteWithAttribution6)']];
 
-  // Find .quote.block inside the given element
-  const quoteDiv = element.querySelector('.quote.block');
-  let quoteContent = '';
-  let attributionContent = '';
+  // Find the innermost div containing the actual quote and attribution
+  let quoteBlock = element.querySelector('.quote.block');
+  if (!quoteBlock) quoteBlock = element;
 
-  if (quoteDiv) {
-    // Find the innermost div containing the content
-    // Sometimes structure can vary, so drill down to get all <p> descendants
-    const ps = quoteDiv.querySelectorAll('p');
-    if (ps.length > 0) {
-      // The quote is the first paragraph
-      quoteContent = ps[0];
-    }
-    if (ps.length > 1) {
-      // Attribution/signature is the second (or next) paragraph
-      attributionContent = ps[1];
-    }
+  // Descend until we find the deepest div with children that are not divs
+  let workingDiv = quoteBlock;
+  while (
+    workingDiv &&
+    workingDiv.children.length === 1 &&
+    workingDiv.children[0].tagName === 'DIV'
+  ) {
+    workingDiv = workingDiv.children[0];
   }
 
-  // Table rows per the block definition
-  const cells = [
-    headerRow,
-    [quoteContent || ''],
-    [attributionContent || '']
-  ];
+  // Now, workingDiv should contain the quote and possibly attribution
+  // Collect all direct child elements
+  const children = Array.from(workingDiv.children);
+  if (children.length === 0) {
+    // Fallback: use all childNodes if no element children (edge case)
+    rows.push([Array.from(workingDiv.childNodes)]);
+    rows.push(['']);
+  } else if (children.length === 1) {
+    rows.push([children[0]]);
+    rows.push(['']);
+  } else {
+    // Most likely: first child is quote, second is attribution or image/signature
+    rows.push([children[0]]);
+    rows.push([children[1]]);
+  }
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

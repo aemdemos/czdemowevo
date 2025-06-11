@@ -1,39 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the active quotecard (the visible/current quote)
-  const quotecard = element.querySelector('.quote-carousel .quotecard.active');
-  if (!quotecard) return;
+  const headerRow = ['Quote (quoteWithAttribution7)'];
+  const activeCard = element.querySelector('.quotecard.active');
+  if (!activeCard) return;
 
-  // Extract the quote text
-  const quote = quotecard.querySelector('p');
+  // Get the quote <p>
+  const quoteP = activeCard.querySelector('p');
+  const quoteCell = quoteP ? [quoteP] : [document.createElement('div')];
 
-  // Extract attribution info (plain text, no <li> tags)
-  const aphorist = quotecard.querySelector('.aphorist');
-  let attributionCell = '';
+  // Attribution (plain text, with source in <em> if available)
+  let attributionCell;
+  const aphorist = activeCard.querySelector('.aphorist');
   if (aphorist) {
     const lis = aphorist.querySelectorAll('ul li');
-    let name = '';
-    let source = '';
-    if (lis.length > 0) name = lis[0].textContent.trim();
-    if (lis.length > 1) source = lis[1].textContent.trim();
-    if (name || source) {
-      const fragment = document.createDocumentFragment();
-      if (name) fragment.append(document.createTextNode(name));
-      if (source) {
-        if (name) fragment.append(document.createTextNode(', '));
-        const em = document.createElement('em');
-        em.textContent = source;
-        fragment.append(em);
-      }
-      attributionCell = fragment;
+    let name = lis[0] ? lis[0].textContent.trim() : '';
+    let source = lis[1] ? lis[1].textContent.trim() : '';
+    const attributionDiv = document.createElement('div');
+    if (name && source) {
+      // Compose as: Name, <em>Source</em>
+      attributionDiv.append(document.createTextNode(name + ', '));
+      const em = document.createElement('em');
+      em.textContent = source;
+      attributionDiv.append(em);
+    } else if (name) {
+      attributionDiv.textContent = name;
+    } else if (source) {
+      const em = document.createElement('em');
+      em.textContent = source;
+      attributionDiv.append(em);
+    } else {
+      attributionDiv.textContent = '';
     }
+    attributionCell = [attributionDiv];
+  } else {
+    attributionCell = [document.createElement('div')];
   }
 
   const cells = [
-    ['Quote (quoteWithAttribution7)'],
-    [quote],
-    [attributionCell]
+    headerRow,
+    quoteCell,
+    attributionCell,
   ];
+
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

@@ -1,13 +1,13 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const headerRow = ['Show disclaimers (modal18)'];
-  // Per the example, always use a static link text and href
-  const a = document.createElement('a');
-  a.href = '/modals/sample-disclaimer';
-  a.textContent = 'Show disclaimers';
+  // Always produce a table with the correct header and a single link as in the markdown example
+  const link = document.createElement('a');
+  link.href = '/modals/sample-disclaimer';
+  link.textContent = 'Show disclaimers';
+
   const cells = [
-    headerRow,
-    [a],
+    ['Show disclaimers (modal18)'],
+    [link]
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
