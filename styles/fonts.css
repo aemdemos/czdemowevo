@@ -1,17 +1,17 @@
 
 @font-face {
-  font-family: proxima-nova-condensed;      
-  src: url('../fonts/proxima-nova-condensed-700-normal.woff2') format('woff2');
-  font-weight: 700;
+  font-family: "HCo Ringside Extra Wide";      
+  src: url('../fonts/hco-ringside-extra-wide-900-normal.woff2') format('woff2');
+  font-weight: 900;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0-10FFFF;
 }
 
 @font-face {
-  font-family: "HCo Ringside Extra Wide";      
-  src: url('../fonts/hco-ringside-extra-wide-900-normal.woff2') format('woff2');
-  font-weight: 900;
+  font-family: proxima-nova-condensed;      
+  src: url('../fonts/proxima-nova-condensed-700-normal.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0-10FFFF;
