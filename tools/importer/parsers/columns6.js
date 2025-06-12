@@ -1,28 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as in example
-  const header = ['Columns (columns6)'];
-  
-  // Find the container with the columns
-  const recipes = element.querySelector('.featured-recipes');
+  // Find the recipes block
+  const block = element.querySelector('.featured.block.special');
+  if (!block) return;
+  const recipes = block.querySelector('.featured-recipes');
   if (!recipes) return;
-
-  // Get the left column element
+  // Get left and right columns
   const leftCol = recipes.querySelector('.featured-recipes-left');
-  // Get the right column element
   const rightCol = recipes.querySelector('.featured-recipes-right');
-  if (!leftCol || !rightCol) return;
-
-  // Reference the actual leftCol and rightCol elements, so all semantic structure and images are preserved
-  // This is robust to changes in the number of children inside each column
-  
-  // Build the table structure
+  function getRecipeDivs(parent) {
+    if (!parent) return [];
+    return Array.from(parent.querySelectorAll(':scope > .featured-recipe'));
+  }
+  const leftRecipes = getRecipeDivs(leftCol); // 1
+  const rightRecipes = getRecipeDivs(rightCol); // 3
+  // Left column: first featured recipe (as a block)
+  let leftContent = '';
+  if (leftRecipes[0]) {
+    const a = leftRecipes[0].querySelector('a');
+    leftContent = a ?? leftRecipes[0];
+  }
+  // Right column: group all 3 right recipes in order, as block content
+  const rightContent = rightRecipes.map(rr => {
+    const a = rr.querySelector('a');
+    return a ?? rr;
+  });
+  // Compose table with single-column header, two-column content row
   const cells = [
-    header,
-    [leftCol, rightCol],
+    ['Columns (columns6)'],
+    [leftContent, rightContent]
   ];
-  
-  // Create and replace
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

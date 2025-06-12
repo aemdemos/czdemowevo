@@ -1,40 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the callout block containing the hero content
-  const calloutBlock = element.querySelector('.callout.block');
-  if (!calloutBlock) return;
+  // Find the .callout.block element
+  const callout = element.querySelector('.callout.block');
+  if (!callout) return;
 
-  const children = Array.from(calloutBlock.children);
-  let backgroundImg = null;
+  // Collect all direct child elements of .callout.block
+  const children = Array.from(callout.children);
+
+  // Find the first <picture> (background image)
+  let backgroundImage = null;
+  // Find the first heading (h1-h6)
   let heading = null;
-  const row3Content = [];
-  let foundBackground = false;
-  let foundHeading = false;
 
-  // categorise children: first picture as background, first heading as hero heading, rest into row3Content
-  children.forEach((child) => {
-    if (!foundBackground && child.tagName.toLowerCase() === 'picture') {
-      backgroundImg = child;
-      foundBackground = true;
-    } else if (!foundHeading && /^h[1-6]$/i.test(child.tagName)) {
-      heading = child;
-      foundHeading = true;
-    } else {
-      row3Content.push(child);
+  for (let i = 0; i < children.length; i++) {
+    const el = children[i];
+    if (!backgroundImage && el.tagName === 'PICTURE') {
+      backgroundImage = el;
+      continue;
     }
-  });
+    if (!heading && /^H[1-6]$/.test(el.tagName)) {
+      heading = el;
+      continue;
+    }
+  }
 
-  // Row 3 is the heading and then all additional content (e.g., images after heading)
-  const row3 = [];
-  if (heading) row3.push(heading);
-  row3.push(...row3Content);
-
+  // Build the hero block table: header, background image, heading
   const cells = [
     ['Hero'],
-    [backgroundImg || ''],
-    [row3.length ? row3 : '']
+    [backgroundImage ? backgroundImage : ''],
+    [heading ? heading : '']
   ];
-
+  
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

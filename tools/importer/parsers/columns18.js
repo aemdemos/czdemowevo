@@ -1,32 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as specified in the example
-  const headerRow = ['Columns'];
+  // Header row exactly as specified
+  const headerRow = ['Columns (columns18)'];
 
-  // The steps block contains multiple columns, each in a direct child div
-  // Each column: <div> <div.step><span>...</span></div> <p>Title</p> <p>Text</p> </div>
-  let stepsBlock = element.querySelector('.steps.block');
-  if (!stepsBlock) stepsBlock = element;
+  // Find the steps block (should be 1 direct child of wrapper)
+  const stepsBlock = element.querySelector('.steps.block');
+  if (!stepsBlock) {
+    // Failsafe: fallback to main element if not found
+    return;
+  }
 
-  // Get all columns as direct children of the stepsBlock
-  const columnDivs = Array.from(stepsBlock.querySelectorAll(':scope > div'));
+  // Each step column is a direct child of stepsBlock
+  const stepColumnDivs = Array.from(stepsBlock.children);
 
-  // Edge case: if there is no column, fallback to an empty row
-  const columnCells = columnDivs.length > 0 ? columnDivs.map((col) => {
-    // Each col wraps a single inner div, which contains the step structure
-    let inner = col.firstElementChild;
-    // Fallback: if structure is different, use the col itself
-    if (!inner) inner = col;
+  // Extract the content for each step column
+  const stepCells = stepColumnDivs.map((colDiv) => {
+    // We want to retain the inner structure and semantics of each step column
+    // Each colDiv can be directly referenced as its cell content
+    // This makes the function robust to additional/less p's, different structures, etc.
+    // Just reference the inner div (which is the real step content)
+    const inner = colDiv.firstElementChild || colDiv;
     return inner;
-  }) : [''];
+  });
 
-  // Build the table: header and one row with all columns
-  const tableRows = [
-    headerRow,
-    columnCells
-  ];
+  // Assemble the table rows
+  const rows = [headerRow, stepCells];
 
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
-
+  // Create and replace
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

@@ -1,37 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the columns block inside the columns-wrapper
-  const columnsBlock = element.querySelector('.columns.block');
-  if (!columnsBlock) return;
-
-  // Find immediate child columns
-  const columnDivs = Array.from(columnsBlock.querySelectorAll(':scope > div'));
-
-  // Defensive: If not exactly two columns, abort (per structure)
-  if (columnDivs.length !== 2) return;
-
-  // Left column: content (possibly with extra wrappers)
-  let leftCol = columnDivs[0];
-  // Drill down to the deepest div that contains the real content
-  while (
-    leftCol &&
-    leftCol.children.length === 1 &&
-    leftCol.firstElementChild &&
-    leftCol.firstElementChild.tagName === 'DIV'
-  ) {
-    leftCol = leftCol.firstElementChild;
+  // Find the real columns block inside the wrapper (may be the current element)
+  let columnsBlock = element;
+  if (!columnsBlock.classList.contains('block')) {
+    columnsBlock = element.querySelector('.block');
+  }
+  if (!columnsBlock) {
+    // fallback: just use the initial element
+    columnsBlock = element;
   }
 
-  // Right column: may have class 'columns-img-col', just use whole node
-  let rightCol = columnDivs[1];
+  // Collect direct child divs - these are the columns
+  const columns = Array.from(columnsBlock.querySelectorAll(':scope > div'));
+  // Defensive: only use columns, ignore wrappers etc
 
-  // Compose the header row and content row
-  const cells = [
-    ['Columns (columns5)'],
-    [leftCol, rightCol]
-  ];
+  // For each column, grab the main block content
+  const colCells = columns.map(col => {
+    // If there's an image column, use the picture or image
+    if (col.classList.contains('columns-img-col')) {
+      // Use the first <picture> or <img> inside
+      const pic = col.querySelector('picture, img');
+      return pic || col;
+    }
+    // else, just return the whole column content, preserving all structure
+    return col;
+  });
 
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Block name as header, matching the requested header exactly
+  const headerRow = ['Columns (columns5)'];
+  // Build the block table: header + 1 row with all columns
+  const tableRows = [headerRow, colCells];
+  const block = WebImporter.DOMUtils.createTable(tableRows, document);
+  // Replace the wrapper element with the new table block
+  element.replaceWith(block);
 }

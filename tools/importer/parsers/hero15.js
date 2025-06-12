@@ -1,53 +1,50 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   // Get background image from data-background-image attribute
-  const bgImageUrl = element.getAttribute('data-background-image');
-  let bgImgElem = '';
-  if (bgImageUrl) {
-    bgImgElem = document.createElement('img');
-    bgImgElem.src = bgImageUrl;
-    bgImgElem.alt = '';
+  const bgUrl = element.getAttribute('data-background-image');
+  let bgImgEl = null;
+  if (bgUrl) {
+    bgImgEl = document.createElement('img');
+    bgImgEl.src = bgUrl;
+    bgImgEl.alt = '';
   }
 
-  // Find the text column
-  const textCol = element.querySelector('.background-image-column');
-  let heading = null;
-  let subheading = null;
-  let cta = null;
-  if (textCol) {
-    heading = textCol.querySelector('h1,h2,h3,h4,h5,h6');
-    // The first p that is NOT a button-container
-    const ps = textCol.querySelectorAll('p');
-    for (const p of ps) {
-      if (!p.classList.contains('button-container')) {
-        subheading = p;
+  // Find the column that contains the headline and text content
+  const colsBlock = element.querySelector('.columns.block');
+  let contentCol = null;
+  if (colsBlock) {
+    const cols = colsBlock.querySelectorAll(':scope > div');
+    for (const col of cols) {
+      if (col.querySelector('h1, h2, h3, h4, h5, h6')) {
+        contentCol = col;
         break;
       }
     }
-    const btnContainer = textCol.querySelector('p.button-container');
-    if (btnContainer) {
-      cta = btnContainer.querySelector('a');
-    }
+    if (!contentCol && cols.length > 1) contentCol = cols[1];
+    if (!contentCol && cols.length === 1) contentCol = cols[0];
   }
 
-  // Prepare the content row: heading, subheading, cta (with line breaks as needed)
-  const contentParts = [];
-  if (heading) contentParts.push(heading);
-  if (subheading) {
-    if (contentParts.length) contentParts.push(document.createElement('br'));
-    contentParts.push(subheading);
-  }
-  if (cta) {
-    if (contentParts.length) contentParts.push(document.createElement('br'));
-    contentParts.push(cta);
+  // Gather content for the third row
+  let heroContent = [];
+  if (contentCol) {
+    // Heading
+    const heading = contentCol.querySelector('h1, h2, h3, h4, h5, h6');
+    if (heading) heroContent.push(heading);
+    // All paragraphs except button-container
+    const paragraphs = Array.from(contentCol.querySelectorAll('p:not(.button-container)'));
+    heroContent.push(...paragraphs);
+    // Call-to-action button
+    const buttonContainer = contentCol.querySelector('p.button-container');
+    if (buttonContainer) heroContent.push(buttonContainer);
   }
 
-  // Compose table as per Hero spec
-  const rows = [
+  // Build the required table
+  const table = WebImporter.DOMUtils.createTable([
     ['Hero'],
-    [bgImgElem || ''],
-    [contentParts.length ? contentParts : '']
-  ];
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+    [bgImgEl ? bgImgEl : ''],
+    [heroContent.length ? heroContent : '']
+  ], document);
+  
+  // Replace the original element with the new table
   element.replaceWith(table);
 }
