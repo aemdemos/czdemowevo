@@ -1,24 +1,28 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // To avoid HierarchyRequestError, do NOT insert an element into the table that is still part of the DOM
-  // Instead, move all children to a new container that can be safely placed in the table
+  // According to the example and the HTML provided:
+  // The example Hero block can have up to 3 rows:
+  //   1. Header: 'Hero'
+  //   2. Background image (optional)
+  //   3. Content: heading, subheading, CTA (optional)
+  // This HTML contains only a 'Powered by MikMak' logo bar, no images or heading content for the hero.
 
-  // Header row matches example
+  // 1. Table header must be 'Hero' (exactly as in example)
   const headerRow = ['Hero'];
 
-  // Create a container for the logo strip content
-  const container = document.createElement('div');
-  while (element.firstChild) {
-    container.appendChild(element.firstChild);
-  }
+  // 2. There is no background image provided for hero in this section, so row 2 is empty
+  const backgroundImageRow = [''];
 
-  // Build table: header, logo strip, empty row
-  const cells = [
+  // 3. There is no heading/subheading/cta in this element, so row 3 is empty
+  const contentRow = [''];
+
+  // Create the table using the structure from the example
+  const table = WebImporter.DOMUtils.createTable([
     headerRow,
-    [container],
-    ['']
-  ];
+    backgroundImageRow,
+    contentRow
+  ], document);
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Replace the element with the structured table
   element.replaceWith(table);
 }

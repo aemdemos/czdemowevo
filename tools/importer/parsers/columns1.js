@@ -1,43 +1,53 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main block node (should be .columns.block)
-  const block = element.querySelector('.columns.block');
-  if (!block) return;
+  // Find the .columns.block inside the wrapper
+  const columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) return;
 
-  // Get the direct children of the main columns block
-  const blockColumnsWrapper = block.querySelector(':scope > div');
-  if (!blockColumnsWrapper) return;
-
-  // The columns are direct children of this wrapper
-  const columns = Array.from(blockColumnsWrapper.children);
-  if (columns.length < 2) return;
-
-  // The left (content) and right (image) columns
-  const leftCol = columns[0];
-  const rightCol = columns[1];
-
-  // The rightCol may have a .columns-img-col wrapper div
-  let imageCell = rightCol;
-  const imgColDiv = rightCol.querySelector('.columns-img-col');
-  if (imgColDiv) {
-    imageCell = imgColDiv;
+  // Get immediate children of the columns block (should be the two columns)
+  const colWrappers = Array.from(columnsBlock.children);
+  if (colWrappers.length < 2) return;
+  
+  // For the left column, drill down to the deepest single-child div
+  let leftCol = colWrappers[0];
+  let prevLeftCol = null;
+  while (
+    leftCol &&
+    leftCol.children.length === 1 &&
+    leftCol.firstElementChild &&
+    leftCol.tagName === 'DIV'
+  ) {
+    prevLeftCol = leftCol;
+    leftCol = leftCol.firstElementChild;
+  }
+  // Defensive: if we drill down too far, back up one level
+  if (leftCol && leftCol.tagName !== 'DIV' && prevLeftCol) {
+    leftCol = prevLeftCol;
   }
 
-  // If "columns-img-col" exists, use its picture/img, else use rightCol's picture/img
-  let imageEl = imageCell.querySelector('picture, img');
-  if (!imageEl) {
-    // fallback: if nothing found, just include imageCell as-is
-    imageEl = imageCell;
+  // For the right column (image), typically .columns-img-col, but fallback to grilling down
+  let rightCol = colWrappers[1];
+  let prevRightCol = null;
+  while (
+    rightCol &&
+    rightCol.children.length === 1 &&
+    rightCol.firstElementChild &&
+    rightCol.tagName === 'DIV'
+  ) {
+    prevRightCol = rightCol;
+    rightCol = rightCol.firstElementChild;
+  }
+  if (rightCol && rightCol.tagName !== 'DIV' && prevRightCol) {
+    rightCol = prevRightCol;
   }
 
-  // Compose the header row as in the example
+  // Build the table for the block
   const headerRow = ['Columns (columns1)'];
-  // Compose the content row with the left and right columns
-  const contentRow = [leftCol, imageEl];
-
-  // Build the table
-  const cells = [headerRow, contentRow];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  // Replace the original element
+  const contentRow = [leftCol, rightCol];
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
+  
   element.replaceWith(table);
 }

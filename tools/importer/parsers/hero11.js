@@ -1,53 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract the hero block
-  const heroBlock = element.querySelector('.hero.block');
+  // Locate main hero content
+  const heroWrapper = element.querySelector('.hero-wrapper');
+  if (!heroWrapper) return;
+  const heroBlock = heroWrapper.querySelector('.hero.block');
+  if (!heroBlock) return;
+  const left = heroBlock.querySelector('.left');
+  const right = heroBlock.querySelector('.right');
 
-  // Prepare image row content (second row in block)
-  let imageCellContent = '';
-  if (heroBlock) {
-    const right = heroBlock.querySelector('.right');
-    if (right) {
-      const picture = right.querySelector('picture');
-      if (picture) {
-        imageCellContent = picture;
-      }
-    }
-  }
+  // Header row (must be exactly 'Hero')
+  const headerRow = ['Hero'];
 
-  // Prepare content row (third row in block): headings, subheading, CTA, footer
-  const contentCellElements = [];
-  if (heroBlock) {
-    const left = heroBlock.querySelector('.left');
-    if (left) {
-      // Add h1 if present
-      const h1 = left.querySelector('h1');
-      if (h1) contentCellElements.push(h1);
-      // Add h2 if present
-      const h2 = left.querySelector('h2');
-      if (h2) contentCellElements.push(h2);
-      // Add CTA link if present
-      const a = left.querySelector('a');
-      if (a) contentCellElements.push(a);
-    }
+  // Image row (only the <img> element from <picture> if present)
+  let imageCell = '';
+  if (right) {
+    const img = right.querySelector('img');
+    if (img) imageCell = img;
   }
-  // Add footer content (usually h3)
+  const imageRow = [imageCell];
+
+  // Content row: all text & button from left, plus .hero-footer
+  const content = [];
+  if (left) {
+    const h1 = left.querySelector('h1');
+    if (h1) content.push(h1);
+    const h2 = left.querySelector('h2');
+    if (h2) content.push(h2);
+    const a = left.querySelector('a');
+    if (a) content.push(a);
+  }
   const heroFooter = element.querySelector('.hero-footer');
   if (heroFooter) {
-    Array.from(heroFooter.children).forEach(child => contentCellElements.push(child));
+    Array.from(heroFooter.children).forEach((el) => content.push(el));
   }
+  const contentRow = [content.length === 1 ? content[0] : (content.length > 1 ? content : '')];
 
-  // Build table rows as per spec (header, image, content)
-  const rows = [];
-  // 1. Header row: block name, exactly as in the example
-  rows.push(['Hero']);
-  // 2. Image row (may be empty)
-  rows.push([imageCellContent || '']);
-  // 3. Content row (may be empty)
-  rows.push([contentCellElements.length ? contentCellElements : '']);
-
-  // Create the table block
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace the original element with our block
-  element.replaceWith(block);
+  // Compose and replace
+  const cells = [headerRow, imageRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

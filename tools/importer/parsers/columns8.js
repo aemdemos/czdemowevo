@@ -1,35 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find all direct child divs of the columns block (should be col1 and col2)
-  const columns = Array.from(element.querySelectorAll(':scope > div'));
-  
-  // Defensive fallback in case of missing columns
-  const col1Wrapper = columns[0] || document.createElement('div');
-  const col2Wrapper = columns[1] || document.createElement('div');
+  // Find the columns block within the wrapper
+  const columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) return;
 
-  // For col1, if there are extra divs inside, flatten to the innermost content
-  let col1 = col1Wrapper;
-  // If immediate child is a div and contains only one child, drill down
-  while (col1.children.length === 1 && col1.firstElementChild && col1.firstElementChild.tagName === 'DIV') {
-    col1 = col1.firstElementChild;
+  // Get all immediate child divs of the columns block (columns)
+  const cols = Array.from(columnsBlock.querySelectorAll(':scope > div'));
+  if (cols.length < 2) return;
+
+  // Reference the first and second column containers
+  const firstCol = cols[0];
+  const secondCol = cols[1];
+
+  // For the second column, use the picture if present, otherwise the img
+  let imageEl = secondCol.querySelector('picture');
+  if (!imageEl) {
+    imageEl = secondCol.querySelector('img');
   }
+  // If neither found, leave the cell empty
 
-  // For col2, display the image (picture or img)
-  let col2 = col2Wrapper;
-  // If it's an image column, use the picture or img inside
-  if (col2.classList.contains('columns-img-col')) {
-    const picOrImg = col2.querySelector('picture, img');
-    if (picOrImg) {
-      col2 = picOrImg;
-    }
-  }
+  // Table structure per spec: header should be exactly
+  const headerRow = ['Columns (columns8)'];
+  const contentRow = [firstCol, imageEl].map((cell) => cell || '');
 
-  // Build the table: header row (1 cell), content row (2 cells)
-  const cells = [
-    ['Columns (columns8)'],
-    [col1, col2]
-  ];
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

@@ -1,50 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get background image from data-background-image attribute
-  const bgUrl = element.getAttribute('data-background-image');
-  let bgImgEl = null;
-  if (bgUrl) {
-    bgImgEl = document.createElement('img');
-    bgImgEl.src = bgUrl;
-    bgImgEl.alt = '';
+  // 1. Table header row from example markdown
+  const headerRow = ['Hero'];
+
+  // 2. Second row: Background image from data-background-image attribute (if present)
+  let bgImgEl = '';
+  const bgImgUrl = element.getAttribute('data-background-image');
+  if (bgImgUrl) {
+    const img = document.createElement('img');
+    img.src = bgImgUrl;
+    img.alt = '';
+    bgImgEl = img;
   }
 
-  // Find the column that contains the headline and text content
-  const colsBlock = element.querySelector('.columns.block');
-  let contentCol = null;
-  if (colsBlock) {
-    const cols = colsBlock.querySelectorAll(':scope > div');
-    for (const col of cols) {
-      if (col.querySelector('h1, h2, h3, h4, h5, h6')) {
-        contentCol = col;
-        break;
-      }
-    }
-    if (!contentCol && cols.length > 1) contentCol = cols[1];
-    if (!contentCol && cols.length === 1) contentCol = cols[0];
+  // 3. Third row: headline, paragraphs, cta button (all from the right/column with .background-image-column)
+  let contentCell = [];
+  const bgImgColumn = element.querySelector('.background-image-column');
+  if (bgImgColumn) {
+    // Headline (h2)
+    const h2 = bgImgColumn.querySelector('h2');
+    if (h2) contentCell.push(h2);
+    // Paragraphs that are not button container
+    const ps = bgImgColumn.querySelectorAll('p:not(.button-container)');
+    ps.forEach((p) => contentCell.push(p));
+    // CTA/Button
+    const btnContainer = bgImgColumn.querySelector('.button-container');
+    if (btnContainer) contentCell.push(btnContainer);
   }
 
-  // Gather content for the third row
-  let heroContent = [];
-  if (contentCol) {
-    // Heading
-    const heading = contentCol.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) heroContent.push(heading);
-    // All paragraphs except button-container
-    const paragraphs = Array.from(contentCol.querySelectorAll('p:not(.button-container)'));
-    heroContent.push(...paragraphs);
-    // Call-to-action button
-    const buttonContainer = contentCol.querySelector('p.button-container');
-    if (buttonContainer) heroContent.push(buttonContainer);
-  }
+  // Structure rows as per the markdown example
+  const cells = [
+    headerRow,
+    [bgImgEl],
+    [contentCell],
+  ];
+  const block = WebImporter.DOMUtils.createTable(cells, document);
 
-  // Build the required table
-  const table = WebImporter.DOMUtils.createTable([
-    ['Hero'],
-    [bgImgEl ? bgImgEl : ''],
-    [heroContent.length ? heroContent : '']
-  ], document);
-  
-  // Replace the original element with the new table
-  element.replaceWith(table);
+  // No section metadata in example, so no <hr> or metadata table
+  element.replaceWith(block);
 }

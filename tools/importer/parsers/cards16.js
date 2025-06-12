@@ -1,44 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const block = element.querySelector('.quote-carousel.block');
-  if (!block) return;
-  const quotecards = Array.from(block.querySelectorAll(':scope > .quotecard'));
-  const rows = [];
-  // Add header row exactly as specified
-  rows.push(['Cards (cards16)']);
-  quotecards.forEach(card => {
-    // IMAGE CELL
-    let imgCell = null;
+  const quoteCarousel = element.querySelector('.quote-carousel');
+  if (!quoteCarousel) return;
+  const cards = Array.from(quoteCarousel.querySelectorAll('.quotecard'));
+
+  const rows = [['Cards (cards16)']];
+
+  cards.forEach(card => {
+    // First cell: main image (keep <picture> if present)
+    let imgElem = null;
     const aphorist = card.querySelector('.aphorist');
     if (aphorist) {
-      const picture = aphorist.querySelector('picture');
-      if (picture) imgCell = picture;
+      imgElem = aphorist.querySelector('picture') || aphorist.querySelector('img');
     }
-    // TEXT CELL as a flat array (no div, no span)
-    const textCell = [];
-    // Add quote paragraph
-    const quotePara = card.querySelector('p');
-    if (quotePara) textCell.push(quotePara);
-    // Add name (bold) and org below
+    // Second cell: Quote (<p>), then <br>, <strong>Name</strong>, <br>, Place (plain text)
+    const textParts = [];
+    const quote = card.querySelector('p');
+    if (quote) {
+      textParts.push(quote);
+    }
     if (aphorist) {
       const ul = aphorist.querySelector('ul');
       if (ul) {
         const lis = ul.querySelectorAll('li');
-        if (lis.length > 0) {
-          textCell.push(document.createElement('br'));
-          const nameStrong = document.createElement('strong');
-          nameStrong.textContent = lis[0].textContent;
-          textCell.push(nameStrong);
+        if (lis[0]) {
+          textParts.push(document.createElement('br'));
+          const strong = document.createElement('strong');
+          strong.textContent = lis[0].textContent;
+          textParts.push(strong);
         }
-        if (lis.length > 1) {
-          textCell.push(document.createElement('br'));
-          textCell.push(document.createTextNode(lis[1].textContent));
+        if (lis[1]) {
+          textParts.push(document.createElement('br'));
+          textParts.push(document.createTextNode(lis[1].textContent));
         }
       }
     }
     rows.push([
-      imgCell,
-      textCell
+      imgElem,
+      textParts
     ]);
   });
   const table = WebImporter.DOMUtils.createTable(rows, document);
