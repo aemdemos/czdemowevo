@@ -1,42 +1,58 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as in example
+  // Block name header matches the example
   const headerRow = ['Accordion (accordion12)'];
-  const rows = [];
 
-  // Find the main block (could be passed the wrapper or block itself)
-  let faqBlock = element;
-  if (faqBlock.classList.contains('faq-inplace-wrapper')) {
-    const block = faqBlock.querySelector('.faq-inplace.block');
-    if (block) faqBlock = block;
-  }
+  // Find the actual FAQ block
+  const block = element.querySelector('.faq-inplace.block');
+  if (!block) return;
 
-  // Get the two columns containing the FAQ items
-  const cols = Array.from(faqBlock.children).filter(
-    (c) => c.children.length > 0 && Array.from(c.children).every(kid => kid.children.length === 2)
-  );
+  // The block contains two columns (each is a <div>)
+  const columns = Array.from(block.children).filter(child => child.nodeType === 1);
+  // Defensive: ensure we have two columns, but allow less
+  const col1 = columns[0] || null;
+  const col2 = columns[1] || null;
 
-  // Fallback: if not found, treat block as single column
-  const columns = cols.length ? cols : [faqBlock];
+  // Gather accordion rows from both columns
+  // We'll need to make sure the rows are zipped by index
+  const col1Items = col1 ? Array.from(col1.children).filter(i => i.nodeType === 1) : [];
+  const col2Items = col2 ? Array.from(col2.children).filter(i => i.nodeType === 1) : [];
+  // Compute max rows to allow for uneven columns
+  const maxRows = Math.max(col1Items.length, col2Items.length);
 
-  // For each column, process each accordion item
-  columns.forEach((col) => {
-    Array.from(col.children).forEach((itemDiv) => {
-      // Each itemDiv should have exactly 2 children: question, answer
-      if (itemDiv.children.length === 2) {
-        const title = itemDiv.children[0];
-        const content = itemDiv.children[1];
-        rows.push([title, content]);
+  const rows = [headerRow];
+
+  for (let i = 0; i < maxRows; i++) {
+    const leftItem = col1Items[i];
+    const rightItem = col2Items[i];
+    // For each, extract the question and answer, preserving existing elements
+    let leftCell = '';
+    let rightCell = '';
+    if (leftItem) {
+      // Each accordion Q&A is two direct children: question and answer
+      const kids = Array.from(leftItem.children).filter(el => el.nodeType === 1);
+      if (kids.length >= 2) {
+        leftCell = [kids[0], kids[1]];
+      } else if (kids.length === 1) {
+        leftCell = [kids[0]];
+      } else {
+        leftCell = '';
       }
-    });
-  });
-
-  // Only build if at least one item parsed (besides header)
-  if (rows.length) {
-    const table = WebImporter.DOMUtils.createTable([
-      headerRow,
-      ...rows
-    ], document);
-    element.replaceWith(table);
+    }
+    if (rightItem) {
+      const kids = Array.from(rightItem.children).filter(el => el.nodeType === 1);
+      if (kids.length >= 2) {
+        rightCell = [kids[0], kids[1]];
+      } else if (kids.length === 1) {
+        rightCell = [kids[0]];
+      } else {
+        rightCell = '';
+      }
+    }
+    rows.push([leftCell, rightCell]);
   }
+
+  // Create table and replace
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

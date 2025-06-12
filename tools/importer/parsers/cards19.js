@@ -1,32 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
   const headerRow = ['Cards (cards19)'];
-
-  // Select only visible cards
-  const cards = Array.from(element.querySelectorAll(':scope > .recipe')).filter(card => {
-    const style = card.getAttribute('style');
-    return !(style && /display\s*:\s*none/i.test(style));
-  });
+  // Only consider visible cards
+  const cards = Array.from(element.querySelectorAll(':scope > .recipe'))
+    .filter(card => {
+      const style = card.getAttribute('style') || '';
+      return !/display\s*:\s*none/.test(style);
+    });
 
   const rows = cards.map(card => {
-    // Get the image element (reference the actual <img>, do not clone)
-    const img = card.querySelector('picture img');
-    const imgCell = img || '';
-
-    // Get the title text (from <span>) and wrap it in <strong> (no link, no div)
-    const span = card.querySelector('span');
-    let textCell = '';
-    if (span && span.textContent.trim()) {
+    // Get the image (inside <picture> in <a>)
+    const a = card.querySelector('a');
+    const picture = a ? a.querySelector('picture') : null;
+    // Get the title text (inside <span> inside <a>)
+    const span = a ? a.querySelector('span') : null;
+    let textCell;
+    if (span) {
       const strong = document.createElement('strong');
-      strong.textContent = span.textContent.trim();
+      strong.textContent = span.textContent;
       textCell = strong;
+    } else {
+      textCell = document.createTextNode('');
     }
-    return [imgCell, textCell];
+    return [picture, textCell];
   });
 
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    ...rows,
-  ], document);
+  const tableArr = [headerRow, ...rows];
+  const table = WebImporter.DOMUtils.createTable(tableArr, document);
   element.replaceWith(table);
 }

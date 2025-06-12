@@ -1,40 +1,59 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  const featuredBlock = element.querySelector('.featured.block, .featured.plain.block');
+  // Find block with cards
+  const featuredBlock = element.querySelector('.featured.block, .featured');
   if (!featuredBlock) return;
-  const featuredRecipes = featuredBlock.querySelector('.featured-recipes');
-  if (!featuredRecipes) return;
+  const recipes = Array.from(featuredBlock.querySelectorAll('.featured-recipe'));
+  if (recipes.length === 0) return;
 
-  const cardNodes = Array.from(featuredRecipes.querySelectorAll(':scope > .featured-recipe'));
-  const rows = [['Cards (cards9)']];
+  const rows = [['Cards (cards9)']]; // Header row as required
 
-  cardNodes.forEach((card) => {
-    // CTA card (last card, with a button and a picture)
-    if (card.classList.contains('button-container')) {
-      // The picture is the image, the button is the call to action
-      const pic = card.querySelector('picture');
-      const btn = card.querySelector('a.button');
-      if (pic && btn) {
-        // Button in the right column (text/call-to-action cell)
-        rows.push([pic, btn]);
-      }
-    } else {
-      // Regular card: link contains image and span for title
-      const anchor = card.querySelector('a');
-      if (!anchor) return;
-      const pic = anchor.querySelector('picture');
-      const span = anchor.querySelector('span');
-      let titleElem = '';
+  recipes.forEach((recipe) => {
+    // Is last card a button card?
+    const isButtonCard = recipe.classList.contains('button-container');
+    // Image (picture or img)
+    let imgCell = recipe.querySelector('picture,img');
+
+    // Compose text cell
+    let textCellParts = [];
+    // Title (from span inside link or button or fallback)
+    let titleText = '';
+    let link = recipe.querySelector('a[href]:not(.button)');
+    if (link) {
+      let span = link.querySelector('span');
       if (span) {
-        const strong = document.createElement('strong');
-        strong.textContent = span.textContent;
-        titleElem = strong;
+        titleText = span.textContent.trim();
       }
-      rows.push([pic, titleElem]);
     }
+    // Button card: get title from button
+    let button = null;
+    if (isButtonCard) {
+      button = recipe.querySelector('a.button');
+      if (button) {
+        titleText = button.textContent.trim();
+      }
+    }
+    if (titleText) {
+      let strong = document.createElement('strong');
+      strong.textContent = titleText;
+      if (link && !isButtonCard) {
+        let a = document.createElement('a');
+        a.href = link.href;
+        a.appendChild(strong);
+        textCellParts.push(a);
+      } else {
+        textCellParts.push(strong);
+      }
+    }
+    // Button card: include button as CTA
+    if (isButtonCard && button) {
+      textCellParts.push(button);
+    }
+    // Cell is single node or array
+    let textCell = textCellParts.length === 1 ? textCellParts[0] : textCellParts;
+    rows.push([imgCell, textCell]);
   });
 
-  // Create and replace with the table block
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

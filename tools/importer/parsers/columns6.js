@@ -1,35 +1,33 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the recipes block
-  const block = element.querySelector('.featured.block.special');
-  if (!block) return;
-  const recipes = block.querySelector('.featured-recipes');
+  // Find the featured-recipes container
+  const recipes = element.querySelector('.featured-recipes');
   if (!recipes) return;
-  // Get left and right columns
-  const leftCol = recipes.querySelector('.featured-recipes-left');
-  const rightCol = recipes.querySelector('.featured-recipes-right');
-  function getRecipeDivs(parent) {
-    if (!parent) return [];
-    return Array.from(parent.querySelectorAll(':scope > .featured-recipe'));
+
+  // Get left column: featured-recipes-left > .featured-recipe (should be only one)
+  let leftCell = '';
+  const leftWrap = recipes.querySelector('.featured-recipes-left');
+  if (leftWrap) {
+    const leftRecipe = leftWrap.querySelector('.featured-recipe');
+    if (leftRecipe) leftCell = leftRecipe;
   }
-  const leftRecipes = getRecipeDivs(leftCol); // 1
-  const rightRecipes = getRecipeDivs(rightCol); // 3
-  // Left column: first featured recipe (as a block)
-  let leftContent = '';
-  if (leftRecipes[0]) {
-    const a = leftRecipes[0].querySelector('a');
-    leftContent = a ?? leftRecipes[0];
+
+  // Get right column: all .featured-recipe in .featured-recipes-right
+  let rightCell = '';
+  const rightWrap = recipes.querySelector('.featured-recipes-right');
+  if (rightWrap) {
+    const rightRecipes = Array.from(rightWrap.querySelectorAll(':scope > .featured-recipe'));
+    if (rightRecipes.length === 1) {
+      rightCell = rightRecipes[0];
+    } else if (rightRecipes.length > 1) {
+      rightCell = rightRecipes;
+    }
   }
-  // Right column: group all 3 right recipes in order, as block content
-  const rightContent = rightRecipes.map(rr => {
-    const a = rr.querySelector('a');
-    return a ?? rr;
-  });
-  // Compose table with single-column header, two-column content row
-  const cells = [
-    ['Columns (columns6)'],
-    [leftContent, rightContent]
+
+  const tableRows = [
+    ['Columns (columns6)'],  // header, one cell
+    [leftCell, rightCell],   // row, two columns
   ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(table);
 }

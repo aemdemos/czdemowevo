@@ -1,40 +1,19 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The block structure: [ ['Hero'], [Image (optional)], [Text content] ]
+  // Hero block: 1 column, 3 rows - header, image, headline/subheadline/cta (if present)
+  // The provided HTML contains only an image (picture), no actual headline/subheadline/cta
 
-  // Find the quote block
-  const quoteBlock = element.querySelector('.quote.block');
-  let imageCell = '';
-  let contentCell = '';
+  // Get the first <picture> element for the image row (row 2)
+  const picture = element.querySelector('picture');
 
-  if (quoteBlock) {
-    // Find all paragraphs inside the innermost div
-    // Structure: .quote.block > div > div > p, p
-    const innerDivs = quoteBlock.querySelectorAll(':scope > div > div');
-    if (innerDivs.length > 0) {
-      const ps = innerDivs[0].querySelectorAll('p');
-      // The quote text is the first p
-      if (ps.length > 0) {
-        // Use the full element (to preserve formatting if present)
-        contentCell = ps[0];
-      }
-      // The image is in a picture tag inside the second p
-      if (ps.length > 1) {
-        const picture = ps[1].querySelector('picture');
-        if (picture) {
-          imageCell = picture;
-        }
-      }
-    }
-  }
-
-  // Build the table: always 1 column, 3 rows (header, optional image, content)
-  const cells = [
+  // Build the table as per the block requirements
+  const rows = [
     ['Hero'],
-    [imageCell],
-    [contentCell]
+    [picture ? picture : ''],
+    [''] // The third row must be empty because there is no headline/subheadline/cta in this HTML
   ];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Create the table and replace the element
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

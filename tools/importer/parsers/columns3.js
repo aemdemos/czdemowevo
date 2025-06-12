@@ -1,46 +1,64 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the wrapper containing the two primary columns
-  const wrapper = element.querySelector('.pocketguide-wrapper');
-  if (!wrapper) return;
-  const block = wrapper.querySelector('.pocketguide.block');
-  if (!block) return;
-  // Get the first div inside the block (contains our two columns)
-  const blockInner = block.querySelector('div');
-  if (!blockInner) return;
-  // Get the actual row (another div inside blockInner)
-  const row = blockInner.querySelector('div');
-  if (!row) return;
+  // Find the core content block for the columns
+  let contentWrapper = element.querySelector('.pocketguide-wrapper .pocketguide.block > div > div');
+  if (!contentWrapper) {
+    // Fallback: find .pocketguide.block > div > div or > div
+    const block = element.querySelector('.pocketguide.block');
+    if (block) {
+      contentWrapper = block.querySelector('div > div') || block.querySelector('div');
+    }
+  }
+  // Last resort, just use the first 'div' inside .pocketguide.block
+  if (!contentWrapper) {
+    const block = element.querySelector('.pocketguide.block');
+    if (block) {
+      contentWrapper = block.querySelector('div');
+    }
+  }
+  if (!contentWrapper) {
+    // Fallback: use element as is, but this is very unlikely
+    contentWrapper = element;
+  }
 
-  // The row contains children: h2, p (desc), p (button), p (picture)
-  // We want: [leftColElements, rightColElement]
-  const children = Array.from(row.children);
-  // Find the picture column (the p that contains a picture or img)
-  let picIdx = -1;
-  for (let i = 0; i < children.length; i++) {
-    if (children[i].querySelector('picture, img')) {
-      picIdx = i;
-      break;
+  // Collect left and right columns
+  // The left column: everything except the picture (usually h2, p, button)
+  // The right column: the <picture> element (with the img)
+  let picture = null;
+  for (const el of contentWrapper.querySelectorAll('picture')) {
+    picture = el;
+    break;
+  }
+
+  // For left content, collect all children except those that are or contain only a <picture>
+  const leftContent = [];
+  Array.from(contentWrapper.children).forEach(child => {
+    // If this is a <p> that only contains a <picture>, skip
+    if (
+      child.tagName &&
+      child.tagName.toLowerCase() === 'p' &&
+      child.children.length === 1 &&
+      child.firstElementChild &&
+      child.firstElementChild.tagName &&
+      child.firstElementChild.tagName.toLowerCase() === 'picture'
+    ) {
+      return;
     }
-  }
-  // Left column: all children except the picture p
-  const leftColEls = [];
-  for (let i = 0; i < children.length; i++) {
-    if (i !== picIdx) leftColEls.push(children[i]);
-  }
-  // Right column: the <picture> or <img> itself
-  let rightColEl = '';
-  if (picIdx !== -1) {
-    const picEl = children[picIdx].querySelector('picture, img');
-    if (picEl) {
-      rightColEl = picEl;
-    } else {
-      rightColEl = children[picIdx];
+    // If it's a picture directly, skip
+    if (child.tagName && child.tagName.toLowerCase() === 'picture') {
+      return;
     }
-  }
-  // Compose table
+    leftContent.push(child);
+  });
+
+  // Table header must match exactly
   const headerRow = ['Columns (columns3)'];
-  const contentRow = [leftColEls, rightColEl];
-  const table = WebImporter.DOMUtils.createTable([headerRow, contentRow], document);
+  // Table content row: one cell for left, one for right
+  const contentRow = [leftContent, picture];
+  // Only create a single table as in the example markdown
+  const cells = [headerRow, contentRow];
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+
   element.replaceWith(table);
 }

@@ -1,36 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .callout.block element
-  const callout = element.querySelector('.callout.block');
-  if (!callout) return;
+  // Find the hero block container
+  const calloutBlock = element.querySelector('.callout.block');
+  if (!calloutBlock) return;
 
-  // Collect all direct child elements of .callout.block
-  const children = Array.from(callout.children);
+  // Get all immediate children in order
+  const children = Array.from(calloutBlock.children);
 
-  // Find the first <picture> (background image)
-  let backgroundImage = null;
-  // Find the first heading (h1-h6)
-  let heading = null;
+  // Collect all <picture> elements in order
+  const pictures = children.filter(el => el.tagName === 'PICTURE');
+  // Collect first heading (h1-h6)
+  const heading = children.find(el => /^H[1-6]$/.test(el.tagName));
 
-  for (let i = 0; i < children.length; i++) {
-    const el = children[i];
-    if (!backgroundImage && el.tagName === 'PICTURE') {
-      backgroundImage = el;
-      continue;
-    }
-    if (!heading && /^H[1-6]$/.test(el.tagName)) {
-      heading = el;
-      continue;
-    }
+  // Build the cells as per the markdown example
+  // 1. Header row: 'Hero'
+  // 2. Second row: first <picture> (background)
+  // 3. Third row: Heading (if present), then second <picture> (decorative, if present)
+
+  const cells = [];
+  // Header row
+  cells.push(['Hero']);
+
+  // Second row: first picture (or blank)
+  if (pictures[0]) {
+    cells.push([pictures[0]]);
+  } else {
+    cells.push(['']);
   }
 
-  // Build the hero block table: header, background image, heading
-  const cells = [
-    ['Hero'],
-    [backgroundImage ? backgroundImage : ''],
-    [heading ? heading : '']
-  ];
-  
+  // Third row: heading and decorative foreground picture, both if present
+  const content = [];
+  if (heading) content.push(heading);
+  if (pictures[1]) content.push(pictures[1]);
+  // If both present, include both; if only one present, include just that; if neither, add blank.
+  if (content.length > 0) {
+    // If both, pass as array for a block cell
+    cells.push([content.length === 1 ? content[0] : content]);
+  } else {
+    cells.push(['']);
+  }
+
+  // Create the table and replace
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

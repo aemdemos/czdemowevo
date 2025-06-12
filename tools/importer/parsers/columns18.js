@@ -1,32 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row exactly as specified
+  // Header row as in the example
   const headerRow = ['Columns (columns18)'];
 
-  // Find the steps block (should be 1 direct child of wrapper)
+  // Get steps from .steps.block
   const stepsBlock = element.querySelector('.steps.block');
   if (!stepsBlock) {
-    // Failsafe: fallback to main element if not found
+    // fallback: just replace element with a columns block with the element's innerHTML
+    const cells = [headerRow, [element]];
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    element.replaceWith(table);
     return;
   }
 
-  // Each step column is a direct child of stepsBlock
-  const stepColumnDivs = Array.from(stepsBlock.children);
+  // Extract all the step column divs (each .steps.block > div)
+  const columns = Array.from(stepsBlock.children)
+    .filter(col => col.nodeType === 1)
+    .map(col => {
+      // The step content is the single child div
+      const inner = col.querySelector('div');
+      return inner || col;
+    });
 
-  // Extract the content for each step column
-  const stepCells = stepColumnDivs.map((colDiv) => {
-    // We want to retain the inner structure and semantics of each step column
-    // Each colDiv can be directly referenced as its cell content
-    // This makes the function robust to additional/less p's, different structures, etc.
-    // Just reference the inner div (which is the real step content)
-    const inner = colDiv.firstElementChild || colDiv;
-    return inner;
-  });
+  // The correct layout is two rows, each with three columns
+  const row1 = columns.slice(0, 3);
+  const row2 = columns.slice(3, 6);
+  // If there are less than 6 steps, fill out the row with empty strings
+  while (row1.length < 3) row1.push('');
+  while (row2.length < 3) row2.push('');
 
-  // Assemble the table rows
-  const rows = [headerRow, stepCells];
+  const cells = [
+    headerRow,
+    row1,
+    row2
+  ];
 
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
