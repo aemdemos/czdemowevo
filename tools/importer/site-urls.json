@@ -1,0 +1,353 @@
+{
+  "originUrl": "https://www.wheatleyvodka.com",
+  "lastCrawled": "https://www.wheatleyvodka.com/",
+  "urls": [
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "source": "SITEMAPS",
+      "targetPath": "/",
+      "id": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/about-wheatley",
+      "source": "SITEMAPS",
+      "targetPath": "/about-wheatley",
+      "id": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails",
+      "id": "002405ddd482c452d57f80616792bc7ea3524cfe"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/all-you-can-wheat",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/all-you-can-wheat",
+      "id": "0f08a7ab212730d0ce686755cebdb33c4ca5694d"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/beetopolitan",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/beetopolitan",
+      "id": "c97be29b44efe4c9163a535e82b809f0f9510072"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/bottoms-up",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/bottoms-up",
+      "id": "2334f83c355c9c97ce1d598ad93f198bd0c4e029"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/chasing-waterfalls",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/chasing-waterfalls",
+      "id": "67c3a1dd046150242e443187238d1057ebef720f"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cheap-sunglasses",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/cheap-sunglasses",
+      "id": "47db468c573b59b17ff5780331c9813bc7f323ba"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cocktails-of-the-castaway",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/cocktails-of-the-castaway",
+      "id": "252020f6ac52e9866e509db3690d9b43a3c65fc5"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cran-holiday-punch",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/cran-holiday-punch",
+      "id": "68e5253c84075e9ad971eb37413b61d81082b0bc"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/cucumber-collins",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/cucumber-collins",
+      "id": "b4aa8b0a750140f4d7207bc30b760e285885deb2"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/dad-joke",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/dad-joke",
+      "id": "7f5b0a3f9e982d218105d28fc26c5e8990696814"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/dont-touch-my-bowl",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/dont-touch-my-bowl",
+      "id": "cf8f37fa55e9858bb441a88bce7f59527b05b67f"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/down-the-rabbit-hole",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/down-the-rabbit-hole",
+      "id": "bf3d69cf40aaf3038083d83cc17730d89f3e9410"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/fire-on-the-water",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/fire-on-the-water",
+      "id": "7dda5f34a84915c7b0102b49c7823ca0a90adcf4"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/flatiron-flip",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/flatiron-flip",
+      "id": "744ce0582153508ebbbcd269eb71652b1ec5e2a4"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/garden-of-eden",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/garden-of-eden",
+      "id": "14d15eeb26b77381584182eb44aa7bb9ca64e180"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/gone-with-the-wind",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/gone-with-the-wind",
+      "id": "3e18f1bcd908410c15ea944d5153d77359e7a9dc"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/green-jacket",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/green-jacket",
+      "id": "3e64e1504c09d081922c814adbc48d2505b7f023"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/green-machine",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/green-machine",
+      "id": "08f005be7b8aad9fb095a0e069f42761f6c50b2a"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/its-always-sunny",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/its-always-sunny",
+      "id": "c717a2d60386192c8e931b546351c9356c0d85af"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/la-luna-rossa",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/la-luna-rossa",
+      "id": "ed5047f738124abe912af1b6235e9c1ccc4aa138"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/my-pizza-is-sour",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/my-pizza-is-sour",
+      "id": "01c08e3a4d0dbaf2c6753492af88ca00012a5250"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/quince-md",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/quince-md",
+      "id": "f216ae61389c5a76ca8e334e759b892244254336"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/raspberry-lemonade",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/raspberry-lemonade",
+      "id": "6675dd5befdabd44208191829adabf0095847781"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/romapolitan",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/romapolitan",
+      "id": "0cf14368690822f3cf2777d918ae5e8669f675d2"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/snooze-alarm",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/snooze-alarm",
+      "id": "5434d30d6c8970ef6ad5c428c6e5b10580976192"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/spiced-punch",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/spiced-punch",
+      "id": "ed87c3a131edea3a06253b8220cc83d66d018fbf"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/spiced-winter-punch",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/spiced-winter-punch",
+      "id": "b3b44763666637d409c28e72b9fc6ecf1fed69c3"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/summertime-romp",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/summertime-romp",
+      "id": "359ae767a9b16900fb367c76ae3180e89fb5b05b"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-buck-stops-here",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/the-buck-stops-here",
+      "id": "3297b5a3f3b2071d0dc187de773d7d1bd667589f"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-gallagher",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/the-gallagher",
+      "id": "b74dcbafbd69baaa6c658cf49844b3d40b94841c"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-khaleesi",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/the-khaleesi",
+      "id": "6a7f22777966b19b60ed48432782b49549e2dbad"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-new-caledonia",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/the-new-caledonia",
+      "id": "b1fec93c764856b973372093d68a3cbef6846065"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/the-pineapple-bottom",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/the-pineapple-bottom",
+      "id": "55fc23386f88ae3d8614ce6edae8582d66673a48"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/village-mary",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/village-mary",
+      "id": "6ac1649b65c3e4a7fb34750f4074fb0d72e4e544"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/waltzing-back",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/waltzing-back",
+      "id": "485d5ec3661b3a4ed6b3b471c77e4c24bcc85c6c"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-75",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-75",
+      "id": "47f4f99c74142d94ae09fc1fe527dd4844fb01fa"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-bloody-mary",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-bloody-mary",
+      "id": "a6e236a290619740080da2c1ddfcbf5ebaee7443"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-far-east-mule",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-far-east-mule",
+      "id": "a5f8873b2d29fbd4fecfcbf15ee6c65cc7c1860e"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-shandy",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-shandy",
+      "id": "5f704db21f25c098d1c994c6b3652436605bb6fb"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-blackberry-mint-julep",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-blackberry-mint-julep",
+      "id": "439376b39e354a955dd5d73f435cc3f5c6ba5093"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-club",
+      "id": "8c017c20f81f29c6c1810d401d98471c279c8cad"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-club-2",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-club-2",
+      "id": "ea5be8bb47460c5278c71fdc57823d7794922ece"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-greyhound",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-greyhound",
+      "id": "c66fc8db9413d259253c69535878ef700653c39e"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-martini",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-martini",
+      "id": "38f22ce2766203b39af877b6df30baaa540d943f"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-mint-lemonade",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-mint-lemonade",
+      "id": "674c9ad730a0dd14178a28ef2c98b375a4b0df86"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-moscow-mule",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-moscow-mule",
+      "id": "997b397579ee88f5ef440fd840a85c8e0ace124d"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-pineapple-mint-julep",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-pineapple-mint-julep",
+      "id": "57b577860d46268554876c629d9dff218e317e81"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-rhubarb-mint-julep",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-rhubarb-mint-julep",
+      "id": "7f5d1e6c4399c47f57d9363a36721bfd651207c8"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-screwdriver",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-screwdriver",
+      "id": "e9d11b12fda0eda3ad725a0a88dae50542924263"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-vodka-sweet-tea-mint-julep",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-vodka-sweet-tea-mint-julep",
+      "id": "be95681ab92925f81824b0405815278b2a40f4a3"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-apple-sangria",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-white-apple-sangria",
+      "id": "80e1bc5b343dbcbbe6d85768e523cf410ba9f634"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-white-russian",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-white-russian",
+      "id": "cd68b141dcbd009bf946631b274ac67340dd414c"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/cocktails/wheatley-winter-wonderful",
+      "source": "SITEMAPS",
+      "targetPath": "/cocktails/wheatley-winter-wonderful",
+      "id": "0d7cf3538fffa00fca3b693487ed7a065f7199dd"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/locator",
+      "source": "SITEMAPS",
+      "targetPath": "/locator",
+      "id": "0399066659d1a722ecf895ff94f11840e8050288"
+    }
+  ],
+  "crawlOptions": {
+    "timeout": 64800000,
+    "inclusionPatterns": [],
+    "exclusionPatterns": [],
+    "limit": -1,
+    "sameDomain": true,
+    "keepHash": false,
+    "strategy": "SITEMAPS",
+    "logger": {}
+  },
+  "extractionErrors": []
+}
