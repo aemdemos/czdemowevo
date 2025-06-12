@@ -1,31 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The content is in: .pocketguide-wrapper > .pocketguide.block > div > div
-  const wrapper = element.querySelector('.pocketguide-wrapper > .pocketguide.block > div > div');
+  // Find the wrapper containing the two primary columns
+  const wrapper = element.querySelector('.pocketguide-wrapper');
   if (!wrapper) return;
-  
-  // Get all direct children of the wrapper: typically h2, p, p.button-container, p (image)
-  const children = Array.from(wrapper.children);
-  
-  // The last <p> contains the image (picture), all others are text/button content
-  let imgContainer = null;
-  let leftContent = [];
-  if (children.length > 0) {
-    if (children[children.length - 1].querySelector('picture, img')) {
-      imgContainer = children[children.length - 1];
-      leftContent = children.slice(0, children.length - 1);
-    } else {
-      // fallback: if no image found, all content is left
-      leftContent = children;
+  const block = wrapper.querySelector('.pocketguide.block');
+  if (!block) return;
+  // Get the first div inside the block (contains our two columns)
+  const blockInner = block.querySelector('div');
+  if (!blockInner) return;
+  // Get the actual row (another div inside blockInner)
+  const row = blockInner.querySelector('div');
+  if (!row) return;
+
+  // The row contains children: h2, p (desc), p (button), p (picture)
+  // We want: [leftColElements, rightColElement]
+  const children = Array.from(row.children);
+  // Find the picture column (the p that contains a picture or img)
+  let picIdx = -1;
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].querySelector('picture, img')) {
+      picIdx = i;
+      break;
     }
   }
-  
-  // Make columns3 block: header, then two columns (content | image)
-  const tableRows = [
-    ['Columns (columns3)'],
-    [leftContent, imgContainer]
-  ];
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
-
+  // Left column: all children except the picture p
+  const leftColEls = [];
+  for (let i = 0; i < children.length; i++) {
+    if (i !== picIdx) leftColEls.push(children[i]);
+  }
+  // Right column: the <picture> or <img> itself
+  let rightColEl = '';
+  if (picIdx !== -1) {
+    const picEl = children[picIdx].querySelector('picture, img');
+    if (picEl) {
+      rightColEl = picEl;
+    } else {
+      rightColEl = children[picIdx];
+    }
+  }
+  // Compose table
+  const headerRow = ['Columns (columns3)'];
+  const contentRow = [leftColEls, rightColEl];
+  const table = WebImporter.DOMUtils.createTable([headerRow, contentRow], document);
   element.replaceWith(table);
 }

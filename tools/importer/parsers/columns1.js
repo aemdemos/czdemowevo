@@ -1,44 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Ensure we are operating on the block itself
-  let block = element;
-  if (!block.classList.contains('block')) {
-    block = element.querySelector('.columns.block');
-    if (!block) return;
+  // Find the main block node (should be .columns.block)
+  const block = element.querySelector('.columns.block');
+  if (!block) return;
+
+  // Get the direct children of the main columns block
+  const blockColumnsWrapper = block.querySelector(':scope > div');
+  if (!blockColumnsWrapper) return;
+
+  // The columns are direct children of this wrapper
+  const columns = Array.from(blockColumnsWrapper.children);
+  if (columns.length < 2) return;
+
+  // The left (content) and right (image) columns
+  const leftCol = columns[0];
+  const rightCol = columns[1];
+
+  // The rightCol may have a .columns-img-col wrapper div
+  let imageCell = rightCol;
+  const imgColDiv = rightCol.querySelector('.columns-img-col');
+  if (imgColDiv) {
+    imageCell = imgColDiv;
   }
 
-  // Find immediate column containers
-  const colDivs = block.querySelectorAll(':scope > div');
-  if (colDivs.length < 2) return;
-
-  // First column (content)
-  const col1 = colDivs[0];
-  // Second column (image or media)
-  const col2 = colDivs[1];
-
-  // For col1, we want the most content-rich inner div (usually there's a div > div > div structure)
-  let contentContainer = col1;
-  // Dive down to the deepest single-child div if possible
-  while (contentContainer.children.length === 1 && contentContainer.firstElementChild.tagName === 'DIV') {
-    contentContainer = contentContainer.firstElementChild;
-  }
-
-  // For col2, prefer <picture> or <img>, else use the column as is
-  let imageEl = col2.querySelector('picture, img');
+  // If "columns-img-col" exists, use its picture/img, else use rightCol's picture/img
+  let imageEl = imageCell.querySelector('picture, img');
   if (!imageEl) {
-    imageEl = col2;
+    // fallback: if nothing found, just include imageCell as-is
+    imageEl = imageCell;
   }
 
-  // Build table rows
+  // Compose the header row as in the example
   const headerRow = ['Columns (columns1)'];
-  const contentRow = [contentContainer, imageEl];
+  // Compose the content row with the left and right columns
+  const contentRow = [leftCol, imageEl];
 
-  // Create the columns block table
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
-
-  // Replace block with the new table
-  block.replaceWith(table);
+  // Build the table
+  const cells = [headerRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Replace the original element
+  element.replaceWith(table);
 }

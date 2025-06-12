@@ -1,14 +1,24 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The input element only contains powered by logos, no hero relevant content
-  // Per the example, the Hero block should have a header row 'Hero', a second row for background image (empty), and a third row for content (empty)
+  // To avoid HierarchyRequestError, do NOT insert an element into the table that is still part of the DOM
+  // Instead, move all children to a new container that can be safely placed in the table
+
+  // Header row matches example
   const headerRow = ['Hero'];
-  const backgroundRow = [''];
-  const contentRow = [''];
-  const table = WebImporter.DOMUtils.createTable([
+
+  // Create a container for the logo strip content
+  const container = document.createElement('div');
+  while (element.firstChild) {
+    container.appendChild(element.firstChild);
+  }
+
+  // Build table: header, logo strip, empty row
+  const cells = [
     headerRow,
-    backgroundRow,
-    contentRow,
-  ], document);
+    [container],
+    ['']
+  ];
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

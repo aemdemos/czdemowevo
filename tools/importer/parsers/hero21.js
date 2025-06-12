@@ -1,18 +1,27 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Extract the button (if present)
-  const button = element.querySelector('a.button');
-  // The example Hero block is a table with 1 column and 3 rows:
-  //  1. Header row: 'Hero'
-  //  2. (Optional) Background image row (none in this input)
-  //  3. Content row (CTA/button)
-  // Since no metadata/section, we don't add <hr> or Section Metadata block.
-  // If the button exists, reference it directly; else keep row empty
+  // Hero block requires 1 column, 3 rows: header, background image, content (headline/subheadline/cta)
+  // Header row (from the example): 'Hero'
+  const headerRow = ['Hero'];
+
+  // No background image is present in the HTML, so the background row should be empty
+  const backgroundRow = [''];
+
+  // Content row: the CTA button from the <a> element
+  // There is no heading or subheading in this HTML, only the button.
+  // We put the button directly in the content row's cell.
+  // Reference the existing <a> (not clone)
+  const button = element.querySelector('a');
+  const contentRow = [button ? button : ''];
+
+  // Compose the block table
   const cells = [
-    ['Hero'],
-    [''],
-    [button ? button : '']
+    headerRow,
+    backgroundRow,
+    contentRow
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the original element with the new block table
   element.replaceWith(table);
 }

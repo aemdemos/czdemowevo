@@ -1,42 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the content container
-  let contentContainer = element.querySelector('.quote-wrapper .quote > div > div');
-  if (!contentContainer) {
-    // fallback: just use all paragraphs under element
-    contentContainer = element;
-  }
-  const ps = contentContainer.querySelectorAll('p');
+  // The block structure: [ ['Hero'], [Image (optional)], [Text content] ]
+
+  // Find the quote block
+  const quoteBlock = element.querySelector('.quote.block');
   let imageCell = '';
-  let headingCell = '';
-  if (ps.length === 2) {
-    // extract image (second <p>'s <picture> or <img>)
-    const imgP = ps[1];
-    const pic = imgP.querySelector('picture');
-    if (pic) {
-      imageCell = pic;
-    } else {
-      const img = imgP.querySelector('img');
-      if (img) imageCell = img;
+  let contentCell = '';
+
+  if (quoteBlock) {
+    // Find all paragraphs inside the innermost div
+    // Structure: .quote.block > div > div > p, p
+    const innerDivs = quoteBlock.querySelectorAll(':scope > div > div');
+    if (innerDivs.length > 0) {
+      const ps = innerDivs[0].querySelectorAll('p');
+      // The quote text is the first p
+      if (ps.length > 0) {
+        // Use the full element (to preserve formatting if present)
+        contentCell = ps[0];
+      }
+      // The image is in a picture tag inside the second p
+      if (ps.length > 1) {
+        const picture = ps[1].querySelector('picture');
+        if (picture) {
+          imageCell = picture;
+        }
+      }
     }
-    // extract heading (first <p>) and convert to <h1>
-    const headingP = ps[0];
-    const h1 = document.createElement('h1');
-    h1.innerHTML = headingP.innerHTML;
-    headingCell = h1;
-  } else if (ps.length === 1) {
-    // Only heading present, convert to <h1>
-    const headingP = ps[0];
-    const h1 = document.createElement('h1');
-    h1.innerHTML = headingP.innerHTML;
-    headingCell = h1;
   }
 
+  // Build the table: always 1 column, 3 rows (header, optional image, content)
   const cells = [
     ['Hero'],
     [imageCell],
-    [headingCell],
+    [contentCell]
   ];
+
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
