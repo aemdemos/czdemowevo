@@ -1,4 +1,4 @@
-
+ 
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
@@ -81,4 +81,136 @@
   line-height: 1.18;
   max-width: 700px;
   box-sizing: border-box;
+}
+
+.hero.hero15 {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 600px;
+  padding: 0;
+  background: none;
+}
+
+/* Left column: show only the photo, no illustration as background */
+.hero.hero15 > div:first-child {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  background: none;
+  order: 1;
+}
+
+.hero.hero15 > div:first-child picture,
+.hero.hero15 > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: none;
+}
+
+/* Right column: add illustrated background, show content on top */
+.hero.hero15 > div:last-child {
+  flex: 1 1 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 56px;
+  background: #F9F8F3;
+  background-image: url('PATH_TO_ILLUSTRATION_IMAGE'); /* Replace with correct URL */
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 90% auto;
+  order: 2;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure inner content is visible, left-aligned, and on top of bg */
+.hero.hero15 > div:last-child > div {
+  max-width: 560px;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.hero.hero15 h1,
+.hero.hero15 h2,
+.hero.hero15 h3 {
+  margin: 0 0 24px;
+  padding: 0;
+  font-family: var(--heading-font-family), Arial, Helvetica, sans-serif;
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #07204D;
+  text-align: left;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  box-sizing: border-box;
+}
+
+.hero.hero15 p {
+  font-size: 1.19rem;
+  color: #222;
+  font-family: var(--body-font-family), Arial, Helvetica, sans-serif;
+  line-height: 1.55;
+  margin-bottom: 36px;
+  text-align: left;
+}
+
+.hero.hero15 a,
+.hero.hero15 button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 18px 38px;
+  font-size: 1.1rem;
+  font-family: var(--body-font-family), Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #07204D;
+  background: linear-gradient(90deg, #DDB878 0%, #A17947 100%);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(160 120 71 / 12%);
+  text-decoration: none;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.hero.hero15 a:hover,
+.hero.hero15 button:hover {
+  box-shadow: 0 4px 16px rgb(160 120 71 / 18%);
+}
+
+/* Responsive: stack columns, adjust padding and background */
+@media (width <= 900px) {
+  .hero.hero15 {
+    flex-direction: column;
+    min-height: unset;
+  }
+
+  .hero.hero15 > div:first-child,
+  .hero.hero15 > div:last-child {
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: 0;
+    order: unset;
+  }
+
+  .hero.hero15 > div:last-child {
+    padding: 40px 16px;
+    background-position: center top;
+    background-size: cover;
+  }
+
+  .hero.hero15 > div:last-child > div {
+    max-width: 100%;
+    padding: 0;
+  }
 }
