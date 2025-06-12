@@ -1,13 +1,35 @@
- 
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
 }
 
 .hero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 560px;
+  min-width: 320px;
+  max-width: 90vw;
+  height: 48px;
+  margin: 0 auto;
+  background: linear-gradient(112deg, #c59b7b 0%, #efd8bf 47%, #c59b7b 100%);
+  border-radius: 24px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 6%);
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  padding: 0;
+}
+
+.hero > div {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.hero > div:first-child {
+  display: none;
 }
 
 .hero h1,
@@ -212,5 +234,56 @@
   .hero.hero15 > div:last-child > div {
     max-width: 100%;
     padding: 0;
+  }
+}
+
+/* ====== GENERATED CSS (other selectors left unchanged) ====== */
+
+.hero .button-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.hero .button-container .button,
+.hero .button-container a.button {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: #00245a;
+  font-family: var(--heading-font-family), Arial, Helvetica, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  line-height: 1.08;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  min-width: unset;
+  min-height: unset;
+  max-width: unset;
+  max-height: unset;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+@media (width <= 500px) {
+  .hero {
+    width: 97vw;
+    min-width: 0;
+    height: 32px;
+    border-radius: 16px;
+    padding: 0 1vw;
+  }
+
+  .hero .button-container .button,
+  .hero .button-container a.button {
+    font-size: 0.92rem;
   }
 }
