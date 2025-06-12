@@ -1,3 +1,4 @@
+
 .columns > div {
   display: flex;
   flex-direction: column;
@@ -29,5 +30,125 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+}
+
+
+.columns.columns1 {
+  background: #fff;
+  box-shadow: 0 4px 32px 0 rgb(0 0 0 / 10%);
+  border-radius: 0;
+  max-width: 1000px;
+  margin: 48px auto;
+  overflow: hidden;
+}
+
+.columns.columns1 > div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: stretch;
+  min-height: 600px;
+}
+
+/* Left column: top-aligned, tighter section spacing */
+.columns.columns1 > div > div:first-child {
+  width: 50%;
+  box-sizing: border-box;
+  padding: 2.5rem 2rem 2.5rem 2.5rem;
+  border-right: 1px solid #e2e8f0;
+  display: block;
+  align-self: stretch;
+}
+
+.columns.columns1 h2 {
+  color: #03274F;
+  font-family: var(--heading-font-family), "Arial Narrow", Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-top: 1.2rem;
+  margin-bottom: 0.35em;
+}
+
+/* Reduce vertical space between sections/lists */
+.columns.columns1 ul {
+  color: #03274F;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin-top: 0;
+  margin-bottom: 1.1em;
+  padding-left: 1.25em;
+}
+
+.columns.columns1 li {
+  margin-bottom: 0.35em;
+}
+
+.columns.columns1 a {
+  color: #03274F;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.columns.columns1 h2#created-by {
+  margin-top: 2rem;
+}
+
+.columns.columns1 ul:last-child {
+  margin-bottom: 0;
+}
+
+/* Right column: image fills area (cover), no white space above/below */
+.columns.columns1 .columns-img-col {
+  width: 50%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+  background: #f8fafc;
+  min-height: 400px;
+  position: relative;
+}
+
+.columns.columns1 .columns-img-col picture,
+.columns.columns1 .columns-img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  margin: 0 auto;
+  position: static;
+}
+
+/* Responsive: stack on mobile */
+@media (width <= 800px) {
+  .columns.columns1 > div {
+    flex-direction: column;
+    min-height: unset;
+  }
+
+  .columns.columns1 > div > div,
+  .columns.columns1 .columns-img-col {
+    width: 100%;
+    min-height: 240px;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .columns.columns1 .columns-img-col {
+    border-bottom: none;
+    min-height: 260px;
+  }
+
+  .columns.columns1 .columns-img-col picture,
+  .columns.columns1 .columns-img-col img {
+    max-width: 100%;
+    max-height: 320px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
   }
 }
