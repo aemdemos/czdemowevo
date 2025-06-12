@@ -1,59 +1,47 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find block with cards
-  const featuredBlock = element.querySelector('.featured.block, .featured');
-  if (!featuredBlock) return;
-  const recipes = Array.from(featuredBlock.querySelectorAll('.featured-recipe'));
-  if (recipes.length === 0) return;
+  const block = element.querySelector('.featured.block');
+  if (!block) return;
+  const recipes = block.querySelector('.featured-recipes');
+  if (!recipes) return;
 
-  const rows = [['Cards (cards9)']]; // Header row as required
+  // Find all cards
+  const cardEls = Array.from(recipes.querySelectorAll(':scope > .featured-recipe'));
+  const rows = [];
+  // Add header row
+  rows.push(['Cards (cards9)']);
 
-  recipes.forEach((recipe) => {
-    // Is last card a button card?
-    const isButtonCard = recipe.classList.contains('button-container');
-    // Image (picture or img)
-    let imgCell = recipe.querySelector('picture,img');
+  cardEls.forEach(cardEl => {
+    // Card image (mandatory)
+    const picture = cardEl.querySelector('picture');
 
-    // Compose text cell
-    let textCellParts = [];
-    // Title (from span inside link or button or fallback)
-    let titleText = '';
-    let link = recipe.querySelector('a[href]:not(.button)');
-    if (link) {
-      let span = link.querySelector('span');
-      if (span) {
-        titleText = span.textContent.trim();
-      }
-    }
-    // Button card: get title from button
-    let button = null;
-    if (isButtonCard) {
-      button = recipe.querySelector('a.button');
-      if (button) {
-        titleText = button.textContent.trim();
-      }
-    }
-    if (titleText) {
-      let strong = document.createElement('strong');
-      strong.textContent = titleText;
-      if (link && !isButtonCard) {
-        let a = document.createElement('a');
-        a.href = link.href;
-        a.appendChild(strong);
-        textCellParts.push(a);
+    // Text cell: title in <strong> if present, or CTA button
+    const button = cardEl.querySelector('a.button');
+    let textCell;
+    if (button) {
+      textCell = button;
+    } else {
+      // Try to find <a> with <span> for title
+      const a = cardEl.querySelector('a');
+      if (a) {
+        const span = a.querySelector('span');
+        if (span && span.textContent.trim()) {
+          const strong = document.createElement('strong');
+          strong.textContent = span.textContent.trim();
+          textCell = strong;
+        } else {
+          textCell = '';
+        }
       } else {
-        textCellParts.push(strong);
+        textCell = '';
       }
     }
-    // Button card: include button as CTA
-    if (isButtonCard && button) {
-      textCellParts.push(button);
+    // Only add rows if there is at least an image or text cell
+    if (picture || textCell) {
+      rows.push([picture, textCell]);
     }
-    // Cell is single node or array
-    let textCell = textCellParts.length === 1 ? textCellParts[0] : textCellParts;
-    rows.push([imgCell, textCell]);
   });
 
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }

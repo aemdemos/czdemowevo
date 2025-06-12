@@ -1,16 +1,14 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The header row must match exactly
+  // The header row must match the example exactly
   const headerRow = ['Search (search20)'];
-  // The second row should have the absolute URL as a clickable link
-  const searchIndexUrl = 'https://main--helix-block-collection--adobe.hlx.page/block-collection/sample-search-data/query-index.json';
-  const link = document.createElement('a');
-  link.href = searchIndexUrl;
-  link.textContent = searchIndexUrl;
-  const cells = [
+  // The content row must contain the absolute URL to the search index
+  const contentRow = ['https://main--helix-block-collection--adobe.hlx.page/block-collection/sample-search-data/query-index.json'];
+
+  const table = WebImporter.DOMUtils.createTable([
     headerRow,
-    [link],
-  ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+    contentRow
+  ], document);
+
   element.replaceWith(table);
 }

@@ -1,32 +1,37 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main columns block
-  let columnsBlock = element.querySelector('.columns.block');
-  if (!columnsBlock) {
-    columnsBlock = element;
+  // Accept either the columns-wrapper or the .columns block as entry
+  let block = element;
+  if (!block.classList.contains('columns')) {
+    block = element.querySelector('.columns.block');
+  }
+  if (!block) return; // edge case: block not found
+
+  // Get all direct children of .columns.block, each represents a visual column
+  // In these examples, we expect 2 columns
+  const columns = Array.from(block.children);
+  if (columns.length < 2) return; // edge case: not enough columns
+
+  // For each column, find the main content container
+  // Some columns are wrapped in several divs
+  function getMainContent(container) {
+    let curr = container;
+    // drill down for single DIV wrappers, but stop if multiple or non-DIV
+    while (curr && curr.children.length === 1 && curr.firstElementChild.tagName === 'DIV') {
+      curr = curr.firstElementChild;
+    }
+    return curr;
   }
 
-  // Get the direct child columns (should be two)
-  // Look for direct children that are divs and not just wrapper divs
-  let colDivs = Array.from(columnsBlock.children).filter((div) => div.tagName === 'DIV');
-  // Defensive: if a column is further wrapped (i.e. <div><div>realContent...</div></div>), unwrap
-  colDivs = colDivs.map((col) => {
-    // If this column has only one child and it's a DIV, unwrap
-    if (col.childElementCount === 1 && col.firstElementChild.tagName === 'DIV') {
-      return col.firstElementChild;
-    }
-    return col;
-  });
+  const colCells = columns.map(getMainContent);
 
-  // Only proceed if we have exactly two columns
-  if (colDivs.length !== 2) return;
-  const [leftCol, rightCol] = colDivs;
+  // Prepare the block table array
+  const tableRows = [
+    ['Columns (columns4)'], // header EXACT match
+    colCells,
+  ];
 
-  // Table header matches the block name (with variant)
-  const headerRow = ['Columns (columns4)'];
-  const contentRow = [leftCol, rightCol];
-
-  const table = WebImporter.DOMUtils.createTable([headerRow, contentRow], document);
-
+  // Create and swap the table
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(table);
 }

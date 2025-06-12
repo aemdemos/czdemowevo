@@ -1,42 +1,54 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Locate main hero content
-  const heroWrapper = element.querySelector('.hero-wrapper');
-  if (!heroWrapper) return;
-  const heroBlock = heroWrapper.querySelector('.hero.block');
-  if (!heroBlock) return;
-  const left = heroBlock.querySelector('.left');
-  const right = heroBlock.querySelector('.right');
-
-  // Header row (must be exactly 'Hero')
-  const headerRow = ['Hero'];
-
-  // Image row (only the <img> element from <picture> if present)
+  // Extract the .hero.block
+  const heroBlock = element.querySelector('.hero.block');
   let imageCell = '';
-  if (right) {
-    const img = right.querySelector('img');
-    if (img) imageCell = img;
-  }
-  const imageRow = [imageCell];
+  let contentCell = [];
 
-  // Content row: all text & button from left, plus .hero-footer
-  const content = [];
-  if (left) {
-    const h1 = left.querySelector('h1');
-    if (h1) content.push(h1);
-    const h2 = left.querySelector('h2');
-    if (h2) content.push(h2);
-    const a = left.querySelector('a');
-    if (a) content.push(a);
+  // Extract image for the second row
+  if (heroBlock) {
+    const right = heroBlock.querySelector('.right');
+    if (right) {
+      const pic = right.querySelector('picture');
+      if (pic) {
+        imageCell = pic;
+      } else {
+        const img = right.querySelector('img');
+        if (img) imageCell = img;
+      }
+    }
   }
-  const heroFooter = element.querySelector('.hero-footer');
-  if (heroFooter) {
-    Array.from(heroFooter.children).forEach((el) => content.push(el));
-  }
-  const contentRow = [content.length === 1 ? content[0] : (content.length > 1 ? content : '')];
 
-  // Compose and replace
-  const cells = [headerRow, imageRow, contentRow];
+  // Extract content for the third row (headings, cta, footer)
+  if (heroBlock) {
+    const left = heroBlock.querySelector('.left');
+    if (left) {
+      // h1, h2, a
+      const nodes = [];
+      const h1 = left.querySelector('h1');
+      if (h1) nodes.push(h1);
+      const h2 = left.querySelector('h2');
+      if (h2) nodes.push(h2);
+      const a = left.querySelector('a');
+      if (a) nodes.push(a);
+      contentCell = nodes;
+    }
+  }
+  // Extract .hero-footer content (if present, typically a h3)
+  const footer = element.querySelector('.hero-footer');
+  if (footer) {
+    Array.from(footer.children).forEach(child => {
+      contentCell.push(child);
+    });
+  }
+
+  // Build the table as per the example: header, image, text content
+  const cells = [
+    ['Hero'],
+    [imageCell],
+    [contentCell]
+  ];
+
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

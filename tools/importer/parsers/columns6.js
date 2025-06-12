@@ -1,33 +1,23 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the featured-recipes container
+  // Find the main featured-recipes container
   const recipes = element.querySelector('.featured-recipes');
   if (!recipes) return;
 
-  // Get left column: featured-recipes-left > .featured-recipe (should be only one)
-  let leftCell = '';
-  const leftWrap = recipes.querySelector('.featured-recipes-left');
-  if (leftWrap) {
-    const leftRecipe = leftWrap.querySelector('.featured-recipe');
-    if (leftRecipe) leftCell = leftRecipe;
-  }
+  // Find the left and right columns
+  let leftCol = recipes.querySelector('.featured-recipes-left');
+  let rightCol = recipes.querySelector('.featured-recipes-right');
 
-  // Get right column: all .featured-recipe in .featured-recipes-right
-  let rightCell = '';
-  const rightWrap = recipes.querySelector('.featured-recipes-right');
-  if (rightWrap) {
-    const rightRecipes = Array.from(rightWrap.querySelectorAll(':scope > .featured-recipe'));
-    if (rightRecipes.length === 1) {
-      rightCell = rightRecipes[0];
-    } else if (rightRecipes.length > 1) {
-      rightCell = rightRecipes;
-    }
-  }
+  // If either column is missing, use an empty div to preserve structure
+  if (!leftCol) leftCol = document.createElement('div');
+  if (!rightCol) rightCol = document.createElement('div');
 
-  const tableRows = [
-    ['Columns (columns6)'],  // header, one cell
-    [leftCell, rightCell],   // row, two columns
+  // Compose the block table: header row, then a row with two columns
+  const cells = [
+    ['Columns (columns6)'],
+    [leftCol, rightCol]
   ];
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
+
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

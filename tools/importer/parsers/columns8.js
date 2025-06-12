@@ -1,32 +1,26 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the columns block within the wrapper
-  const columnsBlock = element.querySelector('.columns.block');
-  if (!columnsBlock) return;
-
-  // Get all immediate child divs of the columns block (columns)
-  const cols = Array.from(columnsBlock.querySelectorAll(':scope > div'));
-  if (cols.length < 2) return;
-
-  // Reference the first and second column containers
-  const firstCol = cols[0];
-  const secondCol = cols[1];
-
-  // For the second column, use the picture if present, otherwise the img
-  let imageEl = secondCol.querySelector('picture');
-  if (!imageEl) {
-    imageEl = secondCol.querySelector('img');
+  // Find the .columns.block node (should be the first child)
+  let columnsBlock = element.querySelector(':scope > .columns.block');
+  if (!columnsBlock) {
+    // If not found, fallback to first child
+    columnsBlock = element.firstElementChild;
   }
-  // If neither found, leave the cell empty
-
-  // Table structure per spec: header should be exactly
+  // Get the direct column containers (should be two children)
+  const columnDivs = columnsBlock.querySelectorAll(':scope > div');
+  // Defensive: Only process if we have at least 2 columns
+  if (columnDivs.length < 2) {
+    return;
+  }
+  // Prepare header row
   const headerRow = ['Columns (columns8)'];
-  const contentRow = [firstCol, imageEl].map((cell) => cell || '');
-
+  // Prepare columns row: reference the actual column wrappers directly
+  const columns = [columnDivs[0], columnDivs[1]];
+  // Build the table
   const table = WebImporter.DOMUtils.createTable([
     headerRow,
-    contentRow
+    columns,
   ], document);
-
+  // Replace the original element with the new block table
   element.replaceWith(table);
 }
