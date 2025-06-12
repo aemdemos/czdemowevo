@@ -135,3 +135,154 @@
   width: 24px;
   border-radius: 50%;
 }
+
+/* Merged .search.search20 selector */
+.search.search20 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px; /* smaller gap for tight grouping */
+  padding: 40px 0;
+  background: #1b293b url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+  background-repeat: repeat;
+  background-size: auto;
+  border-radius: 18px;
+  box-sizing: border-box;
+  min-height: 148px;
+}
+
+/* BUTTON STYLES: compact, robust CTA proportions */
+.search.search20 .search-box,
+.search.search20 .search-results {
+  min-width: 250px;
+  max-width: 274px;
+  width: 274px;
+  min-height: 66px;
+  border-radius: 11px; /* slightly less round */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 18px;
+  font-family: var(--heading-font-family), sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  transition: box-shadow 0.2s;
+}
+
+/* Gold filled left "button" */
+.search.search20 .search-box {
+  background: linear-gradient(135deg, #cba980 0%, #b49162 100%);
+  box-shadow: 0 2px 8px rgb(30 30 30 / 10%);
+  border: none;
+  flex-direction: row;
+  gap: 6px;
+  padding: 0 18px;
+  position: relative;
+}
+
+/* Icon: slightly larger, minimal gap to text, baseline aligned */
+.search.search20 .icon-search {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.search.search20 .icon-search img {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/* Remove input field look, center placeholder, no caret or border */
+.search.search20 .search-box input.search-input {
+  min-width: 0;
+  width: 120px;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: #13294B;
+  font-family: var(--heading-font-family), sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  height: 2em;
+  line-height: 1.2;
+  cursor: pointer;
+  caret-color: transparent;
+  display: block;
+}
+
+.search.search20 .search-box input.search-input::placeholder {
+  color: #13294B;
+  opacity: 1;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Remove focus border and shadow */
+.search.search20 .search-box input.search-input:focus,
+.search.search20 .search-box input.search-input:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  caret-color: transparent;
+}
+
+/* Remove autofill background */
+.search.search20 .search-box input.search-input:-webkit-autofill {
+  -webkit-text-fill-color: #13294B;
+  box-shadow: 0 0 0 100px transparent inset;
+}
+
+/* Outlined white button (right) */
+.search.search20 .search-results {
+  background: transparent;
+  border: 3px solid #fff;
+  color: #fff;
+  text-align: center;
+  min-height: 66px;
+  min-width: 250px;
+  max-width: 274px;
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+}
+
+/* Maintain vertical space if empty */
+.search.search20 .search-results:empty::after {
+  display: block;
+  content: '';
+  min-height: 1em;
+}
+
+/* Responsive: stack vertically on narrower screens */
+@media (width <= 700px) {
+  .search.search20 {
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px 0;
+    min-height: unset;
+  }
+
+  .search.search20 .search-box,
+  .search.search20 .search-results {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+}
