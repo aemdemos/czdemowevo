@@ -1,28 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the 'columns.block' inside the provided element
-  const columnsBlock = element.querySelector('.columns.block');
+  // Find the columns block inside the section
+  const columnsWrapper = element.querySelector('.columns-wrapper');
+  let columnsBlock = null;
+  if (columnsWrapper) {
+    columnsBlock = columnsWrapper.querySelector('.columns.block');
+  } else {
+    columnsBlock = element.querySelector('.columns.block');
+  }
   if (!columnsBlock) return;
-  // The columns block always has one child wrapping the actual columns divs
-  const layoutContainer = columnsBlock.firstElementChild;
-  if (!layoutContainer) return;
-  // Each direct child of layoutContainer is a column (<div>)
-  const columnDivs = Array.from(layoutContainer.children);
-  // For each column, extract its children nodes as a fragment to preserve structure
-  const contentRow = columnDivs.map(col => {
-    const fragment = document.createDocumentFragment();
-    while (col.firstChild) {
-      fragment.appendChild(col.firstChild);
-    }
-    return fragment;
-  });
-  // Compose table rows
+
+  // The .columns.block contains a single row container with child columns
+  // This is typically the first child of .columns.block
+  let columnsRowContainer = columnsBlock.querySelector(':scope > div');
+  if (!columnsRowContainer) {
+    columnsRowContainer = columnsBlock;
+  }
+  // Get each column (immediate children of row)
+  const columnDivs = Array.from(columnsRowContainer.children).filter((col) => col.nodeType === 1);
+  if (!columnDivs.length) return;
+
+  // Header row: exactly one string cell
+  const headerRow = ['Columns (columns22)'];
+  // Data row: each column gets its own cell
+  const contentRow = columnDivs;
+
   const cells = [
-    ['Columns (columns22)'], // header row (single cell)
-    contentRow               // content row (one cell per column)
+    headerRow,
+    contentRow
   ];
-  // Create the block table
+
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  // Replace the original element
   element.replaceWith(table);
 }

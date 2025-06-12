@@ -1,53 +1,39 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .columns.block inside the wrapper
+  // Find the inner columns block (should be one per input element)
   const columnsBlock = element.querySelector('.columns.block');
   if (!columnsBlock) return;
 
-  // Get immediate children of the columns block (should be the two columns)
-  const colWrappers = Array.from(columnsBlock.children);
-  if (colWrappers.length < 2) return;
-  
-  // For the left column, drill down to the deepest single-child div
-  let leftCol = colWrappers[0];
-  let prevLeftCol = null;
+  // Get the top-level direct children of the columns block -- these are the columns
+  const columns = Array.from(columnsBlock.querySelectorAll(':scope > div'));
+  // Defensive: must have at least two columns for this layout
+  if (columns.length < 2) return;
+
+  // For the left column: find innermost content div (usually deeply nested)
+  let leftContent = columns[0];
+  // Drill down if there are only DIV children, until we find the real content
   while (
-    leftCol &&
-    leftCol.children.length === 1 &&
-    leftCol.firstElementChild &&
-    leftCol.tagName === 'DIV'
+    leftContent &&
+    leftContent.children.length === 1 &&
+    leftContent.firstElementChild.tagName === 'DIV'
   ) {
-    prevLeftCol = leftCol;
-    leftCol = leftCol.firstElementChild;
-  }
-  // Defensive: if we drill down too far, back up one level
-  if (leftCol && leftCol.tagName !== 'DIV' && prevLeftCol) {
-    leftCol = prevLeftCol;
+    leftContent = leftContent.firstElementChild;
   }
 
-  // For the right column (image), typically .columns-img-col, but fallback to grilling down
-  let rightCol = colWrappers[1];
-  let prevRightCol = null;
-  while (
-    rightCol &&
-    rightCol.children.length === 1 &&
-    rightCol.firstElementChild &&
-    rightCol.tagName === 'DIV'
-  ) {
-    prevRightCol = rightCol;
-    rightCol = rightCol.firstElementChild;
-  }
-  if (rightCol && rightCol.tagName !== 'DIV' && prevRightCol) {
-    rightCol = prevRightCol;
-  }
+  // For the right column, reference the column directly (contains image/picture)
+  const rightContent = columns[1];
 
-  // Build the table for the block
+  // Table header as in the example (no extra spaces, correct case)
   const headerRow = ['Columns (columns1)'];
-  const contentRow = [leftCol, rightCol];
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
-  
+  // Content row: left and right columns, referencing actual DOM elements
+  const contentRow = [leftContent, rightContent];
+
+  // Compose the table rows
+  const tableRows = [headerRow, contentRow];
+
+  // Create the block table using the helper, referencing document
+  const table = WebImporter.DOMUtils.createTable(tableRows, document);
+
+  // Replace the original element with the new table
   element.replaceWith(table);
 }

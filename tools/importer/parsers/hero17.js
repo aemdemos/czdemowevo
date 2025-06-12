@@ -1,46 +1,33 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the hero block container
-  const calloutBlock = element.querySelector('.callout.block');
-  if (!calloutBlock) return;
+  // Find the .callout.block (the main block for hero content)
+  const block = element.querySelector('.callout.block');
+  if (!block) return;
 
-  // Get all immediate children in order
-  const children = Array.from(calloutBlock.children);
+  // Collect all direct children of the block in order
+  const children = Array.from(block.children);
 
-  // Collect all <picture> elements in order
-  const pictures = children.filter(el => el.tagName === 'PICTURE');
-  // Collect first heading (h1-h6)
-  const heading = children.find(el => /^H[1-6]$/.test(el.tagName));
+  // Find all <picture> elements (for images)
+  const pictures = children.filter(el => el.tagName && el.tagName.toLowerCase() === 'picture');
+  // Find all heading elements (for headings)
+  const headings = children.filter(el => /^H[1-6]$/.test(el.tagName));
 
-  // Build the cells as per the markdown example
-  // 1. Header row: 'Hero'
-  // 2. Second row: first <picture> (background)
-  // 3. Third row: Heading (if present), then second <picture> (decorative, if present)
+  // Compose the rows for the hero table
+  // Row 1: Header row
+  const headerRow = ['Hero'];
 
-  const cells = [];
-  // Header row
-  cells.push(['Hero']);
+  // Row 2: Background image (first <picture>) or empty
+  const backgroundImgRow = [pictures[0] || ''];
 
-  // Second row: first picture (or blank)
-  if (pictures[0]) {
-    cells.push([pictures[0]]);
-  } else {
-    cells.push(['']);
-  }
+  // Row 3: All headings, and the second <picture> (if present)
+  const contentArr = [];
+  if (headings.length) contentArr.push(...headings);
+  if (pictures.length > 1) contentArr.push(pictures[1]);
+  const contentRow = [contentArr.length > 0 ? contentArr : ''];
 
-  // Third row: heading and decorative foreground picture, both if present
-  const content = [];
-  if (heading) content.push(heading);
-  if (pictures[1]) content.push(pictures[1]);
-  // If both present, include both; if only one present, include just that; if neither, add blank.
-  if (content.length > 0) {
-    // If both, pass as array for a block cell
-    cells.push([content.length === 1 ? content[0] : content]);
-  } else {
-    cells.push(['']);
-  }
-
-  // Create the table and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Build the hero block table
+  const table = WebImporter.DOMUtils.createTable([headerRow, backgroundImgRow, contentRow], document);
+  
+  // Replace the original element with the new block table
   element.replaceWith(table);
 }

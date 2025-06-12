@@ -1,40 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as in the example
+  // 1. Table header: must match spec exactly
   const headerRow = ['Columns (columns18)'];
 
-  // Get steps from .steps.block
-  const stepsBlock = element.querySelector('.steps.block');
-  if (!stepsBlock) {
-    // fallback: just replace element with a columns block with the element's innerHTML
-    const cells = [headerRow, [element]];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    element.replaceWith(table);
-    return;
-  }
+  // 2. Find all top-level columns (each is a <div> direct child)
+  const columnDivs = Array.from(element.querySelectorAll(':scope > div'));
 
-  // Extract all the step column divs (each .steps.block > div)
-  const columns = Array.from(stepsBlock.children)
-    .filter(col => col.nodeType === 1)
-    .map(col => {
-      // The step content is the single child div
-      const inner = col.querySelector('div');
-      return inner || col;
-    });
+  // 3. For each column, extract the existing content block (including step, title, description)
+  // Reference existing elements where possible.
+  const cols = columnDivs.map(colDiv => {
+    // The actual content is the only child div of colDiv
+    const contentDiv = colDiv.querySelector(':scope > div');
+    if (!contentDiv) return '';
 
-  // The correct layout is two rows, each with three columns
-  const row1 = columns.slice(0, 3);
-  const row2 = columns.slice(3, 6);
-  // If there are less than 6 steps, fill out the row with empty strings
-  while (row1.length < 3) row1.push('');
-  while (row2.length < 3) row2.push('');
+    // We do not alter contentDiv or its children; we reference the element directly for resilience
+    return contentDiv;
+  });
 
+  // 4. Build the table cells: header, then a single row with N columns (one per step)
   const cells = [
     headerRow,
-    row1,
-    row2
+    cols,
   ];
 
+  // 5. Create the block table
   const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // 6. Replace the original element
   element.replaceWith(table);
 }

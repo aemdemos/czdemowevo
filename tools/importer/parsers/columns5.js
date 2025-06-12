@@ -1,45 +1,40 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Set the header row for columns5, exact per instructions
+  // Header row as in the example
   const headerRow = ['Columns (columns5)'];
 
-  // Find the columns block itself (in case element is columns-wrapper)
-  let columnsBlock = element;
-  if (columnsBlock.classList.contains('columns-wrapper')) {
-    const found = columnsBlock.querySelector('.columns.block');
-    if (found) columnsBlock = found;
-  }
+  // Find the columns block (the main container of columns)
+  const columnsBlock = element.querySelector('.columns.block');
+  if (!columnsBlock) return;
 
-  // Get the column containers: direct children divs (should be 2)
-  const colDivs = Array.from(columnsBlock.children).filter(c => c.tagName === 'DIV');
-  // Defensive: handle columns coded as nested divs (sometimes columns block has one div containing two children)
-  let contentCols = colDivs;
-  if (colDivs.length === 1 && colDivs[0].children.length === 2) {
-    contentCols = Array.from(colDivs[0].children);
-  }
+  // Get all direct child divs (columns)
+  const columns = Array.from(columnsBlock.children).filter(
+    (col) => col.tagName && col.tagName.toLowerCase() === 'div'
+  );
 
-  // If still not 2, see if there's any picture sibling in children
-  if (contentCols.length < 2) {
-    // Try to find a sibling picture
-    const innerDivs = Array.from(columnsBlock.querySelectorAll(':scope > div > div'));
-    if (innerDivs.length >= 2) {
-      contentCols = [innerDivs[0], innerDivs[1]];
+  // Defensive: Only use the first two columns (no extras)
+  if (columns.length < 2) return;
+  const leftCol = (() => {
+    let col = columns[0];
+    while (
+      col &&
+      col.children &&
+      col.children.length === 1 &&
+      col.firstElementChild.tagName.toLowerCase() === 'div'
+    ) {
+      col = col.firstElementChild;
     }
-  }
+    return col;
+  })();
+  const rightCol = columns[1];
 
-  // Defensive: if somehow still not 2 columns, fallback to empty divs
-  const leftCol = contentCols[0] || document.createElement('div');
-  const rightCol = contentCols[1] || document.createElement('div');
-
-  // Compose the 2-column row; reference existing nodes directly
-  const row = [leftCol, rightCol];
-
-  // Build the table
-  const table = WebImporter.DOMUtils.createTable([
+  // Only use exactly two columns in the content row
+  const cells = [
     headerRow,
-    row
-  ], document);
+    [leftCol, rightCol]
+  ];
 
-  // Replace the original element with the new block table
+  // Create the table and replace the original element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

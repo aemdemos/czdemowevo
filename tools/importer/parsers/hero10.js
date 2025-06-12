@@ -1,22 +1,20 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // According to the example and screenshots, the Hero block should have:
-  // Row 1: ['Hero'] (header)
-  // Row 2: [img] (background image)
-  // Row 3: [''] (empty)
+  // 1. Header row: "Hero"
+  const headerRow = ['Hero'];
 
-  // Create the background image element (the image is not in the HTML footer, but required by the example)
+  // 2. Background image row
   const img = document.createElement('img');
   img.src = 'https://main--czdemowevo--aemdemos.hlx.page/media_1ca653f4f0fb50020a010f62ded9172d64671042a.jpg?width=750&height=415';
   img.alt = 'Decorative double Helix';
+  const imageRow = [img];
 
-  // Construct the table as per the example
-  const cells = [
-    ['Hero'],
-    [img],
-    [''],
-  ];
+  // 3. Content row: heading in block
+  const heading = document.createElement('h1');
+  heading.textContent = 'Heading in Block';
+  const contentRow = [heading];
 
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  const rows = [headerRow, imageRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(table);
 }
