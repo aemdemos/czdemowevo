@@ -347,7 +347,10 @@
     "sameDomain": true,
     "keepHash": false,
     "strategy": "SITEMAPS",
-    "logger": {}
+    "logger": {},
+    "strategiesAttempted": [
+      "SITEMAPS"
+    ]
   },
   "extractionErrors": []
 }
