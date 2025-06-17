@@ -1,38 +1,34 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Header row as in the example
+  // Locate the block content
+  const featuredWrapper = element.querySelector('.featured-wrapper');
+  if (!featuredWrapper) return;
+  const featuredBlock = featuredWrapper.querySelector('.featured.block');
+  if (!featuredBlock) return;
+  const featuredRecipes = featuredBlock.querySelector('.featured-recipes');
+  if (!featuredRecipes) return;
+
+  // Find the five recipe cards (not the button container)
+  const recipeDivs = Array.from(featuredRecipes.querySelectorAll(':scope > .featured-recipe:not(.button-container)'));
+  // Find the button container (should be the "All Cocktails" block)
+  const buttonDiv = featuredRecipes.querySelector(':scope > .featured-recipe.button-container');
+
+  // The layout is two rows, three columns each
+  // First row: Cucumber Collins, Wheatley Vodka Club, La Luna Rossa
+  // Second row: Flatiron Flip, Romapolitan, All Cocktails (button container)
+  const row1 = [];
+  const row2 = [];
+  for (let i = 0; i < 3; i++) {
+    row1.push(recipeDivs[i] || '');
+  }
+  for (let i = 3; i < 5; i++) {
+    row2.push(recipeDivs[i] || '');
+  }
+  row2.push(buttonDiv || '');
+
+  // Header row must be a single cell array
   const headerRow = ['Columns (columns5)'];
-
-  // Find the columns block (the main container of columns)
-  const columnsBlock = element.querySelector('.columns.block');
-  if (!columnsBlock) return;
-
-  // Get all direct child divs (columns)
-  const columns = Array.from(columnsBlock.children).filter(
-    (col) => col.tagName && col.tagName.toLowerCase() === 'div'
-  );
-
-  // Defensive: Only use the first two columns (no extras)
-  if (columns.length < 2) return;
-  const leftCol = (() => {
-    let col = columns[0];
-    while (
-      col &&
-      col.children &&
-      col.children.length === 1 &&
-      col.firstElementChild.tagName.toLowerCase() === 'div'
-    ) {
-      col = col.firstElementChild;
-    }
-    return col;
-  })();
-  const rightCol = columns[1];
-
-  // Only use exactly two columns in the content row
-  const cells = [
-    headerRow,
-    [leftCol, rightCol]
-  ];
+  const cells = [headerRow, row1, row2];
 
   // Create the table and replace the original element
   const table = WebImporter.DOMUtils.createTable(cells, document);
