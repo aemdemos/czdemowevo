@@ -1,50 +1,57 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The table header must match exactly
-  const headerRow = ['Carousel (carousel11)'];
-
-  // Find the main carousel container
-  const carouselBlock = element.querySelector('.quote-carousel.block');
-  if (!carouselBlock) return;
+  // Find the quote-carousel block containing the slides
+  const block = element.querySelector('.quote-carousel');
+  if (!block) return;
 
   // Get all quotecard slides
-  const slides = Array.from(carouselBlock.querySelectorAll(':scope > .quotecard'));
+  const slides = Array.from(block.querySelectorAll('.quotecard'));
 
-  const rows = slides.map((slide) => {
-    // Extract the image (first <img> within .aphorist picture, if exists)
+  // Prepare the header row (must match example exactly)
+  const cells = [['Carousel (carousel11)']];
+
+  slides.forEach((slide) => {
+    // IMAGE: from .aphorist > picture > img
     let imgEl = null;
-    const aphoristPic = slide.querySelector('.aphorist picture img');
-    if (aphoristPic) imgEl = aphoristPic;
+    const aphorist = slide.querySelector('.aphorist');
+    if (aphorist) {
+      const picture = aphorist.querySelector('picture');
+      if (picture) imgEl = picture.querySelector('img');
+    }
 
-    // Build the text cell as array of elements
+    // TEXT CONTENT: main quote (p), then author (bold), then place
     const content = [];
-    // The quote text paragraph
-    const quotePara = slide.querySelector('p');
-    if (quotePara) content.push(quotePara);
-
-    // The aphorist info
-    const aphoristUl = slide.querySelector('.aphorist ul');
-    if (aphoristUl) {
-      const lis = aphoristUl.querySelectorAll('li');
-      if (lis.length > 0) {
-        // Add <br> between quote and author, and between author and role
-        content.push(document.createElement('br'));
-        // Author (bold)
-        const author = document.createElement('strong');
-        author.textContent = lis[0].textContent;
-        content.push(author);
-        // Role (if present)
+    // The main quote (inside <p>)
+    const p = slide.querySelector('p');
+    if (p) content.push(p);
+    // Add author and location (from ul li)
+    if (aphorist) {
+      const ul = aphorist.querySelector('ul');
+      if (ul) {
+        const lis = ul.querySelectorAll('li');
+        if (lis.length > 0) {
+          // Add <br> before author
+          content.push(document.createElement('br'));
+          // Author bold
+          const strong = document.createElement('strong');
+          strong.textContent = lis[0].textContent;
+          content.push(strong);
+        }
         if (lis.length > 1) {
+          // Add <br> before location
           content.push(document.createElement('br'));
           content.push(document.createTextNode(lis[1].textContent));
         }
       }
     }
-    return [imgEl, content];
+    // Each row is [image, content], even if one is empty
+    cells.push([
+      imgEl ? imgEl : '',
+      content.length > 0 ? content : '',
+    ]);
   });
 
-  // Compose the table rows
-  const tableData = [headerRow, ...rows];
-  const table = WebImporter.DOMUtils.createTable(tableData, document);
+  // Create the table and replace the element
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

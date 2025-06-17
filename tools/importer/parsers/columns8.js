@@ -1,36 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .columns-wrapper inside the section
+  // Find the core columns block structure
   const columnsWrapper = element.querySelector('.columns-wrapper');
   if (!columnsWrapper) return;
-  // Find the .columns.block inside the wrapper
   const columnsBlock = columnsWrapper.querySelector('.columns.block');
   if (!columnsBlock) return;
-  
-  // The columns block should have a single child <div>, which contains the actual columns
-  let rowContainer = columnsBlock.querySelector(':scope > div');
-  if (!rowContainer) rowContainer = columnsBlock;
-  // Get array of column divs
-  const columnDivs = Array.from(rowContainer.children).filter(col => col && col.childElementCount > 0);
-  if (columnDivs.length < 2) return;
 
-  // Build the header row as a single cell array
+  // In the .columns.block, the immediate child divs are the columns
+  const columnDivs = Array.from(columnsBlock.querySelectorAll(':scope > div'));
+  if (!columnDivs.length) return;
+
+  // For the sample HTML, column 1 is the image, column 2 is the heading + paragraph
+  // To maintain generality and resilience, handle both cases
+  const contentRow = columnDivs.map((col) => {
+    // If this column contains a .columns-img-col, use its picture/img only
+    const imgCol = col.querySelector('.columns-img-col');
+    if (imgCol) {
+      // Find the picture element (prefer) or img
+      const picture = imgCol.querySelector('picture');
+      if (picture) return picture;
+      const img = imgCol.querySelector('img');
+      if (img) return img;
+      // fallback, if nothing found just return the container
+      return imgCol;
+    }
+    // For the text column, preserve all of its direct children (headings, paragraphs, etc.)
+    return Array.from(col.children);
+  });
+
+  // Table header row must match exactly
   const headerRow = ['Columns (columns8)'];
-  // Build the content row: array of column elements — as many as appear in the HTML
-  const contentRow = columnDivs;
 
-  // Compose the cells array: single-cell header, then multi-cell content row
-  const cells = [headerRow, contentRow];
+  // Build the block table
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRow
+  ], document);
 
-  // Create the table
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-
-  // Set the th to span the number of columns
-  const th = table.querySelector('th');
-  if (th && columnDivs.length > 1) {
-    th.setAttribute('colspan', columnDivs.length);
-  }
-
-  // Replace the original element
+  // Replace the original section with the table
   element.replaceWith(table);
 }

@@ -1,50 +1,33 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the .callout.block inside the element
-  const block = element.querySelector('.callout.block');
-  if (!block) return;
+  // Find the main callout block
+  const callout = element.querySelector('.callout.block');
+  if (!callout) return;
 
-  // Get all top-level children of the block
-  const children = Array.from(block.children);
+  // Extract all <picture> elements in order
+  const pictures = callout.querySelectorAll('picture');
+  // Extract the main heading (h1-h6)
+  const heading = callout.querySelector('h1, h2, h3, h4, h5, h6');
 
-  // We'll collect the first <picture> (background image), the first heading, and any remaining content
-  let bgPicture = null;
-  let heading = null;
-  let additionalContent = [];
-
-  // Scan through children to extract picture(s) and heading
-  let foundFirstPicture = false;
-  for (let i = 0; i < children.length; i++) {
-    const node = children[i];
-    if (node.tagName === 'PICTURE' && !foundFirstPicture) {
-      bgPicture = node;
-      foundFirstPicture = true;
-    } else if (/^H[1-6]$/.test(node.tagName) && !heading) {
-      heading = node;
-    } else {
-      additionalContent.push(node);
-    }
-  }
-
-  // Build rows for the Hero block as per the example: header, background image, content (heading)
+  // Build table rows to match example: 1 col, 3 rows: header, image, content
   const rows = [];
-  // Header row
-  rows.push(['Hero']);
-  // Background image row (may be empty if not present)
-  rows.push([bgPicture ? bgPicture : '']);
-  // Content row: heading and any additional content (typically one heading)
-  if (heading || additionalContent.length > 0) {
-    const rowContent = [];
-    if (heading) rowContent.push(heading);
-    // Include any extra content if present (future-proof for subheading/cta)
-    if (additionalContent.length > 0) rowContent.push(...additionalContent);
-    rows.push([rowContent.length === 1 ? rowContent[0] : rowContent]);
-  } else {
-    // If no heading or content, include empty string to keep row
-    rows.push(['']);
-  }
+  rows.push(['Hero']); // Header row: EXACT match to example
 
-  // Create the table and replace the element
+  // Second row: Background image (optional)
+  rows.push([pictures[0] || '']);
+
+  // Third row: Heading + Icon/image (optional)
+  // The example shows the heading and a decorative/award image on the same row, both in one cell
+  let contentCell = [];
+  if (heading) {
+    contentCell.push(heading);
+  }
+  if (pictures.length > 1) {
+    contentCell.push(pictures[1]);
+  }
+  // If neither heading nor second pic, cell remains empty
+  rows.push([contentCell.length ? contentCell : '']);
+
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
