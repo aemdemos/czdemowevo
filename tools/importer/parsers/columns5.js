@@ -1,36 +1,43 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Locate the block content
-  const featuredWrapper = element.querySelector('.featured-wrapper');
-  if (!featuredWrapper) return;
-  const featuredBlock = featuredWrapper.querySelector('.featured.block');
+  // Find the featured-recipes container
+  const featuredBlock = element.querySelector('.featured-wrapper > .featured.block, .featured-wrapper > .featured');
   if (!featuredBlock) return;
-  const featuredRecipes = featuredBlock.querySelector('.featured-recipes');
-  if (!featuredRecipes) return;
+  const recipesContainer = featuredBlock.querySelector('.featured-recipes');
+  if (!recipesContainer) return;
 
-  // Find the five recipe cards (not the button container)
-  const recipeDivs = Array.from(featuredRecipes.querySelectorAll(':scope > .featured-recipe:not(.button-container)'));
-  // Find the button container (should be the "All Cocktails" block)
-  const buttonDiv = featuredRecipes.querySelector(':scope > .featured-recipe.button-container');
+  // Get all immediate child divs which are featured-recipe (including button-container)
+  const recipeDivs = Array.from(recipesContainer.children).filter(child => child.classList.contains('featured-recipe'));
 
-  // The layout is two rows, three columns each
-  // First row: Cucumber Collins, Wheatley Vodka Club, La Luna Rossa
-  // Second row: Flatiron Flip, Romapolitan, All Cocktails (button container)
-  const row1 = [];
-  const row2 = [];
-  for (let i = 0; i < 3; i++) {
-    row1.push(recipeDivs[i] || '');
+  // Function to extract the appropriate content for each cell
+  function getCellContent(recipeDiv) {
+    const a = recipeDiv.querySelector('a');
+    const picture = recipeDiv.querySelector('picture');
+    if (a && picture) {
+      return a;
+    } else if (picture && !a) {
+      const buttonLink = recipeDiv.querySelector('a.button');
+      if (buttonLink) {
+        return [picture, buttonLink];
+      }
+      return [picture];
+    } else if (a && !picture) {
+      return a;
+    } else {
+      return Array.from(recipeDiv.childNodes);
+    }
   }
-  for (let i = 3; i < 5; i++) {
-    row2.push(recipeDivs[i] || '');
-  }
-  row2.push(buttonDiv || '');
 
-  // Header row must be a single cell array
+  // Compose column rows (two rows of three cells each)
+  const row1 = [0, 1, 2].map(idx => getCellContent(recipeDivs[idx]));
+  const row2 = [3, 4, 5].map(idx => getCellContent(recipeDivs[idx]));
+
+  // Header row must be a single cell/column only!
   const headerRow = ['Columns (columns5)'];
-  const cells = [headerRow, row1, row2];
 
-  // Create the table and replace the original element
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // The second and third rows must be arrays of three cells each
+  const tableRows = [headerRow, row1, row2];
+
+  const blockTable = WebImporter.DOMUtils.createTable(tableRows, document);
+  element.replaceWith(blockTable);
 }

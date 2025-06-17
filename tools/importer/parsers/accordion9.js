@@ -1,84 +1,68 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper for node type constants
-  const ELEMENT_NODE = 1;
-  const TEXT_NODE = 3;
+  // Find the .faq-replace.block element to operate on
+  let block = element;
+  if (block.classList.contains('section')) {
+    block = block.querySelector('.faq-replace.block');
+  }
+  if (!block) {
+    // nothing to do
+    return;
+  }
 
   // Find the questions container
-  const questionsContainer = element.querySelector('#faq-replace-questions-container');
-  if (!questionsContainer) return;
+  const questionsContainer = block.querySelector('#faq-replace-questions-container');
+  if (!questionsContainer) {
+    return;
+  }
+  const questionDivs = questionsContainer.querySelectorAll(':scope > div');
 
-  // Get all question entries (direct children)
-  const questionItems = Array.from(questionsContainer.children);
+  // Start building the cells for the table, first row is the header
+  const cells = [
+    ['Accordion (accordion9)']
+  ];
 
-  // Header row exactly as required
-  const headerRow = ['Accordion (accordion9)'];
-  const rows = [headerRow];
-
-  questionItems.forEach((item) => {
-    // The structure per item is:
-    // <picture> (icon)  [may be present]
-    // "Why ..." (text node)
-    // <div>Answer...</div>
-    const children = Array.from(item.childNodes);
+  questionDivs.forEach((qdiv) => {
+    // Each questionDiv contains (in order):
+    // <picture>, question text node, <div>answer</div>
     let picture = null;
-    let questionText = '';
-    let answer = null;
+    let titleTextNode = null;
+    let answerDiv = null;
 
-    // Find <picture>
+    // Use standard DOM nodeType values (1 = ELEMENT_NODE, 3 = TEXT_NODE)
+    const ELEMENT_NODE = 1;
+    const TEXT_NODE = 3;
+    const children = Array.from(qdiv.childNodes);
     for (let i = 0; i < children.length; i++) {
-      if (children[i].nodeType === ELEMENT_NODE && children[i].nodeName === 'PICTURE') {
-        picture = children[i];
-        break;
+      const node = children[i];
+      if (node.nodeType === ELEMENT_NODE && node.tagName === 'PICTURE') {
+        picture = node;
+      } else if (node.nodeType === TEXT_NODE && node.textContent.trim()) {
+        titleTextNode = node;
+      } else if (node.nodeType === ELEMENT_NODE && node.tagName === 'DIV') {
+        answerDiv = node;
       }
     }
-    // Find the question text node (text node immediately after picture)
-    let afterPicture = false;
-    for (let i = 0; i < children.length; i++) {
-      if (children[i] === picture) {
-        afterPicture = true;
-        continue;
-      }
-      if (afterPicture && children[i].nodeType === TEXT_NODE && children[i].textContent.trim()) {
-        questionText = children[i].textContent.trim();
-        break;
-      }
-    }
-    // If for some reason no picture, try first non-empty text node
-    if (!picture) {
-      for (let i = 0; i < children.length; i++) {
-        if (children[i].nodeType === TEXT_NODE && children[i].textContent.trim()) {
-          questionText = children[i].textContent.trim();
-          break;
-        }
-      }
-    }
-
-    // Find the answer <div>
-    answer = Array.from(item.children).find((el) => el.nodeName === 'DIV');
-
-    // Title cell: icon (if present) and question text
+    // Compose the title cell using the original text node without wrapping in <span>
     let titleCell = [];
     if (picture) titleCell.push(picture);
-    if (questionText) {
-      const span = document.createElement('span');
-      span.textContent = questionText;
-      titleCell.push(span);
+    if (titleTextNode) {
+      // If we have a picture, add a space between image and text
+      if (picture) titleCell.push(document.createTextNode(' '));
+      titleCell.push(titleTextNode);
     }
-    if (!picture && !questionText) {
-      // Fallback: just use item.textContent
-      const span = document.createElement('span');
-      span.textContent = item.textContent.trim();
-      titleCell = [span];
+    if (titleCell.length === 0) titleCell = '';
+    // Compose the content cell
+    let contentCell;
+    if (answerDiv) {
+      contentCell = answerDiv;
+    } else {
+      contentCell = '';
     }
-    // If titleCell is only one element, use just that element not array
-    if (titleCell.length === 1) titleCell = titleCell[0];
-    // If answer is missing, use empty string
-    const contentCell = answer || '';
-    rows.push([titleCell, contentCell]);
+    cells.push([titleCell, contentCell]);
   });
 
-  // Create the table and replace original element
-  const block = WebImporter.DOMUtils.createTable(rows, document);
-  element.replaceWith(block);
+  // Create the table and replace
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(table);
 }

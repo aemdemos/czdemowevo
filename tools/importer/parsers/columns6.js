@@ -1,69 +1,38 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper: safely get an image from a container
-  function getImageFrom(container) {
-    // Try to find an <img> within any <picture>, or a direct <img>
-    const img = container.querySelector('img');
-    return img || null;
-  }
-  // Helper: safely get SVG or logo span
-  function getLogoFrom(container) {
-    // Try to find a <span> or <svg> for logos (for Drizly)
-    const logo = container.querySelector('span.icon, svg');
-    return logo || null;
-  }
+  // Get all .button-container divs (columns)
+  const buttonContainers = Array.from(element.querySelectorAll(':scope > div.button-container'));
 
-  // Helper: get the <a> button element
-  function getButtonFrom(container) {
-    return container.querySelector('a.button.primary');
-  }
+  // For each column, collect the <a> (button) and the logo/image, appended to the link for correct order
+  const columnCells = buttonContainers.map((container) => {
+    const link = container.querySelector('a');
+    // Look for logo or image _not_ inside the link (as visual trailing icon)
+    let logo = null;
+    // SVG logo
+    const spanLogo = container.querySelector('.buy-link-image span.icon, .locator-link-image span.icon');
+    // Image logo
+    const imgLogo = container.querySelector('.buy-link-image img, .locator-link-image img');
+    if (spanLogo) logo = spanLogo;
+    else if (imgLogo) logo = imgLogo;
 
-  // --- Build new structure matching the example ---
-  // Get button containers
-  const buyContainer = element.querySelector('.buy-link.button-container');
-  const locatorContainer = element.querySelector('.locator-link.button-container');
-
-  // ---- LEFT COLUMN CONTENT ----
-  // First row left: drizly logo (SVG)
-  const leftTop = getLogoFrom(buyContainer);
-  // Second row left: image from locator
-  const leftBottom = getImageFrom(locatorContainer);
-
-  // ---- RIGHT COLUMN CONTENT ----
-  // First row right content
-  // Columns block\n<ul>\n<li>One</li>...\n</ul>\n<button>
-  const rightTop = [];
-  const desc = document.createElement('div');
-  desc.textContent = 'Columns block';
-  rightTop.push(desc);
-  // list:
-  const ul = document.createElement('ul');
-  ['One', 'Two', 'Three'].forEach(liTxt => {
-    const li = document.createElement('li');
-    li.textContent = liTxt;
-    ul.appendChild(li);
+    // If there's a link and a logo, append the logo to the link (if not already inside)
+    if (link && logo && !link.contains(logo)) {
+      link.appendChild(document.createTextNode(' '));
+      link.appendChild(logo);
+      return link;
+    }
+    // If there's a link (with or without logo inside), use it
+    if (link) return link;
+    // If there's a logo but no link, just use the logo (edge case, not expected here)
+    if (logo) return logo;
+    // fallback (should not occur)
+    return '';
   });
-  rightTop.push(ul);
-  // Add buy online button (from buyContainer)
-  const buyBtn = getButtonFrom(buyContainer);
-  if (buyBtn) rightTop.push(buyBtn);
 
-  // Second row right content
-  const rightBottom = [];
-  // Add text: Or you can just view the preview
-  const note = document.createElement('div');
-  note.textContent = 'Or you can just view the preview';
-  rightBottom.push(note);
-  // Add Product Locator button (from locatorContainer)
-  const locatorBtn = getButtonFrom(locatorContainer);
-  if (locatorBtn) rightBottom.push(locatorBtn);
-
-  // Build the table rows
-  const rows = [
+  const cells = [
     ['Columns (columns6)'],
-    [leftTop, rightTop],
-    [leftBottom, rightBottom]
+    columnCells
   ];
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
