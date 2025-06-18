@@ -1,54 +1,56 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header row (must match example exactly!)
-  const headerRow = ['Hero'];
+  // Extract background image URL from data-background-image
+  const bgImgUrl = element.getAttribute('data-background-image');
+  // Get all direct children columns
+  const columnsWrapper = element.querySelector('.columns-wrapper');
+  let mainImgCell = '';
+  let mainContentFragments = [];
 
-  // Background image: from data-background-image
-  let backgroundImg = '';
-  const bgUrl = element.getAttribute('data-background-image');
-  if (bgUrl) {
-    const img = document.createElement('img');
-    img.src = bgUrl;
-    img.alt = '';
-    backgroundImg = img;
-  }
-
-  // Content (heading, subheading, paragraph, button) from the right column
-  // Find the column wrapper, then find the content column
-  let contentCol = null;
-  const columnsBlock = element.querySelector('.columns.block');
-  if (columnsBlock) {
-    // columnsBlock > div > div.background-image-column
-    const cols = columnsBlock.querySelectorAll(':scope > div > div');
-    // Defensive: find the one with .background-image-column
-    for (const c of cols) {
-      if (c.classList.contains('background-image-column')) {
-        contentCol = c;
-        break;
+  if (columnsWrapper) {
+    // Attempt to get left and right columns
+    const topLevelCols = columnsWrapper.querySelectorAll(':scope > .columns.block > div');
+    let rightCol = null;
+    if (topLevelCols.length === 2) {
+      // Left: image, Right: content
+      const leftCol = topLevelCols[0];
+      rightCol = topLevelCols[1];
+      // Find first picture or img in left column
+      if (leftCol) {
+        let picture = leftCol.querySelector('picture');
+        if (picture) {
+          mainImgCell = picture;
+        }
+      }
+    } else {
+      // fallback: try find image in the whole wrapper
+      let picture = columnsWrapper.querySelector('picture');
+      if (picture) mainImgCell = picture;
+      rightCol = columnsWrapper;
+    }
+    // For main content: headline, subheading, button, etc from rightCol
+    if (rightCol) {
+      // Heading (use h1, then h2, then h3)
+      const heading = rightCol.querySelector('h1, h2, h3');
+      if (heading) mainContentFragments.push(heading);
+      // Paragraphs (not .button-container)
+      const paragraphs = Array.from(rightCol.querySelectorAll('p:not(.button-container)'));
+      paragraphs.forEach(p => mainContentFragments.push(p));
+      // Call-to-action button (inside .button-container)
+      const buttonContainer = rightCol.querySelector('.button-container');
+      if (buttonContainer) {
+        const cta = buttonContainer.querySelector('a.button');
+        if (cta) mainContentFragments.push(cta);
       }
     }
   }
-  if (!contentCol) {
-    contentCol = element.querySelector('.background-image-column');
-  }
 
-  const contentParts = [];
-  if (contentCol) {
-    // We'll grab only direct children for resilience
-    Array.from(contentCol.children).forEach(child => {
-      // Keep headings, paragraphs, and button containers
-      if (/H[1-6]/.test(child.tagName) || child.tagName === 'P' || child.classList.contains('button-container')) {
-        contentParts.push(child);
-      }
-    });
-  }
-
-  // Assemble table rows
-  const rows = [
-    headerRow,
-    [backgroundImg],
-    [contentParts]
+  // Table structure per example: header row, background image row, content row
+  const tableRows = [
+    ['Hero'],
+    [bgImgUrl ? (() => { const img = document.createElement('img'); img.src = bgImgUrl; img.alt = ''; return img; })() : ''],
+    [mainContentFragments.length ? mainContentFragments : '']
   ];
-  const block = WebImporter.DOMUtils.createTable(rows, document);
+  const block = WebImporter.DOMUtils.createTable(tableRows, document);
   element.replaceWith(block);
 }
