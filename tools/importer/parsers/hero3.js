@@ -1,33 +1,33 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main callout block
-  const callout = element.querySelector('.callout.block');
-  if (!callout) return;
-
-  // Extract all <picture> elements in order
-  const pictures = callout.querySelectorAll('picture');
-  // Extract the main heading (h1-h6)
-  const heading = callout.querySelector('h1, h2, h3, h4, h5, h6');
-
-  // Build table rows to match example: 1 col, 3 rows: header, image, content
-  const rows = [];
-  rows.push(['Hero']); // Header row: EXACT match to example
-
-  // Second row: Background image (optional)
-  rows.push([pictures[0] || '']);
-
-  // Third row: Heading + Icon/image (optional)
-  // The example shows the heading and a decorative/award image on the same row, both in one cell
-  let contentCell = [];
-  if (heading) {
-    contentCell.push(heading);
+  // Find the .callout block which contains the hero content
+  const calloutBlock = element.querySelector('.callout.block');
+  if (!calloutBlock) {
+    // Fallback: if .callout.block is missing, do nothing
+    return;
   }
-  if (pictures.length > 1) {
-    contentCell.push(pictures[1]);
-  }
-  // If neither heading nor second pic, cell remains empty
-  rows.push([contentCell.length ? contentCell : '']);
 
+  // Get all direct children of the callout block
+  const children = Array.from(calloutBlock.children);
+
+  // Find all <picture> elements (usually there are two)
+  const pictures = children.filter(el => el.tagName && el.tagName.toLowerCase() === 'picture');
+  // Find the first heading among the children
+  const heading = children.find(el => /^H[1-6]$/.test(el.tagName));
+
+  // Build rows according to the markdown example:
+  // Row 1: Hero (header)
+  // Row 2: Background image (FIRST <picture> only, if exists)
+  // Row 3: Heading (FIRST heading only, if exists)
+  const rows = [
+    ['Hero'],
+    [pictures[0] || ''],
+    [heading || ''],
+  ];
+  
+  // Create the table
   const table = WebImporter.DOMUtils.createTable(rows, document);
+
+  // Replace the original element with the table
   element.replaceWith(table);
 }

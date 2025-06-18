@@ -12,12 +12,13 @@
 /* global WebImporter */
 /* eslint-disable no-console */
 import accordion12Parser from './parsers/accordion12.js';
+import search6Parser from './parsers/search6.js';
+import cards5Parser from './parsers/cards5.js';
+import cards11Parser from './parsers/cards11.js';
+import hero10Parser from './parsers/hero10.js';
 import hero3Parser from './parsers/hero3.js';
 import hero4Parser from './parsers/hero4.js';
-import columns6Parser from './parsers/columns6.js';
 import accordion9Parser from './parsers/accordion9.js';
-import carousel11Parser from './parsers/carousel11.js';
-import columns5Parser from './parsers/columns5.js';
 import hero2Parser from './parsers/hero2.js';
 import columns13Parser from './parsers/columns13.js';
 import columns8Parser from './parsers/columns8.js';
@@ -37,12 +38,13 @@ import {
 const parsers = {
   metadata: metadataParser,
   accordion12: accordion12Parser,
+  search6: search6Parser,
+  cards5: cards5Parser,
+  cards11: cards11Parser,
+  hero10: hero10Parser,
   hero3: hero3Parser,
   hero4: hero4Parser,
-  columns6: columns6Parser,
   accordion9: accordion9Parser,
-  carousel11: carousel11Parser,
-  columns5: columns5Parser,
   hero2: hero2Parser,
   columns13: columns13Parser,
   columns8: columns8Parser,

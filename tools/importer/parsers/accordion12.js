@@ -1,30 +1,31 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main block within the wrapper
-  const block = element.querySelector(':scope > .faq-inplace.block');
+  // 1. Find the main block within 'element'.
+  const block = element.querySelector('.faq-inplace.block');
   if (!block) return;
 
-  // Get both columns inside the block (the structure is two columns of items)
-  const columns = block.querySelectorAll(':scope > div');
-  const rows = [];
+  // 2. Header row matches the block name exactly as required.
+  const rows = [
+    ['Accordion (accordion12)']
+  ];
 
-  // Header row as specified
-  rows.push(['Accordion (accordion12)']);
-
-  // Helper to extract accordion items (each item is a div, containing two divs: title and content)
-  columns.forEach(col => {
-    const items = col.querySelectorAll(':scope > div');
-    items.forEach(item => {
-      const cells = item.querySelectorAll(':scope > div');
-      // Defensive: Only include if both title and content exist
-      if (cells.length >= 2) {
-        // Use the actual elements as required
-        rows.push([cells[0], cells[1]]);
+  // 3. There are two immediate children of the block, each is a column of Q/A pairs.
+  const columnDivs = block.querySelectorAll(':scope > div');
+  columnDivs.forEach(col => {
+    // Each column has Q/A divs, each containing 2 divs (question, answer)
+    const qaDivs = col.querySelectorAll(':scope > div');
+    qaDivs.forEach(qa => {
+      const qas = qa.querySelectorAll(':scope > div');
+      if (qas.length >= 2) {
+        const question = qas[0];
+        const answer = qas[1];
+        // Use the reference to the existing DOM elements, as required
+        rows.push([question, answer]);
       }
     });
   });
 
-  // Create table and replace original element
+  // 4. Create the table using the provided helper, replacing the original element.
   const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
