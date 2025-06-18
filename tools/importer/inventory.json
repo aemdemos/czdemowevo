@@ -99,11 +99,11 @@
       ]
     },
     {
-      "name": "Columns",
+      "name": "Cards",
       "cluster": 5,
-      "source": "Columns",
-      "target": "Columns (columns5)",
-      "key": "columns5",
+      "source": "Cards",
+      "target": "Cards (cards5)",
+      "key": "cards5",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/",
@@ -114,11 +114,11 @@
       ]
     },
     {
-      "name": "Columns",
+      "name": "Search",
       "cluster": 6,
-      "source": "Columns",
-      "target": "Columns (columns6)",
-      "key": "columns6",
+      "source": "Search",
+      "target": "Search (search6)",
+      "key": "search6",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/",
@@ -174,8 +174,11 @@
       ]
     },
     {
-      "name": "unknown",
+      "name": "Hero",
       "cluster": 10,
+      "source": "Hero",
+      "target": "Hero (hero10)",
+      "key": "hero10",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
@@ -186,11 +189,11 @@
       ]
     },
     {
-      "name": "Carousel",
+      "name": "Cards",
       "cluster": 11,
-      "source": "Carousel",
-      "target": "Carousel (carousel11)",
-      "key": "carousel11",
+      "source": "Cards",
+      "target": "Cards (cards11)",
+      "key": "cards11",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
