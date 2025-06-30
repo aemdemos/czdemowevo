@@ -1,3 +1,4 @@
+
 /* Base cards styles */
 .cards > ul {
   list-style: none;
@@ -180,6 +181,7 @@
     max-width: 740px;
     gap: 20px;
   }
+
   .cards.cards9 > ul > li {
     flex: 0 0 calc((100% - 20px) / 2);
     width: calc((100% - 20px) / 2);
@@ -195,6 +197,7 @@
     max-width: 360px;
     gap: 12px;
   }
+
   .cards.cards9 > ul > li {
     flex-basis: 100%;
     width: 100%;
@@ -253,6 +256,7 @@
   border-radius: 0;
   box-sizing: border-box;
   margin: 0 auto;
+
   /* Prevent collapse if image is missing */
   min-height: 160px;
 }
@@ -285,6 +289,7 @@
   justify-content: center;
   background: none;
   box-sizing: border-box;
+
   /* Ensure text doesn't disappear if it's present */
   visibility: visible;
   opacity: 1;
@@ -295,12 +300,14 @@
     gap: 32px 20px;
     max-width: 720px;
   }
+
   .cards.cards19 > ul > li,
   .cards.cards19 .cards-card-image {
     width: 220px;
     min-width: 220px;
     max-width: 220px;
   }
+
   .cards.cards19 .cards-card-image {
     height: 275px;
   }
@@ -311,12 +318,14 @@
     gap: 24px 0;
     max-width: 360px;
   }
+
   .cards.cards19 > ul > li,
   .cards.cards19 .cards-card-image {
     width: 100%;
     min-width: 0;
     max-width: none;
   }
+
   .cards.cards19 .cards-card-image {
     height: 200px;
   }
@@ -428,6 +437,7 @@
     gap: 32px;
     max-width: 100vw;
   }
+
   .cards.cards16 > ul > li {
     min-width: 300px;
     max-width: 100%;
@@ -439,12 +449,14 @@
   .cards.cards16 {
     min-height: unset;
   }
+
   .cards.cards16 > ul {
     flex-direction: column;
     gap: 28px;
     align-items: center;
     max-width: 100%;
   }
+
   .cards.cards16 > ul > li {
     width: 100%;
     min-width: 0;
@@ -454,80 +466,165 @@
 }
 
 /* --- GENERATED CSS --- */
-.cards > ul {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0;
-  padding: 0 48px;
-  list-style: none;
-  background: transparent;
-  min-height: 62px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 2;
+
+/* Merged .cards.cards5 selector begins here */
+.cards.cards5 {
+  /* No declarations in either snippet for plain .cards.cards5, but both contain .cards.cards5.block.
+     If any base .cards.cards5 (without .block) declarations existed, they would be included here, but there are none.
+     Rest of the CSS remains unchanged. */
 }
 
-.cards > ul > li {
+.cards.cards5.block {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: transparent;
-  border: none;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 0;
+  background: none;
+}
+
+/* Flex two cards per row, wrap for grid effect */
+.cards.cards5.block > ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  max-width: 900px;
+  width: 100%;
   margin: 0;
   padding: 0;
-  min-width: 0;
-  min-height: 0;
-  box-sizing: border-box;
+  list-style: none;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Each card: force 2 columns, 3 rows with fixed height */
+.cards.cards5.block > ul > li {
   position: relative;
-  z-index: 2;
+  flex: 0 0 calc(50% - 16px);
+  max-width: calc(50% - 16px);
+  min-width: 320px;
+  height: 260px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #fff;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
 }
 
-.cards > ul > li:first-child {
-  flex: 0 0 auto;
-  margin-right: auto;
-  align-items: center;
+/* Ensure image fills card and is faded for contrast */
+.cards.cards5.block .cards-card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
 }
 
-.cards > ul > li:not(:first-child) {
-  flex: 0 0 auto;
-  margin-left: 40px;
-  align-items: center;
-}
-
-.cards .cards-card-image {
+.cards.cards5.block .cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8) saturate(1.1);
   display: block;
 }
 
-.cards .cards-card-body {
-  display: none;
+/* Light overlay for text contrast */
+.cards.cards5.block .cards-card-image::after {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 33%);
+  z-index: 2;
+  pointer-events: none;
+  content: "";
 }
 
-@media (width <= 900px) {
-  .cards > ul {
-    padding: 0 18px;
-  }
-  .cards {
-    height: 52px;
-    min-height: 52px;
-  }
-  .cards > ul > li:not(:first-child) {
-    margin-left: 18px;
-  }
-}
-
-.cards {
-  background: #072a4a;
-  min-height: 62px;
-  height: 62px;
-  width: 100vw;
+/* Overlay for center-aligned labels/buttons */
+.cards.cards5.block .cards-card-body {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  background: none;
+  margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  overflow: visible;
+  text-align: center;
+}
+
+/* Text overlay style */
+.cards.cards5.block .cards-card-body > *:not(.button-container) {
+  font-family: Montserrat, Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #11294C;
+  font-size: 2em;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+  background: none;
+  box-shadow: none;
+  border: none;
+  opacity: 1;
+}
+
+/* Center the button container and restore spacing */
+.cards.cards5.block .cards-card-body .button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  pointer-events: auto;
+  margin-top: 24px;
+}
+
+/* Override default .button styles for this block */
+.cards.cards5.block .cards-card-body .button-container .button {
+  background: linear-gradient(180deg, #FFDFC1 0%, #F2B27A 100%);
+  color: #11294C;
+  font-family: Montserrat, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  padding: 14px 38px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(44 44 84 / 10%);
+  cursor: pointer;
+  text-align: center;
+  min-width: 140px;
+  margin: 0;
+  transition: box-shadow 0.18s;
+}
+
+.cards.cards5.block .cards-card-body .button-container .button:hover,
+.cards.cards5.block .cards-card-body .button-container .button:focus {
+  box-shadow: 0 4px 16px rgb(44 44 84 / 17%);
+  outline: none;
+}
+
+/* Responsive: stack cards vertically on small screens */
+@media (width <= 900px) {
+  .cards.cards5.block > ul {
+    gap: 16px 0;
+    max-width: 98vw;
+  }
+
+  .cards.cards5.block > ul > li {
+    flex: 0 0 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 180px;
+  }
 }
