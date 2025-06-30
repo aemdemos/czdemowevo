@@ -1,4 +1,5 @@
 
+
 /* search box */
 .search .search-box {
   display: grid;
@@ -292,20 +293,6 @@
 
 /* merged and replaced selector below! */
 
-/*
-.search.search6 {
-  background: #17243a url("https://www.transparenttextures.com/patterns/wood-pattern.png") repeat;
-  border-radius: 12px;
-  min-height: 116px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 18px 0;
-  gap: 20px;
-  position: relative;
-}
-*/
 
 /* Button containers: more compact, squarer corners */
 .search.search6 .search-box,
@@ -449,14 +436,14 @@
 
 /* MERGED SELECTOR BELOW */
 .search.search6 {
-  background: #17243a url("https://www.transparenttextures.com/patterns/wood-pattern.png") repeat;
-  border-radius: 12px;
-  min-height: 116px;
+  background: #1a2536 url("https://www.transparenttextures.com/patterns/wood-pattern.png") repeat;
+  border-radius: 32px;
+  min-height: 82px;
+  padding: 28px 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 18px 0;
-  gap: 20px;
-  position: relative;
+  gap: 10px;
+  box-sizing: border-box;
 }
