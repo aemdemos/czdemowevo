@@ -1,3 +1,4 @@
+
 /* search box */
 .search .search-box {
   display: grid;
@@ -285,4 +286,177 @@
     max-width: 100%;
     width: 100%;
   }
+}
+
+/* --- GENERATED CSS --- */
+
+/* merged and replaced selector below! */
+
+/*
+.search.search6 {
+  background: #17243a url("https://www.transparenttextures.com/patterns/wood-pattern.png") repeat;
+  border-radius: 12px;
+  min-height: 116px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0;
+  gap: 20px;
+  position: relative;
+}
+*/
+
+/* Button containers: more compact, squarer corners */
+.search.search6 .search-box,
+.search.search6 .search-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 168px;
+  max-width: 220px;
+  width: 192px;
+  min-height: 48px;
+  height: 48px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 18px;
+  flex-shrink: 0;
+  transition: box-shadow 0.2s;
+}
+
+/* Gold button (left) tweaks */
+.search.search6 .search-box {
+  background: linear-gradient(110deg, #d1ae84 0%, #b98c5a 100%);
+  color: #12294a;
+  border: none;
+  box-shadow: 0 1px 5px rgb(30 30 30 / 9%);
+  cursor: pointer;
+  flex-direction: row;
+  gap: 10px;
+  font-family: var(--heading-font-family), sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+}
+
+/* Icon sizing and alignment: larger and closer */
+.search.search6 .search-box .icon-search {
+  display: flex;
+  align-items: center;
+  margin: 0 4px 0 0;
+}
+
+.search.search6 .search-box .icon-search img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  vertical-align: middle;
+  filter: brightness(0) saturate(100%) invert(18%) sepia(45%) saturate(2532%) hue-rotate(182deg) brightness(97%) contrast(99%);
+}
+
+/* Input as bold button text */
+.search.search6 .search-box .search-input {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: #12294a;
+  font-family: var(--heading-font-family), sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+  width: auto;
+  min-width: 0;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  height: auto;
+  line-height: 1.2;
+  cursor: pointer;
+  caret-color: transparent;
+  pointer-events: none;
+}
+
+.search.search6 .search-box .search-input::placeholder {
+  color: #12294a;
+  opacity: 1;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* White outline button (right): thicker border, squarer */
+.search.search6 .search-results {
+  background: transparent;
+  border: 5px solid #fff;
+  color: #fff;
+  box-shadow: none;
+  cursor: pointer;
+  text-align: center;
+  min-height: 48px;
+  height: 48px;
+  flex-direction: row;
+  gap: 8px;
+  font-family: var(--heading-font-family), sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+  padding: 0 18px;
+  list-style: none;
+}
+
+.search.search6 .search-results > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-family: var(--heading-font-family), sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+}
+
+.search.search6 .search-results > li:not(:first-child),
+.search.search6 .search-results > li > *:not(a) {
+  display: none;
+}
+
+.search.search6 .search-results .icon-search img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  filter: brightness(0) invert(1);
+  margin-right: 7px;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (width <= 700px) {
+  .search.search6 {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .search.search6 .search-box,
+  .search.search6 .search-results {
+    width: 96vw;
+    max-width: 100%;
+    margin: 4px 0;
+    justify-content: center;
+  }
+}
+
+/* MERGED SELECTOR BELOW */
+.search.search6 {
+  background: #17243a url("https://www.transparenttextures.com/patterns/wood-pattern.png") repeat;
+  border-radius: 12px;
+  min-height: 116px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0;
+  gap: 20px;
+  position: relative;
 }
