@@ -1,4 +1,5 @@
 
+
 /*
  * Fixed and modernized CSS for columns layouts
  */
@@ -170,7 +171,6 @@
   overflow: hidden;
 }
 
-/* Left column: top-aligned, tighter section spacing */
 .columns.columns1 > div > div:first-child {
   width: 50%;
   box-sizing: border-box;
@@ -191,7 +191,6 @@
   margin-bottom: 0.35em;
 }
 
-/* Reduce vertical space between sections/lists */
 .columns.columns1 ul {
   color: #03274F;
   font-size: 1.08rem;
@@ -219,7 +218,6 @@
   margin-bottom: 0;
 }
 
-/* Right column: image fills area (cover), no white space above/below */
 .columns.columns1 .columns-img-col {
   width: 50%;
   display: flex;
@@ -242,7 +240,6 @@
   position: static;
 }
 
-/* Responsive: stack on mobile */
 @media (width <= 800px) {
   .columns.columns1 > div {
     flex-direction: column;
@@ -284,7 +281,6 @@
   flex-direction: column;
 }
 
-/* Left Column: vertical centering, proper max width, generous left padding */
 .columns.columns3 > div > div:not(.columns-img-col) {
   flex: 1 1 0;
   min-width: 0;
@@ -296,7 +292,6 @@
   box-sizing: border-box;
 }
 
-/* Headline: extra bold, slightly tighter and taller */
 .columns.columns3 h2 {
   color: #03254C;
   font-family: var(--heading-font-family), Arial, sans-serif;
@@ -308,7 +303,6 @@
   max-width: 18ch;
 }
 
-/* Subtitle: lighter color, more bottom margin to separate from button */
 .columns.columns3 > div > div:not(.columns-img-col) > p:not(.button-container) {
   color: #222;
   font-size: 1.1rem;
@@ -318,14 +312,12 @@
   line-height: 1.5;
 }
 
-/* Button container: left align, no extra margin */
 .columns.columns3 .button-container {
   text-align: left;
   margin: 0;
   padding: 0;
 }
 
-/* Button: gold gradient, bold, wide, squared corners, left aligned */
 .columns.columns3 .button-container .button {
   font-family: var(--heading-font-family), Arial, sans-serif;
   background: linear-gradient(90deg, #dac19f 0%, #c39e6a 100%);
@@ -348,7 +340,6 @@
   background: linear-gradient(90deg, #cbb081 0%, #a67c44 100%);
 }
 
-/* Right column: image visibly dominant, vertically centered, allows overflow */
 .columns.columns3 .columns-img-col {
   flex: 0 0 46%;
   max-width: 510px;
@@ -362,7 +353,6 @@
   box-sizing: border-box;
 }
 
-/* The image: tilted, extra-large, visually breaks out */
 .columns.columns3 .columns-img-col img {
   display: block;
   transform: rotate(-11deg);
@@ -375,7 +365,6 @@
   margin-bottom: -28px;
 }
 
-/* Make sure the image is never visually hidden */
 .columns.columns3 .columns-img-col picture,
 .columns.columns3 .columns-img-col img {
   visibility: visible;
@@ -384,7 +373,6 @@
   min-height: 0;
 }
 
-/* Responsive: stack vertically when needed */
 @media (width <= 900px) {
   .columns.columns3 > div {
     flex-direction: column;
@@ -413,7 +401,6 @@
   }
 }
 
-/* Cleanup for inherited or default unwanted styles */
 .columns.columns3 > div > .columns-img-col,
 .columns.columns3 > div > div:not(.columns-img-col) {
   border: none;
@@ -512,12 +499,10 @@
   color: #fff;
 }
 
-/* remove extra margin from last child in left col for perfect vertical centering */
 .columns-wrapper > .columns > div > div:not(.columns-img-col) > *:last-child {
   margin-bottom: 0;
 }
 
-/* Right column: image, edge to edge, no extra radius on right side */
 .columns-wrapper > .columns > div > .columns-img-col {
   flex: 1 1 50%;
   max-width: 50%;
@@ -530,7 +515,6 @@
   position: relative;
 }
 
-/* Make sure the image fills and is not rounded */
 .columns-wrapper > .columns .columns-img-col picture,
 .columns-wrapper > .columns .columns-img-col img {
   width: 100%;
@@ -546,14 +530,12 @@
   transform: none;
 }
 
-/* Remove any unwanted overlap/rotation from previous styles */
 .columns-wrapper > .columns .columns-img-col img {
   transform: none;
   margin: 0;
   box-shadow: none;
 }
 
-/* Responsive: stack vertically on small screens */
 @media (width <= 900px) {
   .columns-wrapper > .columns > div {
     flex-direction: column;
@@ -585,3 +567,16 @@
     font-size: 1rem;
   }
 }
+
+.columns.columns8 {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 0;
+  background: #fff;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
