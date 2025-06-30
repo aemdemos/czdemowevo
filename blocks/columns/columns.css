@@ -1,5 +1,6 @@
 
 
+
 /*
  * Fixed and modernized CSS for columns layouts
  */
@@ -410,7 +411,6 @@
 }
 
 .columns-wrapper > .columns {
-  /* Root: visual container, rounded corners, subtle border, centered */
   background: #fff;
   border: 1.5px solid #b09a73;
   border-radius: 18px;
@@ -424,7 +424,6 @@
   box-shadow: none;
 }
 
-/* Two columns, side by side */
 .columns-wrapper > .columns > div {
   display: flex;
   flex-direction: row;
@@ -433,19 +432,17 @@
   min-height: 520px;
 }
 
-/* Left column: text content */
 .columns-wrapper > .columns > div > div:not(.columns-img-col) {
   flex: 1 1 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertical centering */
+  justify-content: center;
   align-items: flex-start;
   padding: 64px 32px 56px 56px;
   box-sizing: border-box;
   min-width: 0;
 }
 
-/* Headline */
 .columns-wrapper > .columns h2 {
   color: #00254d;
   font-family: var(--heading-font-family), "Arial Narrow", Arial, sans-serif;
@@ -458,7 +455,6 @@
   max-width: 20ch;
 }
 
-/* Subheadline */
 .columns-wrapper > .columns > div > div:not(.columns-img-col) > p:not(.button-container) {
   font-size: 1.18rem;
   color: #00254d;
@@ -468,14 +464,12 @@
   line-height: 1.55;
 }
 
-/* Button container -- left aligned, no extra margin */
 .columns-wrapper > .columns .button-container {
   text-align: left;
   margin: 0;
   padding: 0;
 }
 
-/* Button: large, dark blue, white text, prominent, rounded */
 .columns-wrapper > .columns .button-container .button {
   background: #00254d;
   color: #fff;
@@ -580,3 +574,16 @@
   flex-direction: column;
 }
 
+/* Merged .columns.columns13 selector */
+.columns.columns13 {
+  max-width: 420px;
+  margin: 56px auto 0;
+  padding: 0;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
