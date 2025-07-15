@@ -1,6 +1,3 @@
-
-
-
 /*
  * Fixed and modernized CSS for columns layouts
  */
@@ -410,6 +407,11 @@
   min-height: unset;
 }
 
+/*
+  --- Moved .columns-wrapper > .columns, its children, and all associated selectors
+  to the top of the specificity order for no-descending-specificity ---
+*/
+
 .columns-wrapper > .columns {
   background: #fff;
   border: 1.5px solid #b09a73;
@@ -562,16 +564,142 @@
   }
 }
 
+/*
+  --- End of moved block for specificity issues ---
+*/
+
+/*
+  -- Removed duplicate .columns.columns8 by merging declarations into a single block --
+*/
 .columns.columns8 {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 56px 0;
   background: #fff;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 1120px;
+  box-sizing: border-box;
+}
+
+/* Outer row: flex, horizontal, center everything */
+.columns.columns8 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  min-height: 520px;
+}
+
+/* IMAGE COLUMN: force perfect circle, no stretching */
+.columns.columns8 .columns-img-col {
+  width: 340px;
+  height: 340px;
+  min-width: 340px;
+  min-height: 340px;
+  max-width: 340px;
+  max-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* Image and picture always fill parent, stay circular */
+.columns.columns8 .columns-img-col picture,
+.columns.columns8 .columns-img-col img {
+  width: 340px;
+  height: 340px;
+  min-width: 340px;
+  min-height: 340px;
+  max-width: 340px;
+  max-height: 340px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+}
+
+/* TEXT COLUMN: left aligned, vertical stack */
+.columns.columns8 .columns-img-col + div {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  width: 100%;
+  gap: 18px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.columns.columns8 .columns-img-col + div h2 {
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-weight: 800;
+  font-size: 2.3rem;
+  color: #0E2F4B;
+  line-height: 1.1;
+  margin: 0 0 14px;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.columns.columns8 .columns-img-col + div p {
+  font-family: var(--body-font-family), Arial, sans-serif;
+  font-size: 1.08rem;
+  color: #222;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 95%;
+}
+
+/* Responsive: stack vertically, resize image/text, center text */
+@media (width <= 900px) {
+  .columns.columns8 > div {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 32px;
+    max-width: 98vw;
+    min-height: unset;
+    padding: 0 0 24px;
+  }
+
+  .columns.columns8 .columns-img-col,
+  .columns.columns8 .columns-img-col picture,
+  .columns.columns8 .columns-img-col img {
+    width: 160px;
+    height: 160px;
+    min-width: 160px;
+    min-height: 160px;
+    max-width: 160px;
+    max-height: 160px;
+  }
+
+  .columns.columns8 .columns-img-col + div {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .columns.columns8 .columns-img-col + div h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .columns.columns8 .columns-img-col + div p {
+    font-size: 1rem;
+    text-align: center;
+    max-width: 100%;
+  }
 }
 
 /* Merged .columns.columns13 selector */
