@@ -58,34 +58,160 @@
 
 /* Specificity: .accordion9, then .accordion14, then .accordion12 */
 
-.accordion.accordion9 {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  max-width: 950px;
-  margin: 0 auto;
-  position: relative;
-  gap: 48px;
-}
-
+/* ---- .accordion9 styles ---- */
 .accordion.accordion9 > details.accordion-item {
   width: 320px;
-  margin-bottom: 16px;
   border: none;
   padding: 0;
   background: none;
-  border-radius: 8px;
   box-shadow: none;
   position: relative;
   display: block;
   float: none;
   clear: both;
+  grid-column: 1 / 2;
+  margin: 0 0 12px;
+  border-radius: 6px;
 }
 
 .accordion.accordion9 > details.accordion-item:last-child {
   margin-bottom: 0;
 }
 
+.accordion.accordion9 .accordion-item-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  gap: 14px;
+  background: #eef3f8;
+  color: #334e6f;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 6px;
+  height: 52px;
+  min-height: 52px;
+  border: none;
+  box-shadow: none;
+  padding: 0 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  position: relative;
+  outline: none;
+  user-select: none;
+}
+
+.accordion.accordion9 .accordion-item-label::-webkit-details-marker,
+.accordion.accordion9 .accordion-item-label::marker,
+.accordion.accordion9 > details.accordion-item > summary::-webkit-details-marker,
+.accordion.accordion9 > details.accordion-item > summary::marker {
+  display: none;
+}
+
+.accordion.accordion9 .accordion-item-label p {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: inherit;
+  line-height: 1.25;
+}
+
+.accordion.accordion9 .accordion-item-body {
+  display: none;
+}
+
+.accordion.accordion9 > details.accordion-item .accordion-item-body {
+  display: none;
+}
+
+.accordion.accordion9 > details.accordion-item[open] .accordion-item-body {
+  display: block;
+  position: absolute;
+  left: 368px;
+  top: 0;
+  width: 520px;
+  box-sizing: border-box;
+  grid-column: 2 / 3;
+  grid-row: 1 / span 4;
+  color: #00294A;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 340px;
+  max-width: 480px;
+  align-self: start;
+}
+
+.accordion.accordion9 > details.accordion-item[open] > .accordion-item-label {
+  background: #00294A;
+  color: #fff;
+}
+
+/* Remove details summary arrow (order fixed) */
+.accordion.accordion9 details summary::-webkit-details-marker,
+.accordion.accordion9 details summary::marker {
+  display: none;
+}
+
+.accordion.accordion9 details {
+  border: none;
+  box-shadow: none;
+  background: none;
+  border-radius: 8px;
+}
+
+/* Tab icons as placeholders */
+.accordion.accordion9 > details.accordion-item:nth-child(1) > .accordion-item-label::before,
+.accordion.accordion9 > details.accordion-item:nth-child(2) > .accordion-item-label::before,
+.accordion.accordion9 > details.accordion-item:nth-child(3) > .accordion-item-label::before,
+.accordion.accordion9 > details.accordion-item:nth-child(4) > .accordion-item-label::before {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.accordion.accordion9 > details.accordion-item:nth-child(1) > .accordion-item-label::before {
+  background-image: url('icon-limestone.svg');
+}
+
+.accordion.accordion9 > details.accordion-item:nth-child(2) > .accordion-item-label::before {
+  background-image: url('icon-10x.svg');
+}
+
+.accordion.accordion9 > details.accordion-item:nth-child(3) > .accordion-item-label::before {
+  background-image: url('icon-wheat.svg');
+}
+
+.accordion.accordion9 > details.accordion-item:nth-child(4) > .accordion-item-label::before {
+  background-image: url('icon-proof.svg');
+}
+
+/* Grid parent for .accordion9 */
+.accordion.accordion9 {
+  display: grid;
+  grid-template-columns: 224px 1fr;
+  align-items: start;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0;
+  column-gap: 48px;
+  justify-content: start;
+}
+
+/* ---- .accordion14 styles ---- */
 .accordion.accordion14 > details.accordion-item {
   display: block;
   width: 320px;
@@ -100,28 +226,6 @@
 
 .accordion.accordion14 > details.accordion-item:last-child {
   margin-bottom: 0;
-}
-
-.accordion.accordion9 .accordion-item-label {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 24px;
-  border-radius: 8px;
-  background: #f3f6fa;
-  color: #002855;
-  font-weight: 700;
-  font-size: 20px;
-  min-height: 76px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  border: none;
-  outline: none;
-  gap: 16px;
-  text-align: left;
-  box-sizing: border-box;
-  justify-content: flex-start;
-  position: relative;
 }
 
 .accordion.accordion14 .accordion-item-label {
@@ -145,14 +249,14 @@
   justify-content: flex-start;
 }
 
-.accordion.accordion9 > details.accordion-item[open] > .accordion-item-label {
-  background: #002855;
-  color: #fff;
-}
-
-.accordion.accordion14 > details.accordion-item[open] > .accordion-item-label {
-  background: #002a53;
-  color: #fff;
+.accordion.accordion14 .accordion-item-label::before {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 .accordion.accordion14 .accordion-item-label > p {
@@ -164,36 +268,7 @@
   display: none;
 }
 
-.accordion.accordion9 .accordion-item-label::-webkit-details-marker,
-.accordion.accordion9 .accordion-item-label::marker,
-.accordion.accordion9 > details.accordion-item > summary::-webkit-details-marker,
-.accordion.accordion9 > details.accordion-item > summary::marker {
-  display: none;
-}
-
 .accordion.accordion14 .accordion-item-label::after {
-  display: none;
-}
-
-.accordion.accordion14 .accordion-item-label::before {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  margin-right: 16px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-}
-
-.accordion.accordion9 .accordion-item-label p {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: inherit;
-  line-height: 1.3;
-}
-
-.accordion.accordion9 .accordion-item-body {
   display: none;
 }
 
@@ -215,19 +290,9 @@
   top: 0;
 }
 
-.accordion.accordion9 > details.accordion-item[open] .accordion-item-body {
-  display: block;
-  position: absolute;
-  left: 368px;
-  top: 0;
-  width: 520px;
-  background: none;
-  color: #002855;
-  font-size: 20px;
-  line-height: 1.5;
-  font-weight: 400;
-  padding: 0;
-  box-sizing: border-box;
+.accordion.accordion14 > details.accordion-item[open] > .accordion-item-label {
+  background: #002a53;
+  color: #fff;
 }
 
 .accordion.accordion14 > details.accordion-item[open] > .accordion-item-body {
@@ -239,15 +304,7 @@
   position: static;
 }
 
-.accordion.accordion9 details {
-  border: none;
-  box-shadow: none;
-  background: none;
-  border-radius: 8px;
-}
-
-/* Accordion12 selectors last for specificity */
-
+/* ---- .accordion12 styles ---- */
 .accordion.accordion12 {
   columns: 2;
   column-gap: 88px;
@@ -380,6 +437,34 @@
 }
 
 @media (width <= 900px) {
+  .accordion.accordion9 {
+    flex-direction: column;
+    gap: 24px;
+    max-width: 98vw;
+    display: block;
+  }
+  .accordion.accordion9 > details.accordion-item,
+  .accordion.accordion9 .accordion-item-label {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .accordion.accordion9 > details.accordion-item[open] .accordion-item-body {
+    display: block;
+    grid-column: auto;
+    grid-row: auto;
+    position: static;
+    width: 100%;
+    margin-top: 8px;
+    min-width: 0;
+    max-width: 100%;
+    left: unset;
+    top: unset;
+    padding: 0;
+  }
+}
+
+@media (width <= 900px) {
   .accordion.accordion14 {
     flex-direction: column;
     gap: 24px;
@@ -418,25 +503,5 @@
   .accordion.accordion12 > div {
     max-width: 100%;
     min-width: 0;
-  }
-}
-
-@media (width <= 900px) {
-  .accordion.accordion9 {
-    flex-direction: column;
-    gap: 24px;
-    max-width: 98vw;
-  }
-  .accordion.accordion9 > details.accordion-item,
-  .accordion.accordion9 .accordion-item-label {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-  }
-  .accordion.accordion9 > details.accordion-item[open] .accordion-item-body {
-    position: static;
-    width: 100%;
-    margin-top: 8px;
-    padding: 0;
   }
 }
