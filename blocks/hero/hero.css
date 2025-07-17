@@ -1,74 +1,10 @@
+/* 1. HERO CONTAINER */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
 }
 
-.hero.hero4 {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: stretch;
-  width: 100vw;
-  min-height: 100vh;
-  background: #faf7f2;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-}
-
-/* Merged .hero selector */
-.hero {
-  width: 100vw;
-  min-height: 520px;
-  background: #15294d url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  position: relative;
-}
-
-.hero > div {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 520px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 0;
-  height: 100%;
-}
-
-/* Set the right column (where the content actually lives in your HTML) as the card */
-.hero > div:last-child {
-  background: #fff;
-  border-radius: 22px;
-  box-shadow: 0 8px 32px rgb(0 0 0 / 7%);
-  padding: 54px;
-  max-width: 600px;
-  min-width: 340px;
-  margin: 0 auto;
-  align-items: flex-start;
-  justify-content: center;
-  display: flex;
-}
-
-.hero > div:first-child {
-  /* Keep empty but maintain layout */
-  max-width: 620px;
-  min-width: 340px;
-  margin: 0 3vw;
-  height: 100%;
-  display: flex;
-}
+/* 2. HERO BASE VARIANTS (generic, hero4, hero15, hero2, hero3) */
 
 .hero h1,
 .hero h2,
@@ -83,31 +19,6 @@
   color: var(--background-color);
 }
 
-.hero.no-image * {
-  color: var(--text-color);
-}
-
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
-}
-
-.hero img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
-  }
-}
-
-/* Typography and content inside the card */
 .hero strong,
 .hero p,
 .hero li {
@@ -161,43 +72,6 @@
   top: 0.52em;
 }
 
-/* Move .hero.hero15 selectors above .hero.hero2 > div:first-child > div and .hero.hero2 > div:last-child h* to resolve specificity */
-.hero.hero15 > div:first-child {
-  flex: 1 1 50%;
-  display: flex;
-  align-items: stretch;
-  min-width: 0;
-  background: none;
-  order: 1;
-}
-
-.hero.hero15 > div:last-child {
-  flex: 1 1 50%;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 64px 56px;
-  background: #F9F8F3;
-  background-image: url('PATH_TO_ILLUSTRATION_IMAGE');
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: 90% auto;
-  order: 2;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 1;
-}
-
-.hero.hero15 > div:first-child picture,
-.hero.hero15 > div:first-child img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  background: none;
-}
-
 .hero.hero15 h1,
 .hero.hero15 h2,
 .hero.hero15 h3 {
@@ -243,16 +117,6 @@
 .hero.hero15 a:hover,
 .hero.hero15 button:hover {
   box-shadow: 0 4px 16px rgb(160 120 71 / 18%);
-}
-
-.hero.hero15 > div:last-child > div {
-  max-width: 560px;
-  width: 100%;
-  text-align: left;
-  margin: 0;
-  display: block;
-  position: relative;
-  z-index: 2;
 }
 
 .hero.hero2 > div:first-child {
@@ -307,7 +171,7 @@
 }
 
 .hero.hero2 > div:last-child h1 {
-  font-family: "HCo Ringside Extra Wide", "HCo Ringside Extra Wide Fallback", "Arial Narrow", Arial, sans-serif;
+  font-family: "HCo Ringside Extra Wide", "Arial Narrow", Arial, sans-serif;
   font-size: 56px;
   font-weight: 900;
   letter-spacing: 0.035em;
@@ -320,7 +184,7 @@
 }
 
 .hero.hero2 > div:last-child h2 {
-  font-family: proxima-nova-condensed, "proxima-nova-condensed Fallback", Arial, sans-serif;
+  font-family: proxima-nova-condensed, Arial, sans-serif;
   font-size: 21px;
   font-weight: 800;
   color: #15355c;
@@ -333,7 +197,7 @@
 }
 
 .hero.hero2 > div:last-child h3 {
-  font-family: proxima-nova-condensed, "proxima-nova-condensed Fallback", Arial, sans-serif;
+  font-family: proxima-nova-condensed, Arial, sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: #15355c;
@@ -364,7 +228,7 @@
   border: none;
   border-radius: 8px;
   font-size: 20px;
-  font-family: proxima-nova-condensed, "proxima-nova-condensed Fallback", Arial, sans-serif;
+  font-family: proxima-nova-condensed, Arial, sans-serif;
   font-weight: 800;
   padding: 16px 28px;
   margin: 0;
@@ -400,6 +264,194 @@
   margin-bottom: 0;
 }
 
+.hero.hero15 > div:first-child {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  background: none;
+  order: 1;
+}
+
+.hero.hero15 > div:last-child {
+  flex: 1 1 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 56px;
+  background: #F9F8F3;
+  background-image: url('PATH_TO_ILLUSTRATION_IMAGE');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 90% auto;
+  order: 2;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.hero.hero15 > div:first-child picture,
+.hero.hero15 > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: none;
+}
+
+.hero.hero15 > div:last-child > div {
+  max-width: 560px;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.hero {
+  width: 100vw;
+  min-height: 520px;
+  background: #15294d url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero > div:first-child {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0;
+  height: 100%;
+}
+
+.hero > div:last-child {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 0 42px 42px 0;
+  box-shadow: 0 2px 16px rgb(0 0 0 / 9%);
+  margin: 40px 48px 40px 0;
+  padding: 56px;
+  max-width: 540px;
+  box-sizing: border-box;
+}
+
+.hero > div:last-child > div {
+  width: 100%;
+  text-align: left;
+}
+
+.hero > div:last-child strong,
+.hero > div:last-child h1,
+.hero > div:last-child h2,
+.hero > div:last-child h3 {
+  color: #15294d;
+  font-family: "HCo Ringside Extra Wide", "Arial Narrow", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 2.8rem;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  line-height: 1.08;
+  margin: 0 0 0.5em;
+}
+
+.hero > div:last-child p,
+.hero > div:last-child ul,
+.hero > div:last-child li,
+.hero > div:last-child a {
+  color: #222;
+  font-family: proxima-nova-condensed, Arial, sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hero > div:last-child ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.2em 0 0;
+}
+
+.hero > div:last-child li {
+  margin-bottom: 0.4em;
+  display: flex;
+  align-items: center;
+}
+
+.hero > div:last-child li::before {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: #e3c29e;
+  content: "";
+  flex-shrink: 0;
+}
+
+.hero > div:last-child a {
+  color: #173b7a;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.hero > div:last-child a:hover {
+  color: #D4B087;
+}
+
+.hero.no-image * {
+  color: var(--text-color);
+}
+
+.hero picture {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.hero img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.hero.hero4 {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100vw;
+  min-height: 100vh;
+  background: #faf7f2;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
 .hero.hero3 {
   min-height: 520px;
   height: 520px;
@@ -418,7 +470,6 @@
   justify-content: flex-start;
 }
 
-/* Full background image using the first child */
 .hero.hero3 > div:first-child {
   position: absolute;
   inset: 0;
@@ -440,7 +491,6 @@
   background: none;
 }
 
-/* Overlay: darken the image for text contrast */
 .hero.hero3::before {
   position: absolute;
   inset: 0;
@@ -450,7 +500,6 @@
   content: '';
 }
 
-/* Overlay: blue translucent bar for badges (top, full width) */
 .hero.hero3::after {
   position: absolute;
   top: 40px;
@@ -463,7 +512,6 @@
   content: '';
 }
 
-/* Center the text container horizontally and at vertical center */
 .hero.hero3 > div:last-child {
   position: absolute;
   left: 0;
@@ -480,7 +528,6 @@
   width: 100%;
 }
 
-/* Headline wrapper */
 .hero.hero3 > div:last-child > div {
   width: 100%;
   max-width: 790px;
@@ -492,7 +539,6 @@
   background: none;
 }
 
-/* Headline styling - further refined for visual match */
 .hero.hero3 h2 {
   color: #fff;
   font-size: 2.7rem;
@@ -506,6 +552,12 @@
   text-shadow: 0 2px 8px rgb(0 0 0 / 70%);
   letter-spacing: 0.035em;
   box-sizing: border-box;
+}
+
+@media (width >= 900px) {
+  .hero {
+    padding: 40px 32px;
+  }
 }
 
 @media (width <= 900px) {
@@ -534,6 +586,31 @@
   .hero.hero3::after {
     height: 38px;
   }
+
+  .hero {
+    flex-direction: column;
+    min-height: 320px;
+    height: auto;
+  }
+
+  .hero > div:first-child {
+    display: none;
+  }
+
+  .hero > div:last-child {
+    border-radius: 0 0 32px 32px;
+    margin: 18px 0 0;
+    padding: 32px 5vw;
+    max-width: 100vw;
+    width: 100vw;
+  }
+
+  .hero > div:last-child strong,
+  .hero > div:last-child h1,
+  .hero > div:last-child h2,
+  .hero > div:last-child h3 {
+    font-size: 2rem;
+  }
 }
 
 @media (width <= 600px) {
@@ -545,5 +622,16 @@
   .hero.hero3 h2 {
     font-size: 1rem;
     padding: 0.4rem 0;
+  }
+
+  .hero > div:last-child {
+    padding: 18px 2vw;
+  }
+
+  .hero > div:last-child strong,
+  .hero > div:last-child h1,
+  .hero > div:last-child h2,
+  .hero > div:last-child h3 {
+    font-size: 1.2rem;
   }
 }
