@@ -1,3 +1,4 @@
+ 
 .tabs .tabs-list {
   display: flex;
   gap: 0.5ch;
@@ -39,7 +40,6 @@
   margin: 0;
 }
 
-
 .tabs .tabs-list button[aria-selected='true'] {
   border-bottom: 1px solid var(--background-color);
   background-color: var(--background-color);
@@ -55,4 +55,147 @@
 
 .tabs .tabs-panel[aria-hidden='true'] {
   display: none;
+}
+
+/* ========== MERGED .tabs.tabs9 ========== */
+.tabs.tabs9 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 56px;
+  background: #fff;
+  border: none;
+  width: 100%;
+  min-height: 320px;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+/* ========== END MERGED .tabs.tabs9 ========== */
+
+@media (width <= 900px) {
+  .tabs.tabs9 {
+    flex-direction: column;
+    gap: 32px;
+    align-items: stretch;
+    min-height: 0;
+  }
+}
+
+/* Left column: full vertical nav of tabs */
+.tabs.tabs9 .tabs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+  width: 220px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Tab buttons: uniform, fill width */
+.tabs.tabs9 .tabs-tab {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  width: 100%;
+  background: #E8EEF4;
+  color: #4D6A8B;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0 20px;
+  margin: 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-sizing: border-box;
+  outline: none;
+  justify-content: flex-start;
+}
+
+.tabs.tabs9 .tabs-tab[aria-selected="true"] {
+  background: #00294A;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Tab label: icon + text, no margin */
+.tabs.tabs9 .tabs-tab p {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: inherit;
+}
+
+/* Hide any icons/images inside panel content - moved up to resolve no-descending-specificity */
+.tabs.tabs9 .tabs-panel picture,
+.tabs.tabs9 .tabs-panel img {
+  display: none;
+}
+
+/* Tab icons */
+.tabs.tabs9 .tabs-tab picture,
+.tabs.tabs9 .tabs-tab img {
+  width: 20px;
+  height: 20px;
+  display: block;
+  filter: grayscale(1) brightness(0.7);
+}
+
+.tabs.tabs9 .tabs-tab[aria-selected="true"] picture,
+.tabs.tabs9 .tabs-tab[aria-selected="true"] img {
+  filter: none;
+}
+
+/* Right column: only active panel is visible, remove card styling */
+.tabs.tabs9 .tabs-panel {
+  display: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  max-width: 470px;
+  color: #00294A;
+  font-size: 16px;
+  line-height: 1.5;
+  place-self: center start;
+  min-width: 0;
+}
+
+/* Only show the active panel */
+.tabs.tabs9 .tabs-panel[aria-hidden="false"] {
+  display: block;
+}
+
+/* Panel text: plain, no spacing or box */
+.tabs.tabs9 .tabs-panel p {
+  color: #00294A;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Remove extra margin on mobile, stack vertically */
+@media (width <= 600px) {
+  .tabs.tabs9 {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .tabs.tabs9 .tabs-list {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .tabs.tabs9 .tabs-panel {
+    max-width: 100%;
+  }
 }
