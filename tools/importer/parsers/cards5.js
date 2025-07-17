@@ -1,46 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Locate the featured-recipes container
-  const cardsBlock = element.querySelector('.featured.block');
-  if (!cardsBlock) return;
-  const featuredRecipes = cardsBlock.querySelector('.featured-recipes');
-  if (!featuredRecipes) return;
+  // Find the .featured-recipes container
+  const featuredBlock = element.querySelector('.featured.block');
+  if (!featuredBlock) return;
+  const recipesContainer = featuredBlock.querySelector('.featured-recipes');
+  if (!recipesContainer) return;
 
-  // Get all card divs (including the button container at the end)
-  const cardDivs = Array.from(featuredRecipes.children).filter(child => child.classList.contains('featured-recipe'));
+  // Get all .featured-recipe direct children
+  const recipeNodes = Array.from(recipesContainer.children).filter(child => child.classList.contains('featured-recipe'));
+  
+  // Header row: single cell, but will be set to span 2 columns
+  const cells = [
+    ['Cards']
+  ];
 
-  // Table header matches spec
-  const cells = [['Cards (cards5)']];
+  recipeNodes.forEach(recipeEl => {
+    // Image (picture)
+    const imageEl = recipeEl.querySelector('picture');
 
-  cardDivs.forEach(div => {
-    // Check if this is the button container (last card)
-    if (div.classList.contains('button-container')) {
-      const picture = div.querySelector('picture');
-      const button = div.querySelector('a.button');
-      if (picture && button) {
-        // Button goes in the second cell (text cell)
-        cells.push([picture, button]);
-      } else if (picture) {
-        cells.push([picture, '']);
-      }
+    // Check if this is the 'All Cocktails' button card
+    const button = recipeEl.querySelector('a.button');
+    if (button) {
+      // For the button card, put the button in the text cell
+      cells.push([
+        imageEl,
+        button
+      ]);
       return;
     }
-    // For normal cards
-    const link = div.querySelector('a');
-    if (!link) return;
-    const picture = link.querySelector('picture');
-    const span = link.querySelector('span');
-    // Text cell as a heading-style element (strong for title)
-    let textCell = '';
-    if (span && span.textContent.trim()) {
-      const strong = document.createElement('strong');
-      strong.textContent = span.textContent.trim();
-      textCell = strong;
+    // For regular cards, get the title
+    const anchor = recipeEl.querySelector('a');
+    let titleText = '';
+    if (anchor) {
+      const span = anchor.querySelector('span');
+      if (span && span.textContent) {
+        titleText = span.textContent.trim();
+      }
     }
-    cells.push([picture, textCell]);
+    // Use strong tag for card title (matches heading style in example)
+    const strong = document.createElement('strong');
+    strong.textContent = titleText;
+    cells.push([
+      imageEl,
+      strong
+    ]);
   });
-
+  
+  // Create table
   const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Set header row cell to colspan=2 for correct structure
+  const th = table.querySelector('tr > th');
+  if (th) th.setAttribute('colspan', '2');
   element.replaceWith(table);
-  // Do not return anything
 }

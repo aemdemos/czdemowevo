@@ -1,53 +1,55 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main hero block inside the container
-  const heroBlock = element.querySelector('.hero.block');
-  // Get the image from the right
-  let imageCell = '';
+  // Find the hero block in the given section
+  const heroBlock = element.querySelector('.block.hero');
+
+  // Get the image (from the .right > picture/img)
+  let imageEl = null;
   if (heroBlock) {
     const right = heroBlock.querySelector('.right');
     if (right) {
-      const picture = right.querySelector('picture');
-      if (picture) {
-        imageCell = picture;
+      const pic = right.querySelector('picture');
+      if (pic) {
+        imageEl = pic;
       } else {
         const img = right.querySelector('img');
-        if (img) imageCell = img;
+        if (img) imageEl = img;
       }
     }
   }
-  // Get the left content (heading, subheading, button)
-  let textCellContent = [];
+
+  // Get all left content (heading, subheading, CTA)
+  let leftContent = [];
   if (heroBlock) {
     const left = heroBlock.querySelector('.left');
     if (left) {
-      // Grab all direct children (e.g. h1, h2, a)
-      textCellContent = Array.from(left.children).filter(child => {
-        // Filter out any empty nodes (edge case)
-        if (child.tagName === 'BR') return false;
-        if (child.textContent && child.textContent.trim().length === 0) return false;
-        return true;
-      });
+      leftContent = Array.from(left.children);
     }
   }
-  // Add footer content (subtext below main block)
-  const heroFooter = element.querySelector('.hero-footer');
-  if (heroFooter) {
-    // Add all children of the footer (could be h3, p, etc)
-    Array.from(heroFooter.children).forEach(child => {
-      textCellContent.push(child);
-    });
+
+  // Get footer content if present (eg. h3, paragraph)
+  let footerContent = [];
+  const footer = element.querySelector('.hero-footer');
+  if (footer) {
+    footerContent = Array.from(footer.children);
   }
-  // If nothing found, add an empty string for robustness
-  if (imageCell === undefined) imageCell = '';
-  if (textCellContent.length === 0) textCellContent = [''];
-  // Build the table: [header], [image], [text content]
-  const cells = [
+
+  // Compose the content block for the third row,
+  // including all left content, then all footer content
+  const thirdRowContent = [];
+  if (leftContent.length) thirdRowContent.push(...leftContent);
+  if (footerContent.length) thirdRowContent.push(...footerContent);
+
+  // The block table has the following rows:
+  // - [Hero]
+  // - [image] (if present, else empty string)
+  // - [content] (headings, subheading, CTA, and below image text if present)
+  const rows = [
     ['Hero'],
-    [imageCell],
-    [textCellContent.length === 1 ? textCellContent[0] : textCellContent],
+    [imageEl ? imageEl : ''],
+    [thirdRowContent.length ? thirdRowContent : ''],
   ];
-  // Create the table and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
