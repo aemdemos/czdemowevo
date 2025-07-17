@@ -1,31 +1,54 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // 1. Find the main block within 'element'.
-  const block = element.querySelector('.faq-inplace.block');
-  if (!block) return;
+  // Find the block that contains the FAQ columns
+  let block = element.querySelector('.faq-inplace.block');
+  if (!block) block = element;
 
-  // 2. Header row matches the block name exactly as required.
-  const rows = [
-    ['Accordion (accordion12)']
-  ];
+  // There should be two column wrappers inside the block
+  const columns = Array.from(block.children);
 
-  // 3. There are two immediate children of the block, each is a column of Q/A pairs.
-  const columnDivs = block.querySelectorAll(':scope > div');
-  columnDivs.forEach(col => {
-    // Each column has Q/A divs, each containing 2 divs (question, answer)
-    const qaDivs = col.querySelectorAll(':scope > div');
-    qaDivs.forEach(qa => {
-      const qas = qa.querySelectorAll(':scope > div');
-      if (qas.length >= 2) {
-        const question = qas[0];
-        const answer = qas[1];
-        // Use the reference to the existing DOM elements, as required
-        rows.push([question, answer]);
-      }
-    });
-  });
+  // Each column contains multiple FAQ items; each item is a div with two children: question, answer
+  const leftItems = columns[0] ? Array.from(columns[0].children) : [];
+  const rightItems = columns[1] ? Array.from(columns[1].children) : [];
 
-  // 4. Create the table using the provided helper, replacing the original element.
+  // The table header as per spec
+  const rows = [['Accordion']];
+  // Number of rows is the max of either column
+  const maxRows = Math.max(leftItems.length, rightItems.length);
+
+  for (let i = 0; i < maxRows; i++) {
+    // For left column
+    let leftTitle = null, leftContent = null;
+    if (leftItems[i]) {
+      const leftDivs = Array.from(leftItems[i].children);
+      leftTitle = leftDivs[0] || document.createElement('div');
+      leftContent = leftDivs[1] || document.createElement('div');
+    } else {
+      leftTitle = document.createElement('div');
+      leftContent = document.createElement('div');
+    }
+    // For right column
+    let rightTitle = null, rightContent = null;
+    if (rightItems[i]) {
+      const rightDivs = Array.from(rightItems[i].children);
+      rightTitle = rightDivs[0] || document.createElement('div');
+      rightContent = rightDivs[1] || document.createElement('div');
+    } else {
+      rightTitle = document.createElement('div');
+      rightContent = document.createElement('div');
+    }
+    // Add left item row
+    if ((leftTitle.textContent && leftTitle.textContent.trim()) || (leftContent.textContent && leftContent.textContent.trim())) {
+      rows.push([leftTitle, leftContent]);
+    }
+    // Add right item row
+    if ((rightTitle.textContent && rightTitle.textContent.trim()) || (rightContent.textContent && rightContent.trim())) {
+      rows.push([rightTitle, rightContent]);
+    }
+  }
+
+  // Create the block table
   const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Replace the original element
   element.replaceWith(table);
 }
