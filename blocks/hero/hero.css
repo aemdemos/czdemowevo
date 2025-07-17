@@ -1,5 +1,3 @@
-
-
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
@@ -21,33 +19,55 @@
   z-index: 1;
 }
 
+/* Merged .hero selector */
 .hero {
+  width: 100vw;
+  min-height: 520px;
+  background: #15294d url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 560px;
-  min-width: 320px;
-  max-width: 90vw;
-  height: 48px;
-  margin: 0 auto;
-  background: linear-gradient(112deg, #c59b7b 0%, #efd8bf 47%, #c59b7b 100%);
-  border-radius: 24px;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 6%);
-  position: relative;
+  box-sizing: border-box;
   padding: 0;
+  margin: 0;
+  position: relative;
 }
 
 .hero > div {
-  flex: 1 1 100%;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 520px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0;
   height: 100%;
 }
 
+/* Set the right column (where the content actually lives in your HTML) as the card */
+.hero > div:last-child {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 7%);
+  padding: 54px;
+  max-width: 600px;
+  min-width: 340px;
+  margin: 0 auto;
+  align-items: flex-start;
+  justify-content: center;
+  display: flex;
+}
+
 .hero > div:first-child {
-  display: none;
+  /* Keep empty but maintain layout */
+  max-width: 620px;
+  min-width: 340px;
+  margin: 0 3vw;
+  height: 100%;
+  display: flex;
 }
 
 .hero h1,
@@ -87,76 +107,61 @@
   }
 }
 
-.hero.hero13 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background: #fff;
-  min-height: 340px;
-  padding: 0;
-}
-
-.hero.hero13 > div:first-child {
-  display: none;
-}
-
-.hero.hero13 > div:last-child {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.hero.hero13 h1 {
-  margin: 0;
-  padding-top: 72px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  font-style: italic;
-  color: #0d2d53;
-  text-align: center;
-  line-height: 1.18;
-  max-width: 700px;
-  box-sizing: border-box;
-}
-
-.hero .button-container {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.hero .button-container .button,
-.hero .button-container a.button {
-  background: none;
-  border: none;
-  box-shadow: none;
-  color: #00245a;
-  font-family: var(--heading-font-family), Arial, Helvetica, sans-serif;
-  font-size: 1.35rem;
-  font-weight: 800;
+/* Typography and content inside the card */
+.hero strong,
+.hero p,
+.hero li {
+  color: #192748;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  margin: 0 0 18px;
   letter-spacing: 0.01em;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  line-height: 1.08;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
-  min-width: unset;
-  min-height: unset;
-  max-width: unset;
-  max-height: unset;
-  white-space: nowrap;
-  overflow: visible;
 }
 
+.hero strong {
+  font-size: 2.5rem;
+  font-weight: 900;
+  display: block;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.hero ul {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+}
+
+.hero li {
+  position: relative;
+  padding-left: 1.4em;
+  margin-bottom: 7px;
+  color: #192748;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hero li::before {
+  content: '';
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  background: #e3c29e;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  position: absolute;
+  left: 0.1em;
+  top: 0.52em;
+}
+
+/* Move .hero.hero15 selectors above .hero.hero2 > div:first-child > div and .hero.hero2 > div:last-child h* to resolve specificity */
 .hero.hero15 > div:first-child {
   flex: 1 1 50%;
   display: flex;
@@ -164,15 +169,6 @@
   min-width: 0;
   background: none;
   order: 1;
-}
-
-.hero.hero15 > div:first-child picture,
-.hero.hero15 > div:first-child img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  background: none;
 }
 
 .hero.hero15 > div:last-child {
@@ -193,14 +189,13 @@
   z-index: 1;
 }
 
-.hero.hero15 > div:last-child > div {
-  max-width: 560px;
+.hero.hero15 > div:first-child picture,
+.hero.hero15 > div:first-child img {
   width: 100%;
-  text-align: left;
-  margin: 0;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  position: relative;
-  z-index: 2;
+  background: none;
 }
 
 .hero.hero15 h1,
@@ -250,6 +245,16 @@
   box-shadow: 0 4px 16px rgb(160 120 71 / 18%);
 }
 
+.hero.hero15 > div:last-child > div {
+  max-width: 560px;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
 .hero.hero2 > div:first-child {
   flex: 1 1 50%;
   order: 2;
@@ -263,6 +268,18 @@
   border-left: 1px solid #e6e6e6;
 }
 
+.hero.hero2 > div:last-child {
+  flex: 1 1 50%;
+  order: 1;
+  background: #fff;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-right: 1px solid #e6e6e6;
+}
+
 .hero.hero2 > div:first-child > div,
 .hero.hero2 > div:first-child picture,
 .hero.hero2 > div:first-child img {
@@ -274,18 +291,6 @@
 .hero.hero2 > div:first-child img {
   object-fit: cover;
   border-radius: 0;
-}
-
-.hero.hero2 > div:last-child {
-  flex: 1 1 50%;
-  order: 1;
-  background: #fff;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border-right: 1px solid #e6e6e6;
 }
 
 .hero.hero2 > div:last-child > div {
@@ -395,80 +400,6 @@
   margin-bottom: 0;
 }
 
-@media (width <= 500px) {
-  .hero {
-    width: 97vw;
-    min-width: 0;
-    height: 32px;
-    border-radius: 16px;
-    padding: 0 1vw;
-  }
-
-  .hero .button-container .button,
-  .hero .button-container a.button {
-    font-size: 0.92rem;
-  }
-}
-
-@media (width <= 900px) {
-  .hero.hero2 {
-    flex-direction: column;
-    min-height: unset;
-    max-width: 99vw;
-    border-radius: 8px;
-  }
-
-  .hero.hero2 > div {
-    flex: 1 1 100%;
-    border-right: none;
-    border-bottom: 1px solid #e6e6e6;
-    padding: 0;
-  }
-
-  .hero.hero2 > div:first-child {
-    border-left: none;
-    border-bottom: 1px solid #e6e6e6;
-    min-height: 220px;
-    order: 2;
-  }
-
-  .hero.hero2 > div:last-child {
-    border-bottom: none;
-    order: 1;
-  }
-
-  .hero.hero2 > div:last-child > div {
-    padding: 24px 10px;
-    gap: 16px;
-  }
-
-  .hero.hero2 > div:last-child h1 {
-    font-size: 28px;
-  }
-
-  .hero.hero2 > div:last-child h2 {
-    font-size: 15px;
-  }
-
-  .hero.hero2 > div:last-child h3 {
-    font-size: 11px;
-    margin-top: 8px;
-  }
-
-  .hero.hero2 > div:last-child .button-container .button,
-  .hero.hero2 > div:last-child .button-container a.button {
-    font-size: 13px;
-    padding: 7px 10px;
-    min-width: 60px;
-    max-width: 110px;
-  }
-
-  .hero.hero2 > div:last-child .button-container {
-    gap: 7px;
-  }
-}
-
-/* Merged .hero.hero3 selector */
 .hero.hero3 {
   min-height: 520px;
   height: 520px;
@@ -516,6 +447,7 @@
   background: rgb(23 58 94 / 45%);
   z-index: 2;
   pointer-events: none;
+  content: '';
 }
 
 /* Overlay: blue translucent bar for badges (top, full width) */
@@ -528,6 +460,7 @@
   background: rgb(23 58 94 / 70%);
   z-index: 3;
   pointer-events: none;
+  content: '';
 }
 
 /* Center the text container horizontally and at vertical center */
@@ -614,23 +547,3 @@
     padding: 0.4rem 0;
   }
 }
-
-/* --- GENERATED CSS --- */
-
-/* Merged .hero.hero4 selector */
-.hero.hero4 {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: stretch;
-  width: 100vw;
-  min-height: 100vh;
-  background: #faf7f2;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-}
-
