@@ -1,26 +1,23 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the block containing the accordion data
-  const block = element.querySelector('.faq-inplace.block');
-  if (!block) return;
-  // Each column is a direct child of the block div, containing multiple Q&A pairs
-  const columns = Array.from(block.children);
-  const cells = [];
-  // Header row: Must be exactly 'Accordion' per requirements
-  cells.push(['Accordion']);
-  // Traverse both columns for Q&A pairs
-  columns.forEach(col => {
-    Array.from(col.children).forEach(item => {
-      // Each item contains 2 divs: [0] = question, [1] = answer
-      const question = item.children[0];
-      const answer = item.children[1];
-      // Only add rows that have both question and answer
-      if (question && answer) {
-        cells.push([question, answer]);
+  // The block is made up of two main columns of accordion items.
+  // Each column is a <div> containing multiple FAQ items, each FAQ item is a <div> containing [question, answer].
+  const mainDiv = element.querySelector(':scope > div'); // the block content container
+  const cols = Array.from(mainDiv.children).filter(e => e.tagName === 'DIV'); // two columns
+  const rows = [];
+  rows.push(['Accordion']); // Header row, matches the block name in the example
+  // Loop through each column and FAQ item
+  cols.forEach((col) => {
+    Array.from(col.children).forEach((faqItem) => {
+      // Each FAQ item is a <div> with two children: question <div> and answer <div>
+      const children = Array.from(faqItem.children).filter(e => e.tagName === 'DIV');
+      if (children.length === 2) {
+        // Reference the real elements, do not clone
+        rows.push([children[0], children[1]]);
       }
     });
   });
-  // Create table and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Create and replace with the block table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

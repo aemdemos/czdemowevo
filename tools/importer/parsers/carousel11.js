@@ -1,67 +1,74 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper: Extract the <img> from a <picture>
-  function getImgFromPicture(picture) {
-    if (!picture) return null;
-    const img = picture.querySelector('img');
-    return img || null;
-  }
-
-  // Find the carousel root block (works even if structure changes slightly)
-  const carousel = element.querySelector('.quote-carousel');
+  // Find the carousel block root
+  const wrapper = element.querySelector('.quote-carousel-wrapper');
+  if (!wrapper) return;
+  const carousel = wrapper.querySelector('.quote-carousel.block');
   if (!carousel) return;
-  const cards = Array.from(carousel.querySelectorAll('.quotecard'));
 
-  // Prepare header row
-  const cells = [['Carousel']];
+  // Get all slides (quotecards)
+  const slides = Array.from(carousel.querySelectorAll('.quotecard'));
 
-  cards.forEach((card) => {
-    // Get author/profile image
-    let img = null;
-    const aphoristDiv = card.querySelector('.aphorist');
-    if (aphoristDiv) {
-      const picture = aphoristDiv.querySelector('picture');
-      img = getImgFromPicture(picture);
-    }
+  // Build the block table structure
+  const rows = [];
+  rows.push(['Carousel']); // header row, matches example
 
-    // Compose text cell
-    const textCell = document.createElement('div');
+  slides.forEach((slide) => {
+    // Get quote text
+    const quoteP = slide.querySelector('p');
 
-    // Get the quote (always a <p>)
-    const p = card.querySelector('p');
-    if (p) {
-      textCell.appendChild(p);
-    }
-
-    // Add author name (first <li>) and title (second <li>)
-    if (aphoristDiv) {
-      const ul = aphoristDiv.querySelector('ul');
-      if (ul) {
-        const lis = ul.querySelectorAll('li');
-        if (lis.length > 0) {
-          // Author name in bold
-          const strong = document.createElement('strong');
-          strong.textContent = lis[0].textContent;
-          textCell.appendChild(document.createElement('br'));
-          textCell.appendChild(strong);
-        }
-        if (lis.length > 1) {
-          textCell.appendChild(document.createElement('br'));
-          const span = document.createElement('span');
-          span.textContent = lis[1].textContent;
-          textCell.appendChild(span);
-        }
+    // Get aphorist image (img inside picture)
+    let imgEl = null;
+    const aphorist = slide.querySelector('.aphorist');
+    if (aphorist) {
+      const picture = aphorist.querySelector('picture');
+      if (picture) {
+        imgEl = picture.querySelector('img');
       }
     }
 
-    // Push the row: image cell and text cell
-    cells.push([
-      img,
-      textCell
+    // Get author and meta info
+    let authorName = '';
+    let authorCompany = '';
+    if (aphorist) {
+      const liItems = aphorist.querySelectorAll('ul > li');
+      if (liItems.length > 0) {
+        authorName = liItems[0].textContent.trim();
+      }
+      if (liItems.length > 1) {
+        authorCompany = liItems[1].textContent.trim();
+      }
+    }
+
+    // Compose author name and company block as in example (strong then span)
+    const authorBlock = document.createElement('div');
+    if (authorName) {
+      const authorNameEl = document.createElement('strong');
+      authorNameEl.textContent = authorName;
+      authorBlock.appendChild(authorNameEl);
+    }
+    if (authorCompany) {
+      authorBlock.appendChild(document.createElement('br'));
+      const companyEl = document.createElement('span');
+      companyEl.textContent = authorCompany;
+      authorBlock.appendChild(companyEl);
+    }
+
+    // Compose content cell: quote paragraph and author block
+    const contentFrag = document.createDocumentFragment();
+    if (quoteP) contentFrag.appendChild(quoteP);
+    if (authorBlock.childNodes.length > 0) {
+      contentFrag.appendChild(document.createElement('br'));
+      contentFrag.appendChild(authorBlock);
+    }
+
+    // Always create two columns. If image or content missing, use empty string
+    rows.push([
+      imgEl ? imgEl : '',
+      contentFrag.childNodes.length > 0 ? contentFrag : ''
     ]);
   });
 
-  // Create and replace with the block table
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }
