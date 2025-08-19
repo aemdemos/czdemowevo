@@ -1,65 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main questions container
-  const questionsContainer = element.querySelector('#faq-replace-questions-container');
-  if (!questionsContainer) return;
+  const tabsContainer = element.querySelector('#faq-replace-questions-container');
+  if (!tabsContainer) return;
 
-  // Gather all tab divs (each tab)
-  const tabDivs = Array.from(questionsContainer.children).filter(node => node.nodeType === Node.ELEMENT_NODE && node.tagName === 'DIV');
+  const tabElements = Array.from(tabsContainer.children);
+  if (!tabElements.length) return;
 
-  // Prepare arrays for tab labels and tab contents
-  const labels = [];
-  const contents = [];
+  // Header row: block name only, single cell
+  const cells = [['Tabs']];
 
-  tabDivs.forEach(tab => {
-    // Tab label: the text node after <picture>
-    let tabLabel = '';
-    let pic = tab.querySelector('picture');
-    if (pic) {
-      let cur = pic.nextSibling;
-      while (cur && (cur.nodeType !== Node.TEXT_NODE || !cur.textContent.trim())) {
-        cur = cur.nextSibling;
-      }
-      if (cur && cur.nodeType === Node.TEXT_NODE) {
-        tabLabel = cur.textContent.trim();
-      }
-    }
-    // Fallback: find first non-empty text node if needed
-    if (!tabLabel) {
-      for (const n of tab.childNodes) {
-        if (n !== pic && n.nodeType === Node.TEXT_NODE && n.textContent.trim()) {
-          tabLabel = n.textContent.trim();
-          break;
-        }
+  // Each tab row: [tab label, tab content] (two cells)
+  tabElements.forEach((tabEl) => {
+    // Tab label: icon + label text before content <div>
+    const labelNodes = [];
+    for (const node of tabEl.childNodes) {
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'PICTURE') {
+        labelNodes.push(node);
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent.trim();
+        if (text) labelNodes.push(document.createTextNode(text));
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'DIV') {
+        break; // stop before content <div>
       }
     }
-    labels.push(tabLabel);
-
-    // Tab content: first <div> child (the answer/explanation)
-    let contentDiv = null;
-    for (const c of tab.children) {
-      if (c.tagName === 'DIV') {
-        contentDiv = c;
-        break;
-      }
-    }
-    // Always include the picture above the content if present (for icon/visual context)
-    if (pic && contentDiv) {
-      contents.push([pic, contentDiv]);
-    } else if (contentDiv) {
-      contents.push(contentDiv);
+    let tabLabel;
+    if (labelNodes.length === 1) {
+      tabLabel = labelNodes[0];
+    } else if (labelNodes.length > 1) {
+      tabLabel = document.createElement('span');
+      labelNodes.forEach(n => tabLabel.appendChild(n));
     } else {
-      contents.push('');
+      tabLabel = '';
     }
+    // Tab content
+    const contentDiv = tabEl.querySelector('div');
+    const tabContent = contentDiv ? contentDiv : document.createElement('div');
+    // Add as a row with two cells
+    cells.push([tabLabel, tabContent]);
   });
 
-  // Build the table: header row (1 cell), label row (one per tab), content row (one per tab)
-  const table = [];
-  table.push(['Tabs']);
-  table.push(labels);
-  table.push(contents);
-
-  // Create the block table and replace the element
-  const block = WebImporter.DOMUtils.createTable(table, document);
+  const block = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(block);
 }
