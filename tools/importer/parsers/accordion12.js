@@ -1,54 +1,26 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the block that contains the FAQ columns
-  let block = element.querySelector('.faq-inplace.block');
-  if (!block) block = element;
-
-  // There should be two column wrappers inside the block
+  // Find the block containing the accordion data
+  const block = element.querySelector('.faq-inplace.block');
+  if (!block) return;
+  // Each column is a direct child of the block div, containing multiple Q&A pairs
   const columns = Array.from(block.children);
-
-  // Each column contains multiple FAQ items; each item is a div with two children: question, answer
-  const leftItems = columns[0] ? Array.from(columns[0].children) : [];
-  const rightItems = columns[1] ? Array.from(columns[1].children) : [];
-
-  // The table header as per spec
-  const rows = [['Accordion']];
-  // Number of rows is the max of either column
-  const maxRows = Math.max(leftItems.length, rightItems.length);
-
-  for (let i = 0; i < maxRows; i++) {
-    // For left column
-    let leftTitle = null, leftContent = null;
-    if (leftItems[i]) {
-      const leftDivs = Array.from(leftItems[i].children);
-      leftTitle = leftDivs[0] || document.createElement('div');
-      leftContent = leftDivs[1] || document.createElement('div');
-    } else {
-      leftTitle = document.createElement('div');
-      leftContent = document.createElement('div');
-    }
-    // For right column
-    let rightTitle = null, rightContent = null;
-    if (rightItems[i]) {
-      const rightDivs = Array.from(rightItems[i].children);
-      rightTitle = rightDivs[0] || document.createElement('div');
-      rightContent = rightDivs[1] || document.createElement('div');
-    } else {
-      rightTitle = document.createElement('div');
-      rightContent = document.createElement('div');
-    }
-    // Add left item row
-    if ((leftTitle.textContent && leftTitle.textContent.trim()) || (leftContent.textContent && leftContent.textContent.trim())) {
-      rows.push([leftTitle, leftContent]);
-    }
-    // Add right item row
-    if ((rightTitle.textContent && rightTitle.textContent.trim()) || (rightContent.textContent && rightContent.trim())) {
-      rows.push([rightTitle, rightContent]);
-    }
-  }
-
-  // Create the block table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-  // Replace the original element
+  const cells = [];
+  // Header row: Must be exactly 'Accordion' per requirements
+  cells.push(['Accordion']);
+  // Traverse both columns for Q&A pairs
+  columns.forEach(col => {
+    Array.from(col.children).forEach(item => {
+      // Each item contains 2 divs: [0] = question, [1] = answer
+      const question = item.children[0];
+      const answer = item.children[1];
+      // Only add rows that have both question and answer
+      if (question && answer) {
+        cells.push([question, answer]);
+      }
+    });
+  });
+  // Create table and replace
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

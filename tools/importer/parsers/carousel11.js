@@ -1,66 +1,67 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the carousel block inside the provided element
-  const carouselBlock = element.querySelector('.quote-carousel.block');
-  if (!carouselBlock) return;
+  // Helper: Extract the <img> from a <picture>
+  function getImgFromPicture(picture) {
+    if (!picture) return null;
+    const img = picture.querySelector('img');
+    return img || null;
+  }
 
-  // Get all slides
-  const slides = Array.from(carouselBlock.querySelectorAll('.quotecard'));
+  // Find the carousel root block (works even if structure changes slightly)
+  const carousel = element.querySelector('.quote-carousel');
+  if (!carousel) return;
+  const cards = Array.from(carousel.querySelectorAll('.quotecard'));
 
-  // Table header matches example
+  // Prepare header row
   const cells = [['Carousel']];
 
-  slides.forEach((slide) => {
-    // --- IMAGE CELL ---
-    let imageCell = '';
-    const aphorist = slide.querySelector('.aphorist');
-    if (aphorist) {
-      const picture = aphorist.querySelector('picture');
-      if (picture) {
-        imageCell = picture;
-      } else {
-        const img = aphorist.querySelector('img');
-        if (img) imageCell = img;
-      }
+  cards.forEach((card) => {
+    // Get author/profile image
+    let img = null;
+    const aphoristDiv = card.querySelector('.aphorist');
+    if (aphoristDiv) {
+      const picture = aphoristDiv.querySelector('picture');
+      img = getImgFromPicture(picture);
     }
 
-    // --- TEXT CELL ---
-    const textCellContent = [];
-    // Quote text (as paragraph)
-    const quote = slide.querySelector('p');
-    if (quote) textCellContent.push(quote);
+    // Compose text cell
+    const textCell = document.createElement('div');
 
-    // Author & Affiliation
-    if (aphorist) {
-      const ul = aphorist.querySelector('ul');
+    // Get the quote (always a <p>)
+    const p = card.querySelector('p');
+    if (p) {
+      textCell.appendChild(p);
+    }
+
+    // Add author name (first <li>) and title (second <li>)
+    if (aphoristDiv) {
+      const ul = aphoristDiv.querySelector('ul');
       if (ul) {
         const lis = ul.querySelectorAll('li');
         if (lis.length > 0) {
-          // Join author and their affiliation on a new line
-          const author = document.createElement('strong');
-          author.textContent = lis[0].textContent;
-          textCellContent.push(document.createElement('br'));
-          textCellContent.push(author);
-          if (lis.length > 1) {
-            textCellContent.push(document.createElement('br'));
-            const affiliation = document.createElement('span');
-            affiliation.textContent = lis[1].textContent;
-            textCellContent.push(affiliation);
-          }
+          // Author name in bold
+          const strong = document.createElement('strong');
+          strong.textContent = lis[0].textContent;
+          textCell.appendChild(document.createElement('br'));
+          textCell.appendChild(strong);
+        }
+        if (lis.length > 1) {
+          textCell.appendChild(document.createElement('br'));
+          const span = document.createElement('span');
+          span.textContent = lis[1].textContent;
+          textCell.appendChild(span);
         }
       }
     }
 
-    // Avoid empty cell arrays
-    const textCellFinal = textCellContent.length ? textCellContent : '';
-    
+    // Push the row: image cell and text cell
     cells.push([
-      imageCell,
-      textCellFinal
+      img,
+      textCell
     ]);
   });
 
-  // Create block table and replace element
+  // Create and replace with the block table
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

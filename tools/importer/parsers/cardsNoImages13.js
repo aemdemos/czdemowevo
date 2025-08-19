@@ -1,41 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build the table header row exactly as in the example
+  // Cards header row
   const rows = [['Cards']];
 
-  // Get all direct card containers
-  // Each direct child of '.steps.block' is a wrapper for a card
-  const stepsBlock = element.querySelector('.steps.block');
-  if (!stepsBlock) {
-    // If not found, don't replace, nothing to do
+  // Get all immediate children that represent steps/cards
+  // Steps are in: <div class="steps block"> <div> ... </div> </div>
+  // Each card is inside: <div> <div><div class="step"><span>n</span></div> <p>Title</p> <p>Description</p> </div> </div>
+
+  // Find all direct card wrappers (each representing one card)
+  const stepBlock = element.querySelector('.steps.block');
+  if (!stepBlock) {
+    // If there is no block, don't do anything
     return;
   }
-  const cardContainers = stepsBlock.querySelectorAll(':scope > div');
+  const cardWrappers = stepBlock.querySelectorAll(':scope > div');
 
-  cardContainers.forEach(cardWrap => {
-    // Each cardWrap has a child div with content
-    const inner = cardWrap.firstElementChild;
+  cardWrappers.forEach((cardWrapper) => {
+    // The card content is the first (and only) child of this div
+    // which contains: <div><div class="step"><span>n</span></div> <p>Title</p> <p>Description</p> </div>
+    const inner = cardWrapper.firstElementChild;
     if (!inner) return;
+    // Get all <p> tags inside inner
+    const paragraphs = inner.querySelectorAll('p');
 
-    // Look for all immediate children in order
-    // Ignore .step and its number, only care about <p> elements
-    const ps = Array.from(inner.children).filter(el => el.tagName === 'P');
-
-    // Create cell content: heading as <strong>, then description (keep block-level spacing)
-    const cellContent = [];
-    if (ps[0]) {
-      // Use a <strong> for the card heading as in the visual example
+    // Title is first <p>, description is second <p>
+    const cardCellContent = [];
+    if (paragraphs.length > 0) {
+      // Make title bold - use <strong>, but reference the original element
       const strong = document.createElement('strong');
-      strong.textContent = ps[0].textContent;
-      cellContent.push(strong);
+      strong.innerHTML = paragraphs[0].innerHTML;
+      cardCellContent.push(strong);
     }
-    if (ps[1]) {
-      // Add a line break to visually separate heading and description as in the example
-      cellContent.push(document.createElement('br'));
-      cellContent.push(document.createElement('br'));
-      cellContent.push(ps[1]); // use the actual <p> element for description
+    if (paragraphs.length > 1) {
+      cardCellContent.push(document.createElement('br'));
+      cardCellContent.push(paragraphs[1]); // reference the original element
     }
-    rows.push([cellContent]);
+    rows.push([cardCellContent]);
   });
 
   const table = WebImporter.DOMUtils.createTable(rows, document);

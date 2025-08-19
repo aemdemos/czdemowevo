@@ -1,23 +1,30 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the columns-wrapper and columns block
+  // Find the columns-wrapper > columns.block
+  let columnsBlock = null;
   const columnsWrapper = element.querySelector('.columns-wrapper');
-  if (!columnsWrapper) return;
-  const columnsBlock = columnsWrapper.querySelector('.columns.block');
+  if (columnsWrapper) {
+    columnsBlock = columnsWrapper.querySelector('.columns.block');
+  } else {
+    columnsBlock = element.querySelector('.columns.block');
+  }
   if (!columnsBlock) return;
-  // The columns block contains a div whose children are the columns
-  const innerDiv = columnsBlock.querySelector(':scope > div');
-  if (!innerDiv) return;
-  const colDivs = Array.from(innerDiv.children);
-  if (colDivs.length < 2) return;
-  // The output table should have:
-  // - Header row: one cell with block name
-  // - Second row: one cell per column (side by side)
-  const headerRow = ['Columns (columns8)'];
-  const contentRow = [colDivs[0], colDivs[1]];
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
+
+  // The first child of .columns.block is a div containing the column content
+  const columnsRowDiv = columnsBlock.querySelector(':scope > div');
+  if (!columnsRowDiv) return;
+
+  // The direct children of this div are the columns
+  const colDivs = Array.from(columnsRowDiv.children);
+  // Defensive: expect 2 columns, but handle if missing
+  const cellEls = colDivs.map(col => col);
+  while (cellEls.length < 2) cellEls.push('');
+
+  // Create the columns8 table
+  const cells = [
+    ['Columns (columns8)'],
+    [cellEls[0], cellEls[1]]
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

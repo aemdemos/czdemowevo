@@ -1,60 +1,49 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the innermost content block (most meaningful div with content)
-  let contentRoot = element;
-  // Unwrap commonly nested structures (e.g., .section > .quote-wrapper > .quote.block > div > div)
-  let current = element;
-  while (
-    current &&
-    current.children &&
-    current.children.length === 1 &&
-    current.children[0].tagName === 'DIV'
-  ) {
-    current = current.children[0];
-  }
-  contentRoot = current;
+  // Table header EXACTLY matching example
+  const headerRow = ['Embed'];
 
-  // Compose an array of all child nodes (elements and text) for the cell
+  // Accumulate cell content: both text and image
   const cellContent = [];
-  Array.from(contentRoot.childNodes).forEach((node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      cellContent.push(node);
-    } else if (node.nodeType === Node.TEXT_NODE) {
-      const txt = node.textContent.trim();
-      if (txt) {
-        const p = document.createElement('p');
-        p.textContent = txt;
-        cellContent.push(p);
+
+  // Find all paragraphs inside the block
+  const paragraphs = element.querySelectorAll('p');
+
+  paragraphs.forEach(p => {
+    // If the paragraph contains a <picture> or <img>, include that element
+    const pic = p.querySelector('picture');
+    if (pic) {
+      cellContent.push(pic);
+    } else {
+      // If not image, include the paragraph (could have text or other inline HTML)
+      // But remove images/pictures if any (to avoid duplicates)
+      const paraClone = p.cloneNode(true);
+      const imgs = paraClone.querySelectorAll('img, picture');
+      imgs.forEach(imgEl => imgEl.remove());
+      if (paraClone.textContent.trim()) {
+        cellContent.push(paraClone);
       }
     }
   });
 
-  // Determine the embed URL
-  // First look for any explicit video link in <a>, else search the text, else fallback to the known example
-  let videoUrl = '';
-  const a = element.querySelector('a[href*="vimeo.com"], a[href*="youtube.com"], a[href*="youtu.be"]');
-  if (a) {
-    videoUrl = a.href;
-  } else {
-    const text = element.textContent || '';
-    const urlMatch = text.match(/https?:\/\/(vimeo\.com|youtu\.be|youtube\.com)\/[^\s)]+/i);
-    if (urlMatch) {
-      videoUrl = urlMatch[0];
+  // If paragraphs are missing, fallback: include all direct <div> descendants
+  if (cellContent.length === 0) {
+    const children = Array.from(element.querySelectorAll(':scope > div'));
+    if (children.length) {
+      cellContent.push(...children);
     } else {
-      videoUrl = 'https://vimeo.com/454418448';
+      // Fallback: include the element itself (never empty cell)
+      cellContent.push(element);
     }
   }
-  const urlEl = document.createElement('a');
-  urlEl.href = videoUrl;
-  urlEl.textContent = videoUrl;
-  cellContent.push(urlEl);
 
-  // Compose the block table exactly as in the markdown example
+  // Compose the table structure: header, then 1 cell with all content
   const cells = [
-    ['Embed'],
-    [cellContent],
+    headerRow,
+    [cellContent]
   ];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(table);
+  // Create and replace
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }
