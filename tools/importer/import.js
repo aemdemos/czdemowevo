@@ -12,15 +12,15 @@
 /* global WebImporter */
 /* eslint-disable no-console */
 import columns8Parser from './parsers/columns8.js';
-import cards5Parser from './parsers/cards5.js';
-import hero2Parser from './parsers/hero2.js';
-import hero3Parser from './parsers/hero3.js';
-import columns6Parser from './parsers/columns6.js';
+import accordion12Parser from './parsers/accordion12.js';
 import carousel11Parser from './parsers/carousel11.js';
 import cardsNoImages13Parser from './parsers/cardsNoImages13.js';
-import hero14Parser from './parsers/hero14.js';
+import hero2Parser from './parsers/hero2.js';
 import hero4Parser from './parsers/hero4.js';
-import accordion12Parser from './parsers/accordion12.js';
+import hero3Parser from './parsers/hero3.js';
+import columns6Parser from './parsers/columns6.js';
+import cards5Parser from './parsers/cards5.js';
+import hero14Parser from './parsers/hero14.js';
 import tabs9Parser from './parsers/tabs9.js';
 import embedVideo10Parser from './parsers/embedVideo10.js';
 import headerParser from './parsers/header.js';
@@ -40,15 +40,15 @@ import {
 const parsers = {
   metadata: metadataParser,
   columns8: columns8Parser,
-  cards5: cards5Parser,
-  hero2: hero2Parser,
-  hero3: hero3Parser,
-  columns6: columns6Parser,
+  accordion12: accordion12Parser,
   carousel11: carousel11Parser,
   cardsNoImages13: cardsNoImages13Parser,
-  hero14: hero14Parser,
+  hero2: hero2Parser,
   hero4: hero4Parser,
-  accordion12: accordion12Parser,
+  hero3: hero3Parser,
+  columns6: columns6Parser,
+  cards5: cards5Parser,
+  hero14: hero14Parser,
   tabs9: tabs9Parser,
   embedVideo10: embedVideo10Parser,
   ...customParsers,

@@ -1,39 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block header matches the example: 'Hero'
+  // 1. Table header row exactly as in the example
   const headerRow = ['Hero'];
 
-  // Background image from data-background-image attribute (example: decorative background)
-  let bgImgElem = '';
-  const bgImgUrl = element.getAttribute('data-background-image');
-  if (bgImgUrl) {
-    const img = document.createElement('img');
-    img.src = bgImgUrl;
-    img.alt = '';
-    bgImgElem = img;
+  // 2. Background image row
+  // Use data-background-image attribute as the background image asset
+  const bgImageUrl = element.getAttribute('data-background-image');
+  let bgImgEl = '';
+  if (bgImageUrl) {
+    bgImgEl = document.createElement('img');
+    bgImgEl.src = bgImageUrl;
+    bgImgEl.alt = '';
   }
 
-  // Textual content: Headline, Subheading, Paragraphs, CTA (in correct order)
-  const rightCol = element.querySelector('.background-image-column');
-  const textElems = [];
-  if (rightCol) {
-    // Headline (h1-h6, only first)
-    const heading = rightCol.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) textElems.push(heading);
-    // All paragraphs except button-container
-    rightCol.querySelectorAll('p:not(.button-container)').forEach(p => textElems.push(p));
-    // CTA (button-container)
-    const buttonCtn = rightCol.querySelector('.button-container');
-    if (buttonCtn) textElems.push(buttonCtn);
+  // 3. Content row (heading, subheading, paragraph, CTA)
+  // Find the text content column
+  const textCol = element.querySelector('.background-image-column');
+  const contentEls = [];
+  if (textCol) {
+    // Add heading(s)
+    const heading = textCol.querySelector('h1, h2, h3, h4, h5, h6');
+    if (heading) contentEls.push(heading);
+    // Add all paragraphs except for button containers
+    textCol.querySelectorAll('p:not(.button-container)').forEach(p => {
+      contentEls.push(p);
+    });
+    // Add button if present
+    const btnContainer = textCol.querySelector('.button-container');
+    if (btnContainer) contentEls.push(btnContainer);
   }
 
-  // Construct block table as per example (1 column, 3 rows)
+  // Compose the table: 1 column, 3 rows
   const cells = [
     headerRow,
-    [bgImgElem],
-    [textElems]
+    [bgImgEl || ''],
+    [contentEls]
   ];
 
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the original element with the constructed table
+  element.replaceWith(table);
 }

@@ -1,48 +1,42 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main cards container
-  const featuredBlock = element.querySelector('.featured-recipes');
-  if (!featuredBlock) return;
-
-  // The block header row
-  const cells = [['Cards']];
-
-  // Each direct child div in .featured-recipes is a card
-  const cardEls = Array.from(featuredBlock.children);
-  cardEls.forEach(cardEl => {
-    // Card image
-    let imageCell = null;
-    const picture = cardEl.querySelector('picture');
-    if (picture) imageCell = picture;
-    // Card text cell
-    let textCellContent = [];
-
-    // If there is a link containing title (normal card)
-    const link = cardEl.querySelector('a[href]');
-    const titleSpan = cardEl.querySelector('span');
-    const button = cardEl.querySelector('a.button');
-    const isButtonCard = cardEl.classList.contains('button-container');
-
-    if (!isButtonCard && titleSpan) {
-      // Title in bold, wrapped in link if present
-      const strongEl = document.createElement('strong');
-      strongEl.textContent = titleSpan.textContent;
-      if (link) {
-        const titleLink = document.createElement('a');
-        titleLink.href = link.getAttribute('href');
-        titleLink.appendChild(strongEl);
-        textCellContent.push(titleLink);
-      } else {
-        textCellContent.push(strongEl);
+  const featuredRecipes = element.querySelector('.featured-recipes');
+  if (!featuredRecipes) return;
+  const cardEls = Array.from(featuredRecipes.children).filter(card => card.classList.contains('featured-recipe'));
+  const cells = [];
+  cells.push(['Cards']);
+  cardEls.forEach(card => {
+    const picture = card.querySelector('picture');
+    const textCellContent = [];
+    // Title extraction: from <span> inside card (may be inside link)
+    let titleSpan = card.querySelector('span');
+    // For the last card (CTA), if <span> is missing use button text
+    let titleText = '';
+    if (titleSpan && titleSpan.textContent.trim()) {
+      titleText = titleSpan.textContent.trim();
+    } else {
+      // Fallback: get text from the button link
+      const btn = card.querySelector('a.button');
+      if (btn && btn.textContent.trim()) {
+        titleText = btn.textContent.trim();
       }
-    } else if (isButtonCard && button) {
-      // Last card is a button, include it only
-      textCellContent.push(button);
     }
-    cells.push([imageCell, textCellContent]);
+    if (titleText) {
+      const strong = document.createElement('strong');
+      strong.textContent = titleText;
+      textCellContent.push(strong);
+    }
+    // Description handling (future proof, not present here)
+    const desc = card.querySelector('p, .description');
+    if (desc) textCellContent.push(desc);
+    // CTA extraction: any <a> with class 'button'
+    const cta = card.querySelector('a.button');
+    if (cta) textCellContent.push(cta);
+    cells.push([
+      picture,
+      textCellContent
+    ]);
   });
-
-  // Create the table and replace the element
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
