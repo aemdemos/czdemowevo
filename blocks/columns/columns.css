@@ -1,7 +1,4 @@
-/*
- * Fixed and modernized CSS for columns layouts
- */
-
+/* stylelint-disable no-descending-specificity */
 .columns {
   background: #fff;
   border: 1.5px solid #b09a73;
@@ -37,9 +34,6 @@
   display: block;
 }
 
-/*
-  Place general selectors before more specific ones to avoid descending specificity
-*/
 .columns-wrapper > .columns > div {
   display: flex;
   flex-direction: row;
@@ -255,7 +249,6 @@
   letter-spacing: 0.01em;
 }
 
-/* Responsive: stack vertically on mobile/tablet */
 @media (width <= 900px) {
   .columns.columns22 > div {
     flex-direction: column;
@@ -320,7 +313,7 @@
 
 .columns.columns1 h2 {
   color: #03274F;
-  font-family: var(--heading-font-family), Arial Narrow, Arial, sans-serif;
+  font-family: var(--heading-font-family), "Arial Narrow", Arial, sans-serif;
   font-size: 2rem;
   font-weight: bold;
   letter-spacing: 0.01em;
@@ -575,7 +568,7 @@
 
 .columns-wrapper > .columns h2 {
   color: #00254d;
-  font-family: var(--heading-font-family), Arial Narrow, Arial, sans-serif;
+  font-family: var(--heading-font-family), "Arial Narrow", Arial, sans-serif;
   font-size: 2.6rem;
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -702,12 +695,10 @@
   max-height: unset;
 }
 
-/* Hide all children except the first child (expected to be the prompt heading) */
 .columns.columns8 > div > div:not(.columns-img-col) > *:not(:first-child) {
   display: none;
 }
 
-/* Style the age-gate heading (prompt) */
 .columns.columns8 > div > div:not(.columns-img-col) > *:first-child {
   display: block;
   margin: 0 0 54px;
@@ -722,7 +713,6 @@
   width: 100%;
 }
 
-/* Responsive adjustments for smaller screens */
 @media (width <= 700px) {
   .columns.columns8 {
     min-height: 50vh;
@@ -747,7 +737,6 @@
   }
 }
 
-/* Multi-column support for larger screens (when >1 step/column exists) */
 @media (width >= 800px) {
   .columns.columns13[data-columns="multi"] {
     display: grid;
@@ -766,7 +755,6 @@
   }
 }
 
-/* Responsive stacking for small screens */
 @media (width <= 700px) {
   .columns.columns13 {
     max-width: 98vw;
@@ -793,10 +781,167 @@
   }
 }
 
-.columns.columns3 > div > .columns-img-col,
-.columns.columns3 > div > div:not(.columns-img-col) {
+
+.columns.columns6 {
+  /* Restore background and default box model for the block */
+  background: #1a2640;
+  box-shadow: none;
   border: none;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0;
+  display: block;
+}
+
+/* Main row: flex row for the two buttons, horizontally centered */
+.columns.columns6 > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
   background: none;
-  align-self: auto;
+  padding: 28px 0 32px;
   min-height: unset;
+  box-sizing: border-box;
+}
+
+/* Each button block: side by side, compact, align text and icon horizontally */
+.columns.columns6 > div > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  max-width: 320px;
+  height: 54px;
+  border-radius: 12px;
+  padding: 0 28px;
+  box-sizing: border-box;
+  background: none;
+  border: none;
+  position: relative;
+}
+
+/* Force both .button-container and icon <p> into a horizontal row */
+.columns.columns6 > div > div > p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Ensure the icon is immediately to the right of the label */
+.columns.columns6 > div > div > p.button-container {
+  margin-right: 8px;
+}
+
+.columns.columns6 > div > div > p + p {
+  margin-left: 0;
+}
+
+/* Icon image styling */
+.columns.columns6 > div > div img {
+  height: 21px;
+  width: auto;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+
+  /* Prevent accidental collapse */
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Left button: bronze gradient, dark blue text */
+.columns.columns6 > div > div:first-child {
+  background: linear-gradient(90deg, #c9a27b 0%, #e2b993 100%);
+  border: none;
+}
+
+.columns.columns6 > div > div:first-child .button {
+  color: #23304b;
+  background: none;
+  border: none;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  box-shadow: none;
+  text-align: left;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+/* Right button: transparent, white border, white text */
+.columns.columns6 > div > div:last-child {
+  background: none;
+  border: 2px solid #fff;
+}
+
+.columns.columns6 > div > div:last-child .button {
+  color: #fff;
+  background: none;
+  border: none;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  box-shadow: none;
+  text-align: left;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.columns.columns6 .button-container {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive: stack vertically on small screens and adjust sizes */
+@media (width <= 600px) {
+  .columns.columns6 > div {
+    flex-direction: column;
+    gap: 12px;
+    max-width: 340px;
+    padding: 20px 0;
+    align-items: center;
+  }
+
+  .columns.columns6 > div > div {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 44px;
+    padding: 0 10px;
+  }
+
+  .columns.columns6 > div > div .button {
+    font-size: 16px;
+  }
+
+  .columns.columns6 > div > div img {
+    height: 17px;
+  }
+
+  .columns.columns6 {
+    padding: 8px 0 0;
+  }
 }
