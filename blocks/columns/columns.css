@@ -1,11 +1,11 @@
 /* stylelint-disable no-descending-specificity */
 .columns {
-  background: #14223a url("https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium") center/cover no-repeat;
+  background: #142139 url("https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium") center/cover no-repeat;
   border: none;
   border-radius: 0;
   max-width: 980px;
-  margin: 40px auto;
-  padding: 56px 44px;
+  margin: 0 auto;
+  padding: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@
   box-shadow: none;
   color: #fff;
   align-items: center;
+  width: 100%;
 }
 
 .columns img {
@@ -27,25 +28,29 @@
 }
 
 .columns > div {
-  display: flex;
+  display: grid;
   flex-direction: row;
   width: 100%;
-  gap: 96px;
-  justify-content: center;
-  align-items: flex-start;
+  gap: 0;
+  justify-content: space-between;
+  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  min-height: 120px;
+  padding: 0 3vw;
 }
 
 .columns > div > div {
   order: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  gap: 34px;
+  gap: 18px;
   width: 100%;
   padding: 0;
   border: none;
   background: none;
+  min-width: 0;
 }
 
 .columns > div > .columns-img-col {
@@ -745,21 +750,22 @@
   background: none;
   padding: 0;
   margin: 0;
+  text-align: left;
 }
 
 .columns .button-container .button {
   background: transparent;
   color: #fff;
   border: 2px solid #fff;
-  border-radius: 2.4em;
+  border-radius: 12px;
   font-family: var(--heading-font-family), Arial, sans-serif;
-  font-size: 1.12rem;
+  font-size: 1.15rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  padding: 8px 44px;
-  min-width: 148px;
-  text-align: center;
+  letter-spacing: 0.12em;
+  padding: 18px 48px;
+  min-width: 220px;
+  text-align: left;
   margin: 0;
   box-shadow: none;
   transition: background 0.2s, color 0.2s;
@@ -768,7 +774,7 @@
 .columns .button-container .button:hover,
 .columns .button-container .button:focus {
   background: #fff;
-  color: #14223a;
+  color: #142139;
 }
 
 .columns > div > div > *:last-child {
@@ -924,7 +930,6 @@
   box-sizing: border-box;
 }
 
-/* 3 columns, 2 rows, center items horizontally in each cell */
 .columns.columns13 > div {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -936,7 +941,6 @@
   padding: 0;
 }
 
-/* Center stack of each block's children horizontally */
 .columns.columns13 > div > div {
   display: flex;
   flex-direction: column;
@@ -947,7 +951,6 @@
   padding: 0;
 }
 
-/* Step number badge: visually centered, consistent size and spacing */
 .columns.columns13 > div > div > p:first-child {
   width: 44px;
   height: 44px;
@@ -967,7 +970,6 @@
   text-align: center;
 }
 
-/* Title: centered, bold, uppercase */
 .columns.columns13 > div > div > p:nth-child(2) {
   color: #2B4369;
   font-size: 16px;
@@ -981,7 +983,6 @@
   letter-spacing: 0.01em;
 }
 
-/* Body text: left-aligned in a centered block with max-width for readability */
 .columns.columns13 > div > div > p:nth-child(3) {
     font-size: 12px;
     text-align: left;
@@ -990,7 +991,6 @@
     margin-right: auto;
   }
 
-/* Responsive: stack columns vertically, adjust element sizing for mobile */
 @media (width <= 900px) {
   .columns.columns13 {
     max-width: 98vw;
@@ -1035,4 +1035,46 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+/* Remove any unwanted centering from default styles */
+.columns > div,
+.columns > div > div {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+@media (width <= 900px) {
+  .columns > div {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding: 0 4vw;
+  }
+
+  .columns > div > div {
+    align-items: flex-start;
+    width: 100%;
+    padding: 0;
+  }
+
+  .columns .button-container .button {
+    min-width: 140px;
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+
+  .columns > div > div > p picture,
+  .columns > div > div > p img {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+  }
+}
+
+/* Remove any leftover border-radius from parent containers */
+.columns > div, .columns > div > div, .columns .button-container {
+  border-radius: 0;
 }
