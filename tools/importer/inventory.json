@@ -6,20 +6,20 @@
       "totalBoxes": 1,
       "instances": [
         {
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-00-b2c8ec8cc7206114599cd049698cc67e0e048d63",
+          "xpath": "/html[1]/body[1]/header[1]"
+        },
+        {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
           "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
           "uuid": "4e8d6504-00-b2c8ec8cc7206114599cd049698cc67e0e048d63",
           "xpath": "/html[1]/body[1]/header[1]"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-00-b2c8ec8cc7206114599cd049698cc67e0e048d63",
-          "xpath": "/html[1]/body[1]/header[1]"
         }
       ],
       "styles": {
-        "height": 143
+        "height": 70
       }
     },
     {
@@ -28,15 +28,15 @@
       "totalBoxes": 1,
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com/about-wheatley",
-          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
-          "uuid": "4e8d6504-13-a507e040135207256fc0c4fd07f12510b5a9e729",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-11-a507e040135207256fc0c4fd07f12510b5a9e729",
           "xpath": "/html[1]/body[1]/footer[1]"
         },
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-11-a507e040135207256fc0c4fd07f12510b5a9e729",
+          "url": "https://www.wheatleyvodka.com/about-wheatley",
+          "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
+          "uuid": "4e8d6504-13-a507e040135207256fc0c4fd07f12510b5a9e729",
           "xpath": "/html[1]/body[1]/footer[1]"
         }
       ],
@@ -54,9 +54,9 @@
       "key": "header1",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-00-b2c8ec8cc7206114599cd049698cc67e0e048d63",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-00-b2c8ec8cc7206114599cd049698cc67e0e048d63",
           "xpath": "/html[1]/body[1]/header[1]"
         }
       ]
@@ -67,11 +67,11 @@
       "key": "hero2",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-02-3ab9b21ef6cb3a018359b9f0daf1c63ecf73c7c1",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-02-3ab9b21ef6cb3a018359b9f0daf1c63ecf73c7c1",
           "xpath": "/html[1]/body[1]/main[1]/div[2]",
-          "section": "section-4"
+          "section": "section-2"
         }
       ]
     },
@@ -81,9 +81,9 @@
       "key": "hero3",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-03-28b4d3c63d2ccd41cb54740341e225ebae6698c5",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-03-28b4d3c63d2ccd41cb54740341e225ebae6698c5",
           "xpath": "/html[1]/body[1]/main[1]/div[3]"
         }
       ]
@@ -94,9 +94,9 @@
       "key": "hero4",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-04-ac18c7f4ff0dda41caddc17273e87ac35c820487",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-04-ac18c7f4ff0dda41caddc17273e87ac35c820487",
           "xpath": "/html[1]/body[1]/main[1]/div[4]"
         }
       ]
@@ -109,9 +109,9 @@
       "key": "cards5",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-05-d70c6e6ca8d70ee1f6c77e1030748587e67c4882",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-05-d70c6e6ca8d70ee1f6c77e1030748587e67c4882",
           "xpath": "/html[1]/body[1]/main[1]/div[5]"
         }
       ]
@@ -124,11 +124,11 @@
       "key": "columns6",
       "instances": [
         {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-07-8adc313ebabc6c1bda45a5240cb1d81ddf7d54f5",
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-07-8adc313ebabc6c1bda45a5240cb1d81ddf7d54f5",
           "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[1]/div[2]",
-          "section": "section-5"
+          "section": "section-3"
         }
       ]
     },
@@ -178,11 +178,8 @@
       ]
     },
     {
-      "name": "Embed (video)",
+      "name": "unknown",
       "cluster": 10,
-      "source": "Embed",
-      "target": "Embed",
-      "key": "embedVideo10",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
@@ -223,11 +220,11 @@
       ]
     },
     {
-      "name": "Cards (no images)",
+      "name": "Columns",
       "cluster": 13,
-      "source": "Cards",
-      "target": "Cards",
-      "key": "cardsNoImages13",
+      "source": "Columns",
+      "target": "Columns (columns13)",
+      "key": "columns13",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
@@ -238,28 +235,62 @@
       ]
     },
     {
-      "name": "Hero",
+      "name": "Columns",
       "cluster": 14,
-      "key": "hero14",
+      "source": "Columns",
+      "target": "Columns (columns14)",
+      "key": "columns14",
       "instances": [
+        {
+          "url": "https://www.wheatleyvodka.com/",
+          "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+          "uuid": "2c37b00e-11-a507e040135207256fc0c4fd07f12510b5a9e729",
+          "xpath": "/html[1]/body[1]/footer[1]",
+          "section": "section-4"
+        },
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
           "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
           "uuid": "4e8d6504-13-a507e040135207256fc0c4fd07f12510b5a9e729",
           "xpath": "/html[1]/body[1]/footer[1]",
-          "section": "section-3"
-        },
-        {
-          "url": "https://www.wheatleyvodka.com",
-          "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-          "uuid": "aa6cc1b6-11-a507e040135207256fc0c4fd07f12510b5a9e729",
-          "xpath": "/html[1]/body[1]/footer[1]",
-          "section": "section-3"
+          "section": "section-4"
         }
       ]
     }
   ],
   "outliers": [
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+      "uuid": "2c37b00e-01-85cd4579b6f7e6d4726df9bd07408d48a8a21634",
+      "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[2]/div[2]",
+      "section": "section-1"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+      "uuid": "2c37b00e-06-3658de01c084ddee99108209b5555d00083df6f8",
+      "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[1]/div[1]",
+      "section": "section-3"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+      "uuid": "2c37b00e-08-d700f4bd97979bfe59f7923d6a9f5515b112b6d5",
+      "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[2]/picture[1]"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+      "uuid": "2c37b00e-09-ac2e8bbd7c8831a5258ff52117328fd77c4de5bd",
+      "xpath": "/html[1]/body[1]/main[1]/div[7]"
+    },
+    {
+      "url": "https://www.wheatleyvodka.com/",
+      "urlHash": "2c37b00ea16471ae0f0f7ea3dcc4efeac14d4cb4",
+      "uuid": "2c37b00e-10-2b424cbada03ff8eb2269d0cf189079d961d2f2c",
+      "xpath": "/html[1]/body[1]/main[1]/div[8]"
+    },
     {
       "url": "https://www.wheatleyvodka.com/about-wheatley",
       "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
@@ -278,7 +309,7 @@
       "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
       "uuid": "4e8d6504-03-99dc8a8b2553cde3508ccad1a31df14de03023be",
       "xpath": "/html[1]/body[1]/main[1]/div[2]/div[2]/div[1]/div[1]/div[1]",
-      "section": "section-2"
+      "section": "section-5"
     },
     {
       "url": "https://www.wheatleyvodka.com/about-wheatley",
@@ -297,38 +328,6 @@
       "urlHash": "4e8d6504f2b86a65e10fba858b4e0ea3bc485dcb",
       "uuid": "4e8d6504-11-b6db2d625a27be57d05961cdffa41b50e42bfa7f",
       "xpath": "/html[1]/body[1]/main[1]/div[9]/div[1]"
-    },
-    {
-      "url": "https://www.wheatleyvodka.com",
-      "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-      "uuid": "aa6cc1b6-01-85cd4579b6f7e6d4726df9bd07408d48a8a21634",
-      "xpath": "/html[1]/body[1]/main[1]/div[1]/div[1]/div[1]/div[2]/div[2]",
-      "section": "section-1"
-    },
-    {
-      "url": "https://www.wheatleyvodka.com",
-      "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-      "uuid": "aa6cc1b6-06-3658de01c084ddee99108209b5555d00083df6f8",
-      "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[1]/div[1]",
-      "section": "section-5"
-    },
-    {
-      "url": "https://www.wheatleyvodka.com",
-      "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-      "uuid": "aa6cc1b6-08-d700f4bd97979bfe59f7923d6a9f5515b112b6d5",
-      "xpath": "/html[1]/body[1]/main[1]/div[6]/div[1]/div[1]/div[1]/div[2]/picture[1]"
-    },
-    {
-      "url": "https://www.wheatleyvodka.com",
-      "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-      "uuid": "aa6cc1b6-09-ac2e8bbd7c8831a5258ff52117328fd77c4de5bd",
-      "xpath": "/html[1]/body[1]/main[1]/div[7]"
-    },
-    {
-      "url": "https://www.wheatleyvodka.com",
-      "urlHash": "aa6cc1b640bd44cdb52406c6ba583b67c2754b16",
-      "uuid": "aa6cc1b6-10-2b424cbada03ff8eb2269d0cf189079d961d2f2c",
-      "xpath": "/html[1]/body[1]/main[1]/div[8]"
     }
   ],
   "sections": [
@@ -339,23 +338,23 @@
     },
     {
       "name": "section-2",
-      "background": "rgba(126, 156, 191, 0.15) none repeat scroll 0% 0% / auto padding-box border-box",
-      "count": 1
-    },
-    {
-      "name": "section-3",
-      "background": "rgba(0, 0, 0, 0) url(\"https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium\") repeat scroll 0% 0% / cover padding-box border-box",
-      "count": 2
-    },
-    {
-      "name": "section-4",
       "background": "rgba(0, 0, 0, 0) url(\"https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium\") repeat scroll 0% 0% / 100% padding-box border-box",
       "count": 1
     },
     {
-      "name": "section-5",
+      "name": "section-3",
       "background": "rgba(0, 0, 0, 0) url(\"https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium\") repeat scroll 0% 0% / contain padding-box border-box",
       "count": 2
+    },
+    {
+      "name": "section-4",
+      "background": "rgba(0, 0, 0, 0) url(\"https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium\") repeat scroll 0% 0% / cover padding-box border-box",
+      "count": 2
+    },
+    {
+      "name": "section-5",
+      "background": "rgba(126, 156, 191, 0.15) none repeat scroll 0% 0% / auto padding-box border-box",
+      "count": 1
     }
   ]
 }
