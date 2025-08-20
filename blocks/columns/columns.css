@@ -70,22 +70,6 @@
   min-height: unset;
 }
 
-.columns.columns13 > div {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.columns.columns13 > div > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 .columns-wrapper > .columns > div > div:not(.columns-img-col) {
   flex: 1 1 50%;
   display: flex;
@@ -129,49 +113,6 @@
   font-weight: 400;
   line-height: 1.6;
   margin: 0;
-}
-
-.columns.columns13 > div > div > p:first-child {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 2px solid #254E77;
-  background: #fff;
-  color: #254E77;
-  font-size: 28px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 24px;
-  box-sizing: border-box;
-  text-align: center;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
-}
-
-.columns.columns13 > div > div > p:nth-child(2) {
-  color: #254E77;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-align: center;
-  margin: 0 0 22px;
-  font-family: var(--heading-font-family), Arial, sans-serif;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-}
-
-.columns.columns13 > div > div > p:nth-child(3) {
-  color: #333;
-  font-size: 14px;
-  font-weight: 400;
-  text-align: center;
-  margin: 0;
-  line-height: 1.7;
-  font-family: var(--body-font-family), Arial, sans-serif;
-  max-width: 340px;
-  padding: 0;
 }
 
 .columns.columns22 .columns-img-col {
@@ -622,50 +563,6 @@
   }
 }
 
-@media (width >= 800px) {
-  .columns.columns13[data-columns="multi"] {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 48px;
-    max-width: 1200px;
-    place-items: start center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .columns.columns13[data-columns="multi"] > div {
-    width: 100%;
-    align-items: center;
-    justify-content: flex-start;
-  }
-}
-
-@media (width <= 700px) {
-  .columns.columns13 {
-    max-width: 98vw;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 8px;
-  }
-
-  .columns.columns13 > div > div > p:first-child {
-    width: 40px;
-    height: 40px;
-    font-size: 19px;
-    margin-bottom: 14px;
-  }
-
-  .columns.columns13 > div > div > p:nth-child(2) {
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-
-  .columns.columns13 > div > div > p:nth-child(3) {
-    font-size: 12px;
-    max-width: 95vw;
-  }
-}
-
 
 .columns.columns6 {
   background: #1a2640;
@@ -837,7 +734,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start; /* Anchor left instead of center */
+  justify-content: flex-start;
   box-sizing: border-box;
 }
 
@@ -849,14 +746,14 @@
   width: 100%;
   max-width: 1100px;
   margin: 0;
-  gap: 1.5rem; /* Reduce gap for a tighter layout */
+  gap: 1.5rem;
 }
 
 .columns.columns8 .columns-img-col {
   flex: 0 0 200px;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Anchor image to the very left */
+  justify-content: flex-start;
   width: 200px;
   height: 200px;
   min-width: 200px;
@@ -953,5 +850,123 @@
     font-size: 0.95rem;
     text-align: center;
     max-width: 90vw;
+  }
+}
+
+
+.columns.columns13 {
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  max-width: 1080px;
+  margin: 48px auto 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Outer grid: arrange steps in 2 rows × 3 columns */
+.columns.columns13 > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 32px 52px; /* row gap (vertical), column gap (horizontal) */
+  place-items: start stretch;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+/* Each card: vertical stack, left-aligned body only */
+.columns.columns13 > div > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Step number in circle */
+.columns.columns13 > div > div > p:first-child {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #20477B;
+  background: #fff;
+  color: #20477B;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 18px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+/* Card title */
+.columns.columns13 > div > div > p:nth-child(2) {
+  color: #20477B;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 14px;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+/* Card body/description: left aligned, centered in card */
+.columns.columns13 > div > div > p:nth-child(3) {
+  color: #6F6F6F;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: left;
+  margin: 0;
+  line-height: 1.7;
+  font-family: var(--body-font-family), Arial, sans-serif;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+
+/* Responsive: stack cards in a single column on small screens */
+@media (width <= 900px) {
+  .columns.columns13 {
+    max-width: 98vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 8px;
+  }
+
+  .columns.columns13 > div {
+    display: flex;
+    flex-direction: column;
+    gap: 28px 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .columns.columns13 > div > div > p:first-child {
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+
+  .columns.columns13 > div > div > p:nth-child(2) {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .columns.columns13 > div > div > p:nth-child(3) {
+    font-size: 12px;
+    max-width: 95vw;
   }
 }
