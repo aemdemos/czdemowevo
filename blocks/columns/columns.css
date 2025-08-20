@@ -740,142 +740,6 @@
 }
 
 
-.columns.columns8 {
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.columns.columns8 > div {
-  width: 100%;
-  min-height: 320px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  box-sizing: border-box;
-}
-
-.columns.columns8 > div > div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0;
-  gap: 1.5rem;
-}
-
-.columns.columns8 .columns-img-col {
-  flex: 0 0 200px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 200px;
-  height: 200px;
-  min-width: 200px;
-  min-height: 200px;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: visible;
-}
-
-.columns.columns8 .columns-img-col picture,
-.columns.columns8 .columns-img-col img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  background: none;
-  box-shadow: none;
-  margin: 0;
-}
-
-.columns.columns8 > div > div:not(.columns-img-col) {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.columns.columns8 h2 {
-  font-family: Montserrat, var(--heading-font-family), Arial, sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #11294B;
-  margin: 0 0 1rem;
-  text-align: left;
-  letter-spacing: 0;
-  text-transform: none;
-  line-height: 1.2;
-}
-
-.columns.columns8 p {
-  font-family: var(--body-font-family), Arial, sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  color: #222;
-  margin: 0;
-  line-height: 1.5;
-  text-align: left;
-  max-width: 520px;
-}
-
-@media (width <= 900px) {
-  .columns.columns8 > div {
-    flex-direction: column;
-    align-items: center;
-    min-height: unset;
-    justify-content: flex-start;
-  }
-
-  .columns.columns8 > div > div {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    max-width: 98vw;
-  }
-
-  .columns.columns8 .columns-img-col,
-  .columns.columns8 .columns-img-col picture,
-  .columns.columns8 .columns-img-col img {
-    width: 120px;
-    height: 120px;
-    min-width: 120px;
-    min-height: 120px;
-  }
-
-  .columns.columns8 > div > div:not(.columns-img-col) {
-    align-items: center;
-    text-align: center;
-    padding: 0;
-  }
-
-  .columns.columns8 h2 {
-    font-size: 1.15rem;
-    margin-bottom: 0.8rem;
-    text-align: center;
-  }
-
-  .columns.columns8 p {
-    font-size: 0.95rem;
-    text-align: center;
-    max-width: 90vw;
-  }
-}
-
-
 .columns.columns13 {
   background: #fff;
   border: none;
@@ -987,11 +851,6 @@
   }
 }
 
-/* Two columns side by side with a large gap */
-
-/* Each column stacks its content vertically, no background, gap for button/image */
-
-/* Button container: remove any background, ensure button is centered */
 .columns .button-container {
   width: auto;
   display: block;
@@ -1000,7 +859,6 @@
   margin: 0;
 }
 
-/* Standalone pill outline button, transparent, thin, centered */
 .columns .button-container .button {
   background: transparent;
   color: #fff;
@@ -1025,14 +883,10 @@
   color: #14223a;
 }
 
-/* Images are visible, large, and centered below button */
-
-/* Remove bottom margin from last child for tidiness */
 .columns > div > div > *:last-child {
   margin-bottom: 0;
 }
 
-/* Responsive: stack columns vertically, keep images prominent and adequate gaps */
 @media (width <= 800px) {
   .columns {
     padding: 28px 8px;
@@ -1052,5 +906,124 @@
 
   .columns img {
     max-width: 122px;
+  }
+}
+
+
+.columns.columns8 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100vw;
+  min-height: 140px;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.columns.columns8 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100vw;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Left image arc at the very top left */
+.columns.columns8 .columns-img-col {
+  width: 24px;
+  min-width: 24px;
+  max-width: 24px;
+  height: 140px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.columns.columns8 .columns-img-col picture,
+.columns.columns8 .columns-img-col img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: -65px;
+  clip-path: inset(0 93% 0 0);
+  display: block;
+}
+
+/* Right text slice at the very top right */
+.columns.columns8 > div > div:not(.columns-img-col) {
+  width: 22px;
+  min-width: 22px;
+  max-width: 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.columns.columns8 h2,
+.columns.columns8 p {
+  width: 46px;
+  max-width: 46px;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: #142744;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+}
+
+/* Responsive adjustments for small screens */
+@media (width <= 700px) {
+  .columns.columns8 {
+    min-height: 80px;
+  }
+
+  .columns.columns8 .columns-img-col {
+    width: 14px;
+    min-width: 14px;
+    max-width: 14px;
+    height: 80px;
+  }
+
+  .columns.columns8 .columns-img-col picture,
+  .columns.columns8 .columns-img-col img {
+    width: 80px;
+    height: 80px;
+    margin-left: -37px;
+    clip-path: inset(0 95% 0 0);
+  }
+
+  .columns.columns8 > div > div:not(.columns-img-col) {
+    width: 12px;
+    min-width: 12px;
+    max-width: 12px;
+  }
+
+  .columns.columns8 h2,
+  .columns.columns8 p {
+    width: 25px;
+    max-width: 25px;
+    font-size: 0.75rem;
   }
 }
