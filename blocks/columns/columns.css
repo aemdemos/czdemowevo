@@ -1,29 +1,51 @@
 /* stylelint-disable no-descending-specificity */
 .columns {
-  background: #fff;
-  border: 1.5px solid #b09a73;
-  border-radius: 18px;
-  max-width: 1000px;
-  margin: 40px auto 0;
-  padding: 0;
+  background: #14223a url("https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium") center/cover no-repeat;
+  border: none;
+  border-radius: 0;
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 56px 44px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   box-shadow: none;
+  color: #fff;
+  align-items: center;
 }
 
 .columns img {
   width: 100%;
+  display: block;
+  margin: 0 auto;
+  max-width: 190px;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
 }
 
 .columns > div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  gap: 96px;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .columns > div > div {
   order: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 34px;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
 }
 
 .columns > div > .columns-img-col {
@@ -864,12 +886,11 @@
   box-sizing: border-box;
 }
 
-/* Outer grid: arrange steps in 2 rows × 3 columns */
 .columns.columns13 > div {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
-  gap: 32px 52px; /* row gap (vertical), column gap (horizontal) */
+  gap: 32px 52px;
   place-items: start stretch;
   width: 100%;
   margin: 0;
@@ -877,7 +898,6 @@
   background: none;
 }
 
-/* Each card: vertical stack, left-aligned body only */
 .columns.columns13 > div > div {
   display: flex;
   flex-direction: column;
@@ -887,7 +907,6 @@
   min-width: 0;
 }
 
-/* Step number in circle */
 .columns.columns13 > div > div > p:first-child {
   width: 48px;
   height: 48px;
@@ -907,7 +926,6 @@
   letter-spacing: 0.01em;
 }
 
-/* Card title */
 .columns.columns13 > div > div > p:nth-child(2) {
   color: #20477B;
   font-size: 16px;
@@ -920,7 +938,6 @@
   letter-spacing: 0.01em;
 }
 
-/* Card body/description: left aligned, centered in card */
 .columns.columns13 > div > div > p:nth-child(3) {
   color: #6F6F6F;
   font-size: 13px;
@@ -935,7 +952,6 @@
   padding: 0;
 }
 
-/* Responsive: stack cards in a single column on small screens */
 @media (width <= 900px) {
   .columns.columns13 {
     max-width: 98vw;
@@ -968,5 +984,73 @@
   .columns.columns13 > div > div > p:nth-child(3) {
     font-size: 12px;
     max-width: 95vw;
+  }
+}
+
+/* Two columns side by side with a large gap */
+
+/* Each column stacks its content vertically, no background, gap for button/image */
+
+/* Button container: remove any background, ensure button is centered */
+.columns .button-container {
+  width: auto;
+  display: block;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Standalone pill outline button, transparent, thin, centered */
+.columns .button-container .button {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 2.4em;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 8px 44px;
+  min-width: 148px;
+  text-align: center;
+  margin: 0;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.columns .button-container .button:hover,
+.columns .button-container .button:focus {
+  background: #fff;
+  color: #14223a;
+}
+
+/* Images are visible, large, and centered below button */
+
+/* Remove bottom margin from last child for tidiness */
+.columns > div > div > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive: stack columns vertically, keep images prominent and adequate gaps */
+@media (width <= 800px) {
+  .columns {
+    padding: 28px 8px;
+    margin: 12px 0;
+  }
+
+  .columns > div {
+    flex-direction: column;
+    gap: 38px;
+  }
+
+  .columns > div > div {
+    gap: 28px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .columns img {
+    max-width: 122px;
   }
 }
