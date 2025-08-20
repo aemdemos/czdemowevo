@@ -1,23 +1,25 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find all immediate button containers (Buy Online, Product Locator)
-  const containers = Array.from(element.querySelectorAll(':scope > div'));
-
-  // Defensive: Skip if fewer than expected columns
-  if (containers.length < 2) return;
-
-  // Each column in the block is a button-container (with button and icon/image)
-  // Use the entire container as the column cell, preserving icon/img
-
-  // Table header as specified in example
+  // Table header as in the markdown example
   const headerRow = ['Columns (columns6)'];
-  const contentRow = containers;
 
-  // Create and replace with block table
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
+  // Get the immediate child divs which are the column containers
+  const columns = Array.from(element.querySelectorAll(':scope > div'));
 
-  element.replaceWith(table);
+  // For each column, take its entire content block (not just button + icon)
+  // This ensures all text and visuals are included as a block
+  const row = columns.map((col) => {
+    // Use the full column content, not just parts
+    // Avoid cloning; reference the existing element
+    return Array.from(col.childNodes).filter(
+      node => !(node.nodeType === Node.TEXT_NODE && !node.textContent.trim())
+    );
+  });
+
+  // Build table cell structure: header row, then one row with all columns
+  const cells = [headerRow, row];
+
+  // Create and replace
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }
