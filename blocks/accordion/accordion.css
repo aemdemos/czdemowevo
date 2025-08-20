@@ -422,8 +422,6 @@
   }
 }
 
-
-/* Outer container: center and constrain width */
 .accordion.block {
   max-width: 980px;
   margin: 40px auto;
@@ -432,11 +430,10 @@
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px 64px; /* horizontal gap wider for original's roomy feel, vertical gap generous */
+  gap: 40px 64px;
   align-items: start;
 }
 
-/* Default grid placement; remove custom grid-column assignments */
 .accordion.block > details.accordion-item {
   width: 100%;
   margin: 0;
@@ -448,19 +445,15 @@
   border-bottom: 1px solid #d8d8d8;
 }
 
-/* Only show the divider (border-bottom) on the left column items so each row has a single line */
-
 .accordion.block > details.accordion-item:nth-child(2n) {
   border-bottom: none;
 }
 
-/* Remove border from the last left column item for consistency */
 .accordion.block > details.accordion-item:last-child,
 .accordion.block > details.accordion-item:nth-last-child(2) {
   border-bottom: none;
 }
 
-/* Responsive: stack in one column below 900px */
 @media (width <= 900px) {
   .accordion.block {
     grid-template-columns: 1fr;
@@ -485,14 +478,13 @@
   }
 }
 
-/* FAQ row: horizontal flex, with more vertical padding for better row height */
 .accordion.block .accordion-item-label {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 20px 0; /* slightly more for original's open feel */
+  padding: 20px 0;
   background: none;
   border: none;
   outline: none;
@@ -500,7 +492,6 @@
   box-sizing: border-box;
 }
 
-/* FAQ text styling */
 .accordion.block .accordion-item-label p {
   color: #036;
   font-size: 17px;
@@ -512,13 +503,11 @@
   overflow-wrap: break-word;
 }
 
-/* Hide default details/summary marker */
 .accordion.block details summary::-webkit-details-marker,
 .accordion.block details summary::marker {
   display: none;
 }
 
-/* Chevron icon: mimic a blue-outlined circle as much as possible */
 .accordion.block .accordion-item-label svg,
 .accordion.block .accordion-item-label .icon,
 .accordion.block .accordion-item-label span.icon {
@@ -535,14 +524,12 @@
   justify-content: center;
 }
 
-/* If using a pseudo-icon, ensure it's right-aligned and spaced */
 .accordion.block .accordion-item-label > *:not(p) {
   margin-left: 18px;
   display: inline-flex;
   align-items: center;
 }
 
-/* FAQ answer/body styling */
 .accordion.block .accordion-item-body {
   font-size: 18px;
   color: #002f5f;
@@ -553,4 +540,123 @@
   border: none;
   margin: 0;
   box-sizing: border-box;
+}
+
+
+.accordion {
+  box-sizing: border-box;
+  background: #fff;
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 0 8px;
+}
+
+/* Use CSS multi-column for true column-major layout with the given HTML */
+.accordion > .accordion-wrapper > .accordion.block {
+  column-count: 2;
+  column-gap: 64px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Accordion items stack vertically in each column */
+.accordion .accordion-item {
+  display: block;
+  width: 100%;
+  break-inside: avoid-column;
+  border-bottom: 1px solid #E0E0E0;
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-sizing: border-box;
+}
+
+/* Remove border from last two items (covers the last item in each column for 12 items) */
+.accordion .accordion-item:last-child,
+.accordion .accordion-item:nth-last-child(2) {
+  border-bottom: none;
+}
+
+/* Summary/question row styling */
+.accordion .accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Question text */
+.accordion .accordion-item-label p {
+  color: #036;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0;
+  font-family: var(--body-font-family);
+  flex: 1 1 auto;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+
+/* Hide default marker arrow for summary */
+.accordion details summary::-webkit-details-marker,
+.accordion details summary::marker {
+  display: none;
+}
+
+/* Right-side icon (selector for direct child after p) */
+.accordion .accordion-item-label > *:not(p) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 14px;
+  border-radius: 50%;
+  border: 2px solid #036;
+  background: #fff;
+  color: #036;
+  font-size: 18px;
+  font-weight: bold;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* FAQ answer/body */
+.accordion .accordion-item-body {
+  font-size: 16px;
+  color: #002f5f;
+  font-weight: normal;
+  line-height: 1.5;
+  padding: 0 0 14px;
+  background: none;
+  border: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Responsive: stack to one column on small screens */
+@media (width <= 900px) {
+  .accordion > .accordion-wrapper > .accordion.block {
+    column-count: 1;
+    column-gap: 0;
+    max-width: 98vw;
+    padding: 0 4px;
+  }
+
+  .accordion .accordion-item {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .accordion .accordion-item:last-child {
+    border-bottom: none;
+  }
 }
