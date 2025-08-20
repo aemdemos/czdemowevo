@@ -1,10 +1,7 @@
-/* 1. HERO CONTAINER */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
 }
-
-/* 2. HERO BASE VARIANTS (generic, hero4, hero15, hero2, hero3) */
 
 .hero h1,
 .hero h2,
@@ -633,5 +630,218 @@
   .hero > div:last-child h2,
   .hero > div:last-child h3 {
     font-size: 1.2rem;
+  }
+}
+
+
+.hero {
+  width: 100vw;
+  min-height: 520px;
+  background: url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Main block: side-by-side - text left, image right */
+.hero > .block.hero {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100vw;
+  min-height: 520px;
+  background: none;
+  position: relative;
+}
+
+/* IMAGE COLUMN - right side */
+.hero > .block.hero > div:first-child {
+  flex: 1 1 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 4vw 3vw 0;
+  min-width: 0;
+  min-height: 0;
+  order: 2;
+  z-index: 2;
+}
+
+/* Show product image, not a white panel */
+.hero > .block.hero > div:first-child picture,
+.hero > .block.hero > div:first-child img {
+  width: 340px;
+  max-width: 95%;
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.17);
+  background: #fff;
+  object-fit: cover;
+  display: block;
+}
+
+/* TEXT COLUMN - left side */
+.hero > .block.hero > div:last-child {
+  flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3vw 0 7vw 8vw;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  order: 1;
+  z-index: 2;
+}
+
+.hero > .block.hero > div:last-child > div {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* REMOVE white panel backgrounds and rounded corners from all hero children */
+.hero > .block.hero,
+.hero > .block.hero > div,
+.hero > .block.hero > div > div {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Headings styling - left aligned, white, bold */
+.hero > .block.hero h1,
+.hero > .block.hero h2 {
+  color: #fff;
+  text-align: left;
+  text-shadow: 0 2px 8px rgba(24,38,68,0.12);
+}
+
+.hero > .block.hero h1 {
+  font-size: 2.2rem;
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+  letter-spacing: 1px;
+  line-height: 1.07em;
+}
+
+.hero > .block.hero h2 {
+  font-size: 1rem;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1.15em;
+  line-height: 1.18em;
+  letter-spacing: 0.03em;
+}
+
+/* Button styling */
+.hero > .block.hero .button-container {
+  margin-bottom: 1.7em;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.hero > .block.hero .button-container .button,
+.hero > .block.hero .button-container a.button {
+  background: #CFB398;
+  color: #222A36;
+  padding: 0.65em 1.4em;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border: none;
+  display: inline-block;
+  transition: background 0.18s;
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  margin-right: 0;
+}
+
+/* Banner bar at bottom */
+.hero > .block.hero h3 {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #CFB398;
+  color: #222A36;
+  font-size: 1rem;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.8em 0;
+  margin: 0;
+  letter-spacing: 1px;
+  box-sizing: border-box;
+  line-height: 1.25em;
+  z-index: 3;
+}
+
+/* Responsive: stack vertical on mobile, image above text, banner stays bottom */
+@media (max-width: 900px) {
+  .hero,
+  .hero > .block.hero {
+    flex-direction: column;
+    min-height: 320px;
+    height: auto;
+  }
+  .hero > .block.hero > div:first-child,
+  .hero > .block.hero > div:last-child {
+    flex: 1 1 100%;
+    padding: 3vw 7vw;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    min-height: 0;
+  }
+  .hero > .block.hero > div:first-child picture,
+  .hero > .block.hero > div:first-child img {
+    width: 70vw;
+    max-width: 380px;
+    margin-bottom: 2em;
+    border-radius: 28px 28px 0 0;
+  }
+  .hero > .block.hero h1 {
+    font-size: 1.25rem;
+    line-height: 1.12em;
+  }
+  .hero > .block.hero h2 {
+    font-size: 0.97rem;
+  }
+  .hero > .block.hero h3 {
+    position: static;
+    width: 100vw;
+    font-size: 0.9rem;
+    padding: 0.7em 0;
+    margin-top: 2em;
+  }
+  .hero > .block.hero > div:last-child > div {
+    max-width: 98vw;
+    padding: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero > .block.hero h1 {
+    font-size: 1.05rem;
+  }
+  .hero > .block.hero h2 {
+    font-size: 0.87rem;
+  }
+  .hero > .block.hero h3 {
+    font-size: 0.8rem;
+    padding: 0.55em 0;
   }
 }
