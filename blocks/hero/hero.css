@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
@@ -309,51 +310,69 @@
 
 .hero {
   width: 100vw;
-  min-height: 520px;
-  background: #15294d url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
+  min-height: 620px;
+  background: url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: stretch;
+  justify-content: flex-start;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  padding-bottom: 65px;
 }
 
 .hero > div:first-child {
-  flex: 1 1 0;
+  flex: 1 1 60%;
   min-width: 0;
-  min-height: 520px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
   box-sizing: border-box;
-  padding: 0;
+  padding: 0 3vw 0 2vw;
   height: 100%;
+  order: 2;
+  background: none;
+  position: relative;
+  z-index: 2;
 }
 
 .hero > div:last-child {
-  flex: 1 1 0;
+  flex: 1 1 40%;
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background: #fff;
+  background: none;
   border-radius: 0 42px 42px 0;
   box-shadow: 0 2px 16px rgb(0 0 0 / 9%);
   margin: 40px 48px 40px 0;
-  padding: 56px;
+  padding: 0 0 0 7vw;
   max-width: 540px;
   box-sizing: border-box;
+  order: 1;
+  position: relative;
+  z-index: 3;
+  min-height: 0;
 }
 
 .hero > div:last-child > div {
   width: 100%;
   text-align: left;
+  max-width: 410px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background: none;
+  padding: 0;
+  min-height: 420px;
+  margin: 0;
 }
 
 .hero > div:last-child strong,
@@ -633,23 +652,6 @@
   }
 }
 
-
-.hero {
-  width: 100vw;
-  min-height: 520px;
-  background: url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: flex-start;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* Main block: side-by-side - text left, image right */
 .hero > .block.hero {
   display: flex;
   flex-direction: row;
@@ -660,7 +662,6 @@
   position: relative;
 }
 
-/* IMAGE COLUMN - right side */
 .hero > .block.hero > div:first-child {
   flex: 1 1 40%;
   display: flex;
@@ -674,19 +675,17 @@
   z-index: 2;
 }
 
-/* Show product image, not a white panel */
 .hero > .block.hero > div:first-child picture,
 .hero > .block.hero > div:first-child img {
   width: 340px;
   max-width: 95%;
   border-radius: 32px 32px 0 0;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.17);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 17%);
   background: #fff;
   object-fit: cover;
   display: block;
 }
 
-/* TEXT COLUMN - left side */
 .hero > .block.hero > div:last-child {
   flex: 1 1 60%;
   display: flex;
@@ -706,7 +705,6 @@
   max-width: 520px;
 }
 
-/* REMOVE white panel backgrounds and rounded corners from all hero children */
 .hero > .block.hero,
 .hero > .block.hero > div,
 .hero > .block.hero > div > div {
@@ -715,12 +713,11 @@
   box-shadow: none;
 }
 
-/* Headings styling - left aligned, white, bold */
 .hero > .block.hero h1,
 .hero > .block.hero h2 {
   color: #fff;
   text-align: left;
-  text-shadow: 0 2px 8px rgba(24,38,68,0.12);
+  text-shadow: 0 2px 8px rgb(24 38 68 / 12%);
 }
 
 .hero > .block.hero h1 {
@@ -743,7 +740,6 @@
   letter-spacing: 0.03em;
 }
 
-/* Button styling */
 .hero > .block.hero .button-container {
   margin-bottom: 1.7em;
   display: flex;
@@ -758,7 +754,7 @@
   border-radius: 8px;
   font-weight: 700;
   font-size: 0.95rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
   border: none;
   display: inline-block;
   transition: background 0.18s;
@@ -768,7 +764,6 @@
   margin-right: 0;
 }
 
-/* Banner bar at bottom */
 .hero > .block.hero h3 {
   position: absolute;
   left: 0;
@@ -789,14 +784,14 @@
   z-index: 3;
 }
 
-/* Responsive: stack vertical on mobile, image above text, banner stays bottom */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .hero,
   .hero > .block.hero {
     flex-direction: column;
     min-height: 320px;
     height: auto;
   }
+
   .hero > .block.hero > div:first-child,
   .hero > .block.hero > div:last-child {
     flex: 1 1 100%;
@@ -806,6 +801,7 @@
     min-width: 0;
     min-height: 0;
   }
+
   .hero > .block.hero > div:first-child picture,
   .hero > .block.hero > div:first-child img {
     width: 70vw;
@@ -813,13 +809,16 @@
     margin-bottom: 2em;
     border-radius: 28px 28px 0 0;
   }
+
   .hero > .block.hero h1 {
     font-size: 1.25rem;
     line-height: 1.12em;
   }
+
   .hero > .block.hero h2 {
     font-size: 0.97rem;
   }
+
   .hero > .block.hero h3 {
     position: static;
     width: 100vw;
@@ -827,21 +826,215 @@
     padding: 0.7em 0;
     margin-top: 2em;
   }
+
   .hero > .block.hero > div:last-child > div {
     max-width: 98vw;
     padding: 0;
   }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .hero > .block.hero h1 {
     font-size: 1.05rem;
   }
+
   .hero > .block.hero h2 {
     font-size: 0.87rem;
   }
+
   .hero > .block.hero h3 {
     font-size: 0.8rem;
     padding: 0.55em 0;
+  }
+}
+
+/* Text left, image right */
+.hero > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* IMAGE COLUMN (first child): right side, bottle positioned lower, wider column */
+
+/* Center and size image: large, bottom-aligned, strongly masked */
+.hero > div:first-child > div {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.hero > div:first-child picture,
+.hero > div:first-child img {
+  width: 410px;
+  max-width: 100%;
+  height: 520px;
+  object-fit: cover;
+  border-radius: 0 0 0 170px / 0 0 0 110px;
+  margin-bottom: 0;
+  background: transparent;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
+  display: block;
+  align-self: flex-end;
+  clip-path: ellipse(90% 87% at 65% 13%);
+}
+
+/* TEXT COLUMN (second child): left side, vertically centered, narrower */
+
+/* Headline and subheadline: vertically centered */
+.hero > div:last-child h1,
+.hero > div:last-child h2 {
+  font-family: var(--heading-font-family);
+  color: #fff;
+  text-align: left;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 0.45em;
+  letter-spacing: 0.035em;
+  line-height: 1.07;
+}
+
+.hero > div:last-child h1 {
+  font-size: 2.2rem;
+  margin-top: 0;
+}
+
+.hero > div:last-child h2 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 1.6em;
+  line-height: 1.19;
+}
+
+/* Button styling (if present): tan, left-aligned */
+.hero > div:last-child .button-container {
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.hero > div:last-child .button-container .button,
+.hero > div:last-child .button-container a.button {
+  background: #E6C59B;
+  color: #232439;
+  padding: 0.65em 1.4em;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 7%);
+  border: none;
+  display: inline-block;
+  transition: background 0.18s;
+  text-align: left;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  margin-right: 0;
+}
+
+.hero > div:last-child .button-container .button:hover,
+.hero > div:last-child .button-container a.button:hover {
+  background: #d6ae84;
+}
+
+/* Banner: straight corners, extra bold, large font, sticky to bottom */
+.hero h3 {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #E6C59B;
+  color: #232439;
+  font-size: 1.45rem;
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 18px 0 13px;
+  margin: 0;
+  letter-spacing: 0.045em;
+  box-sizing: border-box;
+  line-height: 1.18;
+  z-index: 10;
+  border-radius: 0;
+}
+
+/* Make sure banner bar does not overlap content */
+
+/* Responsive stacking for smaller screens */
+@media (width <= 900px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 44px;
+    min-height: 420px;
+  }
+
+  .hero > div {
+    flex: 1 1 100%;
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .hero > div:first-child picture,
+  .hero > div:first-child img {
+    width: 80vw;
+    max-width: 380px;
+    height: 230px;
+    border-radius: 0 0 0 48px / 0 0 0 28px;
+    clip-path: ellipse(85% 90% at 60% 15%);
+  }
+
+  .hero > div:last-child > div {
+    max-width: 96vw;
+    align-items: center;
+    min-height: unset;
+  }
+
+  .hero > div:last-child h1 {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .hero > div:last-child h2 {
+    font-size: 0.97rem;
+    text-align: center;
+  }
+
+  .hero h3 {
+    position: static;
+    width: 100vw;
+    font-size: 1.08rem;
+    padding: 0.7em 0;
+    margin-top: 2em;
+    border-radius: 0;
+  }
+}
+
+/* Even smaller screens */
+@media (width <= 600px) {
+  .hero > div:last-child h1 {
+    font-size: 1.05rem;
+  }
+
+  .hero > div:last-child h2 {
+    font-size: 0.87rem;
+  }
+
+  .hero h3 {
+    font-size: 0.8rem;
+    padding: 0.55em 0;
+    border-radius: 0;
   }
 }
