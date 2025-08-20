@@ -1,27 +1,30 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the callout block containing the hero content
-  const callout = element.querySelector('.callout.block');
-  if (!callout) return;
-  // Get direct children for order and structure
-  const children = Array.from(callout.children);
+  // Find main callout block
+  let block = element.querySelector('.callout.block');
+  if (!block) block = element;
 
-  // Find all pictures and heading(s)
-  const pictures = children.filter(child => child.tagName === 'PICTURE');
-  const heading = children.find(child => /^H[1-6]$/.test(child.tagName));
+  // Get direct children of block
+  const children = Array.from(block.children);
 
-  // Row 1: block name
-  const headerRow = ['Hero'];
-  // Row 2: background image (first picture or empty)
-  const backgroundRow = [pictures[0] || ''];
-  // Row 3: heading (if present) and secondary image (if present)
-  const thirdRowContent = [];
-  if (heading) thirdRowContent.push(heading);
-  if (pictures[1]) thirdRowContent.push(pictures[1]);
-  // If both present, both are included in the same cell, otherwise cell is empty or has one item
-  const contentRow = [thirdRowContent.length ? (thirdRowContent.length === 1 ? thirdRowContent[0] : thirdRowContent) : ''];
+  // Find first <picture> (background image)
+  const bgImage = children.find(el => el.tagName.toLowerCase() === 'picture');
 
-  const cells = [headerRow, backgroundRow, contentRow];
+  // Find first heading (h1/h2/h3...), used as title
+  const heading = children.find(el => /^h[1-6]$/.test(el.tagName.toLowerCase()));
+
+  // Build the table structure (1 column, 3 rows)
+  // Row 1: Header (exactly as in example: 'Hero')
+  // Row 2: Background image (if present)
+  // Row 3: Heading (if present)
+  const cells = [
+    ['Hero'],
+    [bgImage || ''],
+    [heading || ''],
+  ];
+
   const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  // Replace the element with the block table
   element.replaceWith(table);
 }

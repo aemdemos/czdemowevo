@@ -1,75 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Example block expects 1 column x 3 rows:
-  // [ 'Hero' ]
-  // [ image ]
-  // [ headings, subheadings, CTA, etc. ]
-
-  // Find hero block elements
-  const heroWrapper = element.querySelector('.hero-wrapper');
-  const heroBlock = heroWrapper && heroWrapper.querySelector('.hero.block');
-
-  // Extract image from right side
-  let imageCell = '';
+  // Get the hero block wrapper
+  const heroBlock = element.querySelector('.hero.block');
+  let picture = '';
   if (heroBlock) {
     const right = heroBlock.querySelector('.right');
     if (right) {
-      const picture = right.querySelector('picture');
-      if (picture) {
-        imageCell = picture;
+      picture = right.querySelector('picture, img');
+    }
+  }
+
+  // Gather hero content (headings, subheading, CTA)
+  let contentParts = [];
+  if (heroBlock) {
+    const left = heroBlock.querySelector('.left');
+    if (left) {
+      // All headings (in order)
+      left.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(h => contentParts.push(h));
+      // CTA button/link (not already in contentParts)
+      const cta = left.querySelector('a.button, a.primary, a:not([href="#"])');
+      if (cta && !contentParts.includes(cta)) {
+        contentParts.push(cta);
       }
     }
   }
 
-  // Extract textual content (headings, subheading, CTA) from left side
-  let leftContent = [];
-  if (heroBlock) {
-    const left = heroBlock.querySelector('.left');
-    if (left) {
-      // Heading
-      const h1 = left.querySelector('h1');
-      if (h1) leftContent.push(h1);
-      // Subheading
-      const h2 = left.querySelector('h2');
-      if (h2) leftContent.push(h2);
-      // CTA button
-      const cta = left.querySelector('a.button');
-      if (cta) leftContent.push(cta);
-    }
+  // Check for any hero-footer (e.g., additional heading/subheading)
+  const heroFooter = element.querySelector('.hero-footer');
+  if (heroFooter) {
+    // Add all children of hero-footer (often h3/heading)
+    Array.from(heroFooter.children).forEach(child => contentParts.push(child));
   }
 
-  // Extract additional content (hero-footer)
-  let footerContent = '';
-  if (heroWrapper) {
-    const heroFooter = heroWrapper.querySelector('.hero-footer');
-    if (heroFooter) {
-      // We only want direct children, not all h3 in the block
-      const h3 = heroFooter.querySelector('h3');
-      if (h3) footerContent = h3;
-    }
-  }
+  // If no contentParts, add empty string to match correct row count
+  if (contentParts.length === 0) contentParts = [''];
 
-  // Compose content for last row: left content + footer
-  // If both exist, combine all into a single array; if only one, just use that
-  let lastRowContent = [];
-  if (leftContent.length && footerContent) {
-    lastRowContent = leftContent.concat(footerContent);
-  } else if (leftContent.length) {
-    lastRowContent = leftContent;
-  } else if (footerContent) {
-    lastRowContent = [footerContent];
-  }
-  // If nothing, cell will be empty string
-
-  // Build final table structure
+  // Build table structure as per the example: 1col, 3 rows; header must be 'Hero'
   const cells = [
     ['Hero'],
-    [imageCell || ''],
-    [lastRowContent.length ? lastRowContent : ''],
+    [picture || ''],
+    [contentParts]
   ];
-
-  // Create the block table
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  // Replace original element with the block table
   element.replaceWith(table);
 }

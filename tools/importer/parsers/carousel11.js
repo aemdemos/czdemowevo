@@ -1,74 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the carousel block root
-  const wrapper = element.querySelector('.quote-carousel-wrapper');
-  if (!wrapper) return;
-  const carousel = wrapper.querySelector('.quote-carousel.block');
-  if (!carousel) return;
+  // The header row must be a SINGLE cell: ['Carousel']
+  const cells = [['Carousel']];
 
-  // Get all slides (quotecards)
-  const slides = Array.from(carousel.querySelectorAll('.quotecard'));
+  // Get all quotecard slides
+  const quotecards = element.querySelectorAll('.quotecard');
 
-  // Build the block table structure
-  const rows = [];
-  rows.push(['Carousel']); // header row, matches example
-
-  slides.forEach((slide) => {
-    // Get quote text
-    const quoteP = slide.querySelector('p');
-
-    // Get aphorist image (img inside picture)
+  quotecards.forEach((card) => {
+    // Image cell
     let imgEl = null;
-    const aphorist = slide.querySelector('.aphorist');
-    if (aphorist) {
-      const picture = aphorist.querySelector('picture');
-      if (picture) {
-        imgEl = picture.querySelector('img');
+    const picture = card.querySelector('.aphorist picture');
+    if (picture) {
+      imgEl = picture.querySelector('img');
+    }
+
+    // Text content cell
+    const content = [];
+    // Quote text
+    const p = card.querySelector('p');
+    if (p) content.push(p);
+    // Name and affiliation
+    const aphoristUl = card.querySelector('.aphorist ul');
+    if (aphoristUl) {
+      const li = aphoristUl.querySelectorAll('li');
+      if (li.length > 0) {
+        // Name
+        const strong = document.createElement('strong');
+        strong.textContent = li[0].textContent;
+        content.push(document.createElement('br'));
+        content.push(strong);
+        // Affiliation
+        if (li.length > 1) {
+          content.push(document.createElement('br'));
+          content.push(document.createTextNode(li[1].textContent));
+        }
       }
     }
-
-    // Get author and meta info
-    let authorName = '';
-    let authorCompany = '';
-    if (aphorist) {
-      const liItems = aphorist.querySelectorAll('ul > li');
-      if (liItems.length > 0) {
-        authorName = liItems[0].textContent.trim();
-      }
-      if (liItems.length > 1) {
-        authorCompany = liItems[1].textContent.trim();
-      }
-    }
-
-    // Compose author name and company block as in example (strong then span)
-    const authorBlock = document.createElement('div');
-    if (authorName) {
-      const authorNameEl = document.createElement('strong');
-      authorNameEl.textContent = authorName;
-      authorBlock.appendChild(authorNameEl);
-    }
-    if (authorCompany) {
-      authorBlock.appendChild(document.createElement('br'));
-      const companyEl = document.createElement('span');
-      companyEl.textContent = authorCompany;
-      authorBlock.appendChild(companyEl);
-    }
-
-    // Compose content cell: quote paragraph and author block
-    const contentFrag = document.createDocumentFragment();
-    if (quoteP) contentFrag.appendChild(quoteP);
-    if (authorBlock.childNodes.length > 0) {
-      contentFrag.appendChild(document.createElement('br'));
-      contentFrag.appendChild(authorBlock);
-    }
-
-    // Always create two columns. If image or content missing, use empty string
-    rows.push([
-      imgEl ? imgEl : '',
-      contentFrag.childNodes.length > 0 ? contentFrag : ''
-    ]);
+    // Each slide row: two columns
+    cells.push([imgEl, content]);
   });
 
-  const table = WebImporter.DOMUtils.createTable(rows, document);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
