@@ -848,7 +848,6 @@
   }
 }
 
-/* Text left, image right */
 .hero > div {
   display: flex;
   flex-direction: column;
@@ -859,9 +858,6 @@
   position: relative;
 }
 
-/* IMAGE COLUMN (first child): right side, bottle positioned lower, wider column */
-
-/* Center and size image: large, bottom-aligned, strongly masked */
 .hero > div:first-child > div {
   width: 100%;
   height: 100%;
@@ -886,9 +882,6 @@
   clip-path: ellipse(90% 87% at 65% 13%);
 }
 
-/* TEXT COLUMN (second child): left side, vertically centered, narrower */
-
-/* Headline and subheadline: vertically centered */
 .hero > div:last-child h1,
 .hero > div:last-child h2 {
   font-family: var(--heading-font-family);
@@ -913,7 +906,6 @@
   line-height: 1.19;
 }
 
-/* Button styling (if present): tan, left-aligned */
 .hero > div:last-child .button-container {
   margin-bottom: 2em;
   display: flex;
@@ -944,7 +936,6 @@
   background: #d6ae84;
 }
 
-/* Banner: straight corners, extra bold, large font, sticky to bottom */
 .hero h3 {
   position: absolute;
   left: 0;
@@ -966,9 +957,6 @@
   border-radius: 0;
 }
 
-/* Make sure banner bar does not overlap content */
-
-/* Responsive stacking for smaller screens */
 @media (width <= 900px) {
   .hero {
     flex-direction: column;
@@ -1022,7 +1010,6 @@
   }
 }
 
-/* Even smaller screens */
 @media (width <= 600px) {
   .hero > div:last-child h1 {
     font-size: 1.05rem;
@@ -1036,5 +1023,237 @@
     font-size: 0.8rem;
     padding: 0.55em 0;
     border-radius: 0;
+  }
+}
+
+
+.hero-wrapper > .hero.block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 620px;
+  width: 100vw;
+  background: url("https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium") center center/cover no-repeat;
+  box-sizing: border-box;
+  padding: 0 0 64px; /* 64px padding-bottom to make room for banner */
+  overflow: hidden;
+}
+
+/* Columns */
+.hero-wrapper > .hero.block > div {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center both columns vertically */
+  height: 100%;
+}
+
+/* Left (text) column */
+.hero-wrapper > .hero.block > div:last-child {
+  order: 1;
+  align-items: flex-start;
+  padding-left: 6vw;
+  padding-right: 1vw;
+  height: 100%;
+  justify-content: center;
+}
+
+.hero-wrapper > .hero.block > div:last-child > div {
+  max-width: 440px;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: auto;
+  margin: 0;
+}
+
+.hero-wrapper > .hero.block h1 {
+  font-family: var(--heading-font-family);
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  margin: 0 0 0.8rem;
+  text-align: left;
+}
+
+.hero-wrapper > .hero.block h2 {
+  font-family: var(--heading-font-family);
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  line-height: 1.18;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.hero-wrapper > .hero.block .button-container {
+  margin-bottom: 2.1rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.hero-wrapper > .hero.block .button {
+  background: #e5b179;
+  color: #232f3e;
+  font-family: var(--heading-font-family);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.7em 1.3em;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 7%);
+  text-transform: none;
+  transition: background 0.18s;
+  text-align: left;
+  margin: 0;
+  line-height: 1.12;
+}
+
+/* Right (image) column */
+.hero-wrapper > .hero.block > div:first-child {
+  order: 2;
+  align-items: center;
+  justify-content: center;
+  padding-right: 6vw;
+  height: 100%;
+}
+
+/* Center the image vertically more precisely with margin auto */
+.hero-wrapper > .hero.block > div:first-child > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  margin: auto 0;
+}
+
+.hero-wrapper > .hero.block > div:first-child picture,
+.hero-wrapper > .hero.block > div:first-child img {
+  width: 440px;
+  height: 560px;
+  max-width: 97vw;
+  max-height: 70vh;
+  object-fit: cover;
+  border-radius: 0;
+  background: none;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 14%);
+  display: block;
+  margin: 0 auto;
+  clip-path: ellipse(92% 80% at 50% 13%);
+}
+
+/* Banner at the very bottom, not over content */
+.hero-wrapper > .hero.block h3 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #e5b179;
+  color: #232f3e;
+  font-family: var(--heading-font-family);
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.5em 0 0.4em;
+  margin: 0;
+  letter-spacing: 0.04em;
+  line-height: 1.22;
+  z-index: 10;
+  box-sizing: border-box;
+  border-radius: 0;
+  min-height: 44px;
+}
+
+/* Responsive: stack columns vertically on smaller screens */
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block {
+    flex-direction: column;
+    align-items: center;
+    min-height: 420px;
+    padding-bottom: 0;
+  }
+
+  .hero-wrapper > .hero.block > div {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  .hero-wrapper > .hero.block > div:first-child picture,
+  .hero-wrapper > .hero.block > div:first-child img {
+    width: 92vw;
+    height: 220px;
+    max-width: 380px;
+    margin: 0 0 2.2rem;
+    clip-path: ellipse(90% 85% at 50% 14%);
+  }
+
+  .hero-wrapper > .hero.block > div:last-child > div {
+    align-items: center;
+    text-align: center;
+    max-width: 98vw;
+    min-height: unset;
+    padding: 0;
+  }
+
+  .hero-wrapper > .hero.block h1,
+  .hero-wrapper > .hero.block h2 {
+    text-align: center;
+  }
+
+  .hero-wrapper > .hero.block .button-container {
+    justify-content: center;
+  }
+
+  .hero-wrapper > .hero.block h3 {
+    position: static;
+    width: 100vw;
+    font-size: 0.96rem;
+    padding: 0.7em 0;
+    margin-top: 2em;
+    border-radius: 0;
+  }
+}
+
+@media (width <= 600px) {
+  .hero-wrapper > .hero.block > div:first-child picture,
+  .hero-wrapper > .hero.block > div:first-child img {
+    width: 98vw;
+    height: 140px;
+    clip-path: ellipse(85% 90% at 50% 16%);
+  }
+
+  .hero-wrapper > .hero.block h1 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .hero-wrapper > .hero.block h2 {
+    font-size: 0.97rem;
+  }
+
+  .hero-wrapper > .hero.block h3 {
+    font-size: 0.82rem;
+    padding: 0.55em 0;
+    min-height: 30px;
   }
 }
