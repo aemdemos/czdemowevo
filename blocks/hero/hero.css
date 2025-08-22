@@ -310,12 +310,12 @@
 
 .hero {
   width: 100vw;
-  min-height: 620px;
-  background: url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
+  min-height: 650px;
+  background: #1c2a45 url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -325,24 +325,25 @@
 }
 
 .hero > div:first-child {
-  flex: 1 1 60%;
+  flex: 1 1 55%;
   min-width: 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
   box-sizing: border-box;
-  padding: 0 3vw 0 2vw;
+  padding: 0;
   height: 100%;
   order: 2;
   background: none;
   position: relative;
   z-index: 2;
+  margin: 0;
 }
 
 .hero > div:last-child {
-  flex: 1 1 40%;
+  flex: 1 1 45%;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -357,14 +358,15 @@
   box-sizing: border-box;
   order: 1;
   position: relative;
-  z-index: 3;
+  z-index: 2;
   min-height: 0;
+  height: 100%;
 }
 
 .hero > div:last-child > div {
   width: 100%;
   text-align: left;
-  max-width: 410px;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -373,6 +375,9 @@
   padding: 0;
   min-height: 420px;
   margin: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  gap: 18px;
 }
 
 .hero > div:last-child strong,
@@ -848,7 +853,6 @@
   }
 }
 
-/* Text left, image right */
 .hero > div {
   display: flex;
   flex-direction: column;
@@ -859,36 +863,32 @@
   position: relative;
 }
 
-/* IMAGE COLUMN (first child): right side, bottle positioned lower, wider column */
-
-/* Center and size image: large, bottom-aligned, strongly masked */
 .hero > div:first-child > div {
   width: 100%;
   height: 100%;
   min-height: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
+  margin: 0;
 }
 
 .hero > div:first-child picture,
 .hero > div:first-child img {
-  width: 410px;
-  max-width: 100%;
+  width: 100%;
+  max-width: none;
   height: 520px;
   object-fit: cover;
-  border-radius: 0 0 0 170px / 0 0 0 110px;
-  margin-bottom: 0;
-  background: transparent;
-  box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
+  border-radius: 0 220px 0 0 / 0 180px 0 0;
+  background: none;
+  box-shadow: none;
   display: block;
-  align-self: flex-end;
-  clip-path: ellipse(90% 87% at 65% 13%);
+  align-self: stretch;
+  clip-path: ellipse(110% 98% at 50% 3.5%);
+  min-width: 480px;
+  margin: 0; /* Consolidated margin shorthand */
 }
 
-/* TEXT COLUMN (second child): left side, vertically centered, narrower */
-
-/* Headline and subheadline: vertically centered */
 .hero > div:last-child h1,
 .hero > div:last-child h2 {
   font-family: var(--heading-font-family);
@@ -913,7 +913,6 @@
   line-height: 1.19;
 }
 
-/* Button styling (if present): tan, left-aligned */
 .hero > div:last-child .button-container {
   margin-bottom: 2em;
   display: flex;
@@ -944,31 +943,27 @@
   background: #d6ae84;
 }
 
-/* Banner: straight corners, extra bold, large font, sticky to bottom */
 .hero h3 {
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100vw;
-  background: #E6C59B;
-  color: #232439;
-  font-size: 1.45rem;
+  background: #dac09c;
+  color: #1c2a45;
+  font-size: 1.13rem;
   font-family: var(--heading-font-family);
-  font-weight: 900;
+  font-weight: bold;
   text-transform: uppercase;
   text-align: center;
-  padding: 18px 0 13px;
+  padding: 16px 0 12px;
   margin: 0;
-  letter-spacing: 0.045em;
+  letter-spacing: 0.04em;
   box-sizing: border-box;
-  line-height: 1.18;
-  z-index: 10;
+  line-height: 1.2;
+  z-index: 3;
   border-radius: 0;
 }
 
-/* Make sure banner bar does not overlap content */
-
-/* Responsive stacking for smaller screens */
 @media (width <= 900px) {
   .hero {
     flex-direction: column;
@@ -1022,7 +1017,6 @@
   }
 }
 
-/* Even smaller screens */
 @media (width <= 600px) {
   .hero > div:last-child h1 {
     font-size: 1.05rem;
@@ -1037,4 +1031,374 @@
     padding: 0.55em 0;
     border-radius: 0;
   }
+}
+
+
+.hero-wrapper > .hero.block {
+  width: 100vw;
+  min-height: 520px;
+  background: url('https://www.wheatleyvodka.com/media_1702b8b19fe5b7dbded179ab832dcb32b1b3005ba.png?width=2000&format=webply&optimize=medium') center center/cover no-repeat;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  position: relative;
+  padding: 64px 0 40px;
+  overflow: hidden;
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0 24px;
+    min-height: 420px;
+  }
+}
+
+.hero-wrapper > .hero.block > div:last-child {
+  flex: 0 1 380px;
+  max-width: 380px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 24px 0 8vw;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block > div:last-child {
+    max-width: 95vw;
+    width: 100vw;
+    padding: 0 5vw;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.hero-wrapper > .hero.block > div:last-child > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 0;
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block > div:last-child > div {
+    align-items: center;
+  }
+}
+
+.hero-wrapper > .hero.block h1 {
+  font-family: var(--heading-font-family);
+  color: #fff;
+  font-size: 2.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.08;
+  text-align: left;
+  margin: 0 0 0.1em;
+  letter-spacing: 0.025em;
+}
+
+.hero-wrapper > .hero.block h2 {
+  font-family: var(--heading-font-family);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0 0 1.7em;
+  line-height: 1.13;
+  letter-spacing: 0.01em;
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block h1,
+  .hero-wrapper > .hero.block h2 {
+    text-align: center;
+    font-size: 1.15rem;
+  }
+}
+
+.hero-wrapper > .hero.block .button-container {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.hero-wrapper > .hero.block .button-container .button,
+.hero-wrapper > .hero.block .button-container a.button {
+  background: #D8B07C;
+  color: #172945;
+  font-family: var(--heading-font-family);
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 9px;
+  padding: 14px 28px;
+  margin: 0;
+  box-shadow: none;
+  letter-spacing: 0.025em;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+}
+
+.hero-wrapper > .hero.block .button-container .button:hover,
+.hero-wrapper > .hero.block .button-container a.button:hover {
+  background: #c09a63;
+}
+
+.hero-wrapper > .hero.block > div:first-child {
+  flex: 0 1 370px;
+  max-width: 370px;
+  min-width: 270px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 18px;
+  padding: 0;
+  z-index: 3;
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block > div:first-child {
+    margin-left: 0;
+    margin-top: 20px;
+    max-width: 92vw;
+    width: 100vw;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+  }
+}
+
+.hero-wrapper > .hero.block > div:first-child picture img,
+.hero-wrapper > .hero.block > div:first-child img {
+  display: block;
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0 90px 0 0 / 0 80px 0 0;
+  margin: 0;
+  background: none;
+  align-self: flex-start;
+  position: relative;
+  z-index: 3;
+  box-shadow: none;
+  clip-path: ellipse(85% 65% at 50% 17%);
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block > div:first-child picture img,
+  .hero-wrapper > .hero.block > div:first-child img {
+    max-width: 90vw;
+    border-radius: 0 45px 0 0 / 0 32px 0 0;
+    clip-path: ellipse(90% 70% at 50% 16%);
+    align-self: center;
+  }
+}
+
+.hero-wrapper > .hero.block h3 {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #D8B07C;
+  color: #172945;
+  font-family: var(--heading-font-family);
+  font-size: 0.97rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 0 6px;
+  margin: 0;
+  letter-spacing: 0.045em;
+  line-height: 1.08;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+@media (width <= 900px) {
+  .hero-wrapper > .hero.block h3 {
+    position: static;
+    width: 100vw;
+    font-size: 0.89rem;
+    padding: 0.8em 0 0.6em;
+    margin-top: 24px;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+}
+
+/* ==== IMAGE COLUMN - FLUSH RIGHT, WIDER ==== */
+
+/* Make image fill right edge, wider, and more dramatic curve */
+
+/* ==== TEXT COLUMN - VERTICALLY CENTERED ==== */
+
+/* Headline vertical alignment and size */
+.hero h1 {
+  font-family: var(--heading-font-family);
+  font-size: 3.1rem;
+  color: #fff;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 0.08em;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+.hero h2 {
+  font-family: var(--heading-font-family);
+  font-size: 1.24rem;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 1em;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+/* Button: slightly less padding */
+.hero .button-container {
+  margin: 0 0 65px;
+  width: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.hero .button-container .button,
+.hero .button-container a.button {
+  background: #dac09c;
+  color: #1c2a45;
+  font-family: var(--heading-font-family);
+  font-size: 1.13rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 34px;
+  margin: 0;
+  box-shadow: none;
+  letter-spacing: 0.022em;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-decoration: none;
+}
+
+/* ==== FOOTER BAR ==== */
+
+/* ==== RESPONSIVE ==== */
+@media (width <= 900px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    min-height: 430px;
+  }
+
+  .hero > div:first-child,
+  .hero > div:last-child {
+    flex: 1 1 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6vw;
+    margin: 0;
+  }
+
+  .hero > div:first-child picture,
+  .hero > div:first-child img {
+    max-width: 90vw;
+    min-width: 220px;
+    border-radius: 0 60px 0 0 / 0 32px 0 0;
+    clip-path: ellipse(92% 81% at 50% 16%);
+    margin-bottom: 2em;
+    align-self: center;
+  }
+
+  .hero > div:last-child > div {
+    align-items: center;
+    max-width: 97vw;
+    gap: 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .hero h1,
+  .hero h2 {
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 1.25rem;
+  }
+
+  .hero h2 {
+    font-size: 0.97rem;
+  }
+
+  .hero .button-container {
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .hero h3 {
+    position: static;
+    width: 100vw;
+    font-size: 1.01rem;
+    padding: 1.1em 0 0.8em;
+    margin-top: 2em;
+    border-radius: 0;
+  }
+}
+
+@media (width <= 600px) {
+  .hero {
+    min-height: 320px;
+  }
+
+  .hero h1 {
+    font-size: 1.05rem;
+  }
+
+  .hero h2 {
+    font-size: 0.85rem;
+  }
+
+  .hero h3 {
+    font-size: 0.87rem;
+    padding: 0.8em 0;
+  }
+}
+
+/* Ensure .hero always spans full width */
+.hero-container > .hero-wrapper {
+  max-width: unset;
+  padding: 0;
 }
