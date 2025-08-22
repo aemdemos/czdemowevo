@@ -47,23 +47,23 @@
 @font-face {
   font-family:"proxima-nova-condensed Fallback";
   font-style:normal;
-  font-weight:400;
-  src:local("Arial");
-  ascent-override:108.50%;
-  descent-override:46.26%;
-  line-gap-override:0.00%;
-  size-adjust:83.87%;
-}
-
-@font-face {
-  font-family:"proxima-nova-condensed Fallback";
-  font-style:normal;
   font-weight:700;
   src:local("Arial Bold");
   ascent-override:110.76%;
   descent-override:47.22%;
   line-gap-override:0.00%;
   size-adjust:82.16%;
+}
+
+@font-face {
+  font-family:"proxima-nova-condensed Fallback";
+  font-style:normal;
+  font-weight:400;
+  src:local("Arial");
+  ascent-override:108.50%;
+  descent-override:46.26%;
+  line-gap-override:0.00%;
+  size-adjust:83.87%;
 }
 
 @font-face {
