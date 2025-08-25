@@ -1,25 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as in the markdown example
+  // Header row: one column
   const headerRow = ['Columns (columns6)'];
 
-  // Get the immediate child divs which are the column containers
+  // Get all direct child divs (columns)
   const columns = Array.from(element.querySelectorAll(':scope > div'));
 
-  // For each column, take its entire content block (not just button + icon)
-  // This ensures all text and visuals are included as a block
-  const row = columns.map((col) => {
-    // Use the full column content, not just parts
-    // Avoid cloning; reference the existing element
-    return Array.from(col.childNodes).filter(
-      node => !(node.nodeType === Node.TEXT_NODE && !node.textContent.trim())
-    );
-  });
+  // For each column, separate the icon/image and button into distinct rows
+  function extractIconOrImage(col) {
+    const imgContainer = col.querySelector('div[class$="-image"]');
+    if (imgContainer) {
+      const icon = imgContainer.querySelector('span.icon');
+      if (icon) return icon;
+      const img = imgContainer.querySelector('img');
+      if (img) return img;
+    }
+    return '';
+  }
 
-  // Build table cell structure: header row, then one row with all columns
-  const cells = [headerRow, row];
+  function extractButton(col) {
+    const btn = col.querySelector('a.button');
+    return btn || '';
+  }
 
-  // Create and replace
-  const block = WebImporter.DOMUtils.createTable(cells, document);
+  // Build the rows as per example:
+  // Row 1: images/icons only
+  const imagesRow = columns.map(extractIconOrImage);
+  // Row 2: buttons only
+  const buttonsRow = columns.map(extractButton);
+
+  // Compose the table: header, images/icons, buttons
+  const tableArray = [
+    headerRow,
+    imagesRow,
+    buttonsRow,
+  ];
+
+  const block = WebImporter.DOMUtils.createTable(tableArray, document);
   element.replaceWith(block);
 }

@@ -1,45 +1,67 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // The header row must be a SINGLE cell: ['Carousel']
-  const cells = [['Carousel']];
+  // Find the carousel block: look for direct child with class 'quote-carousel'
+  const carousel = element.querySelector('.quote-carousel');
+  if (!carousel) return;
 
-  // Get all quotecard slides
-  const quotecards = element.querySelectorAll('.quotecard');
+  // Get all the slides (quotecards)
+  const slides = Array.from(carousel.querySelectorAll(':scope > .quotecard'));
 
-  quotecards.forEach((card) => {
-    // Image cell
-    let imgEl = null;
-    const picture = card.querySelector('.aphorist picture');
-    if (picture) {
-      imgEl = picture.querySelector('img');
+  // Table header row
+  const rows = [['Carousel']];
+
+  slides.forEach((slide) => {
+    // IMAGE: Find aphorist > picture > img
+    let img = null;
+    const aphorist = slide.querySelector('.aphorist');
+    if (aphorist) {
+      const picture = aphorist.querySelector('picture');
+      if (picture) {
+        img = picture.querySelector('img');
+      }
     }
 
-    // Text content cell
-    const content = [];
-    // Quote text
-    const p = card.querySelector('p');
-    if (p) content.push(p);
-    // Name and affiliation
-    const aphoristUl = card.querySelector('.aphorist ul');
-    if (aphoristUl) {
-      const li = aphoristUl.querySelectorAll('li');
-      if (li.length > 0) {
-        // Name
-        const strong = document.createElement('strong');
-        strong.textContent = li[0].textContent;
-        content.push(document.createElement('br'));
-        content.push(strong);
-        // Affiliation
-        if (li.length > 1) {
-          content.push(document.createElement('br'));
-          content.push(document.createTextNode(li[1].textContent));
+    // TEXT: Compose a container with quote text and aphorist info
+    // Use existing paragraphs and lists directly without cloning
+    const textContent = document.createElement('div');
+
+    // The quote itself (p)
+    const quote = slide.querySelector('p');
+    if (quote) {
+      // Use the existing <p> node for semantic value
+      textContent.appendChild(quote);
+    }
+
+    // Aphorist (Name and Title from .aphorist > ul > li)
+    if (aphorist) {
+      const ul = aphorist.querySelector('ul');
+      if (ul) {
+        const lis = ul.querySelectorAll('li');
+        if (lis[0]) {
+          const nameSpan = document.createElement('span');
+          nameSpan.style.fontWeight = 'bold';
+          nameSpan.textContent = lis[0].textContent;
+          textContent.appendChild(nameSpan);
+        }
+        if (lis[1]) {
+          // Add space if both name and role exist
+          if (lis[0]) textContent.appendChild(document.createTextNode(' '));
+          const roleSpan = document.createElement('span');
+          roleSpan.textContent = lis[1].textContent;
+          textContent.appendChild(roleSpan);
         }
       }
     }
-    // Each slide row: two columns
-    cells.push([imgEl, content]);
+
+    // Compose row: [image, textContent]
+    // Reference img and textContent if they exist, otherwise use empty string
+    rows.push([
+      img ? img : '',
+      textContent.childNodes.length ? textContent : ''
+    ]);
   });
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Create table and replace original element
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

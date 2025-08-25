@@ -1,46 +1,59 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the hero block wrapper
-  const heroBlock = element.querySelector('.hero.block');
-  let picture = '';
-  if (heroBlock) {
-    const right = heroBlock.querySelector('.right');
-    if (right) {
-      picture = right.querySelector('picture, img');
-    }
+  // Helper to get direct child by selector
+  function directChild(el, selector) {
+    return Array.from(el.children).find(child => child.matches(selector));
   }
-
-  // Gather hero content (headings, subheading, CTA)
-  let contentParts = [];
-  if (heroBlock) {
-    const left = heroBlock.querySelector('.left');
-    if (left) {
-      // All headings (in order)
-      left.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(h => contentParts.push(h));
-      // CTA button/link (not already in contentParts)
-      const cta = left.querySelector('a.button, a.primary, a:not([href="#"])');
-      if (cta && !contentParts.includes(cta)) {
-        contentParts.push(cta);
+  // Find .hero.block
+  const heroWrapper = element.querySelector('.hero-wrapper');
+  let block = null;
+  if (heroWrapper) {
+    block = heroWrapper.querySelector('.hero.block');
+  } else {
+    block = element.querySelector('.hero.block');
+  }
+  // Left (text), Right (image)
+  let left = null, right = null;
+  if (block) {
+    left = directChild(block, '.left');
+    right = directChild(block, '.right');
+  }
+  // Get main image from right side
+  let heroImg = '';
+  if (right) {
+    const pic = right.querySelector('picture');
+    if (pic) {
+      const img = pic.querySelector('img');
+      if (img) {
+        heroImg = img;
       }
     }
   }
-
-  // Check for any hero-footer (e.g., additional heading/subheading)
+  // Compose text/cta cell (row 3)
+  const contentCell = [];
+  if (left) {
+    const h1 = left.querySelector('h1');
+    if (h1) contentCell.push(h1);
+    const h2 = left.querySelector('h2');
+    if (h2) contentCell.push(h2);
+    const cta = left.querySelector('a');
+    if (cta) contentCell.push(cta);
+  }
+  // Add hero-footer (can contain h3 or other footer info)
   const heroFooter = element.querySelector('.hero-footer');
   if (heroFooter) {
-    // Add all children of hero-footer (often h3/heading)
-    Array.from(heroFooter.children).forEach(child => contentParts.push(child));
+    for (const child of Array.from(heroFooter.children)) {
+      contentCell.push(child);
+    }
   }
-
-  // If no contentParts, add empty string to match correct row count
-  if (contentParts.length === 0) contentParts = [''];
-
-  // Build table structure as per the example: 1col, 3 rows; header must be 'Hero'
-  const cells = [
+  // Compose final rows as per the example markdown
+  const rows = [
     ['Hero'],
-    [picture || ''],
-    [contentParts]
+    [heroImg || ''],
+    [contentCell.length ? contentCell : '']
   ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Build the table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+  // Replace the original element
   element.replaceWith(table);
 }

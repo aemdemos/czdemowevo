@@ -1,36 +1,45 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Get the columns-wrapper and columns block
+  // Find the columns block inside the input element
   const columnsWrapper = element.querySelector('.columns-wrapper');
-  if (!columnsWrapper) return;
-
-  const columnsBlock = columnsWrapper.querySelector('.columns.block');
+  let columnsBlock = null;
+  if (columnsWrapper) {
+    columnsBlock = columnsWrapper.querySelector('.columns.block');
+  } else {
+    columnsBlock = element.querySelector('.columns.block');
+  }
   if (!columnsBlock) return;
 
-  // The columns are the children of the first direct child of columnsBlock
-  const columnsRow = columnsBlock.firstElementChild;
-  if (!columnsRow) return;
-  const cols = Array.from(columnsRow.children);
+  // Get the direct children representing columns
+  // In this HTML: .columns.block > div > div (for each column)
+  const columnsInnerRow = columnsBlock.querySelector('div');
+  if (!columnsInnerRow) return;
+  const columnDivs = Array.from(columnsInnerRow.children);
+  if (columnDivs.length < 2) return; // Should have two columns
 
-  // Prepare the single header cell row (only one cell, NOT one per column)
-  const headerRow = ['Columns (columns8)'];
-
-  // Prepare the content row: one cell per column
-  const contentRow = cols.map((col) => {
-    const children = Array.from(col.children);
-    if (children.length === 0) {
-      return col;
-    } else if (children.length === 1) {
-      return children[0];
+  // First column: may have .columns-img-col > picture/img
+  let firstColContent = null;
+  const imgCol = columnDivs[0];
+  // Use whatever is inside the first column (image div)
+  if (imgCol) {
+    // Prefer picture, but fallback to whole div if not.
+    const picture = imgCol.querySelector('picture');
+    if (picture) {
+      firstColContent = picture;
     } else {
-      return children;
+      firstColContent = imgCol;
     }
-  });
+  }
 
-  // Compose the cells array
-  const cells = [headerRow, contentRow];
+  // Second column: text (heading + paragraph)
+  const textCol = columnDivs[1];
+  // Use the entire div for resilience, so heading and paragraph included
 
-  // Create the table block
-  const block = WebImporter.DOMUtils.createTable(cells, document);
-  element.replaceWith(block);
+  // Table header must be exactly as specified
+  const headerRow = ['Columns (columns8)'];
+  const row = [firstColContent, textCol];
+
+  const table = WebImporter.DOMUtils.createTable([headerRow, row], document);
+
+  element.replaceWith(table);
 }
