@@ -1,27 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Build the header row for the Accordion block
-  const headerRow = ['Accordion'];
-  const cells = [headerRow];
+  // Find the main block container
+  const blockDiv = element.querySelector('.faq-inplace.block');
+  if (!blockDiv) return;
 
-  // The block contains two column divs, each with children (FAQ items)
-  const block = element.querySelector('.faq-inplace.block');
-  if (!block) return;
-  // Direct child divs of .faq-inplace.block are the columns
-  const columns = Array.from(block.children).filter(col => col.tagName === 'DIV');
+  // Get all columns (each direct child <div> of blockDiv)
+  const columns = Array.from(blockDiv.querySelectorAll(':scope > div'));
+
+  // Collect each accordion item from both columns, preserving order
+  // Each column contains multiple items: each item is a <div> with 2 children (<div>question</div>, <div>answer</div>)
+  const rows = [];
   columns.forEach(col => {
-    // Each item is a div with two children: [title, content]
-    Array.from(col.children).forEach(item => {
-      if (item.tagName === 'DIV' && item.children.length >= 2) {
-        const title = item.children[0]; // reference existing title element
-        const content = item.children[1]; // reference existing content element
-        cells.push([title, content]);
+    Array.from(col.querySelectorAll(':scope > div')).forEach(item => {
+      const children = Array.from(item.children);
+      // Only include valid items with 2 children
+      if (children.length >= 2) {
+        // Reference the question and answer divs directly
+        rows.push([children[0], children[1]]);
       }
     });
   });
 
-  // Create the structured table block
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  // Replace the original element with the new block table
-  element.replaceWith(table);
+  // Only create table if we have accordion items
+  if (rows.length > 0) {
+    // Header row exactly as required
+    const headerRow = ['Accordion'];
+    const cells = [headerRow, ...rows];
+    const blockTable = WebImporter.DOMUtils.createTable(cells, document);
+    element.replaceWith(blockTable);
+  }
 }

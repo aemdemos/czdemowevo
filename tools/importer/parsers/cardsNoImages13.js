@@ -1,36 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Block name header
+  // Table header matches example
   const headerRow = ['Cards'];
+  const rows = [headerRow];
 
-  // Find the cards container: .steps.block inside the element
-  const stepsBlock = element.querySelector('.steps.block');
-  const cardRows = [];
-
-  if (stepsBlock) {
-    // Each card is a :scope > div > div (to get the card content)
-    const cardDivs = stepsBlock.querySelectorAll(':scope > div > div');
-    cardDivs.forEach((cardDiv) => {
-      // Should contain: <div class="step"><span>1</span></div>, <p>heading</p>, <p>description</p>
-      const ps = cardDiv.querySelectorAll(':scope > p');
-      const cellContent = [];
-      if (ps[0]) {
-        // Bold for heading as in example (simulate markdown bold)
-        const strong = document.createElement('strong');
-        strong.textContent = ps[0].textContent;
-        cellContent.push(strong);
+  // Select all immediate card divs (each step)
+  const cardDivs = element.querySelectorAll(':scope > .steps.block > div');
+  cardDivs.forEach((cardDiv) => {
+    // Defensive: skip if not expected structure
+    if (!cardDiv.firstElementChild) return;
+    const inner = cardDiv.firstElementChild;
+    // Get step number (ignored in output, not needed)
+    // Get all paragraphs: first = title, rest = description
+    const ps = inner.querySelectorAll('p');
+    if (ps.length === 0) return; // skip empty card
+    // Reference existing <p> elements, do not clone
+    const titleP = ps[0];
+    let cellElements = [];
+    // Bold the title: create <strong>, but reference existing text content
+    if (titleP.textContent.trim()) {
+      const strong = document.createElement('strong');
+      strong.textContent = titleP.textContent.trim();
+      cellElements.push(strong);
+    }
+    // If description exists, concatenate all remaining paragraphs
+    if (ps.length > 1) {
+      // For semantic meaning, put description in a <p> (as per example)
+      const descTexts = Array.from(ps)
+        .slice(1)
+        .map(p => p.textContent.trim())
+        .join(' ');
+      if (descTexts) {
+        const descP = document.createElement('p');
+        descP.textContent = descTexts;
+        cellElements.push(descP);
       }
-      if (ps[1]) {
-        cellContent.push(document.createElement('br'));
-        cellContent.push(document.createElement('br'));
-        cellContent.push(ps[1]); // Use the actual element
-      }
-      cardRows.push([cellContent]);
-    });
-  }
+    }
+    // Always one column per row; cell is array of elements
+    rows.push([cellElements]);
+  });
 
-  // Compose and replace
-  const tableCells = [headerRow, ...cardRows];
-  const table = WebImporter.DOMUtils.createTable(tableCells, document);
+  // Create the table and replace original element
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

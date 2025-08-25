@@ -1,37 +1,41 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Accept either the columns-wrapper or the .columns block as entry
-  let block = element;
-  if (!block.classList.contains('columns')) {
-    block = element.querySelector('.columns.block');
+  // Find the nested columns block
+  const columnsWrapper = element.querySelector('.columns-wrapper');
+  if (!columnsWrapper) return;
+  const columnsBlock = columnsWrapper.querySelector('.columns.block');
+  if (!columnsBlock) return;
+
+  // There is one child div of columns.block which contains the two columns
+  const rowDiv = columnsBlock.querySelector(':scope > div');
+  if (!rowDiv) return;
+  const colDivs = Array.from(rowDiv.children);
+
+  // First column: image column (contains <picture>)
+  const imgCol = colDivs.find(div => div.classList.contains('columns-img-col'));
+  // Reference the entire .columns-img-col div as the cell
+  const imgCell = imgCol || '';
+
+  // Second column: background image column (contains heading, paragraphs, button)
+  const backgroundCol = colDivs.find(div => div.classList.contains('background-image-column'));
+  let contentCell = [];
+  if (backgroundCol) {
+    // Ignore the decorative background-image div
+    // Collect heading, normal paragraphs, and button paragraphs
+    const heading = backgroundCol.querySelector('h2');
+    if (heading) contentCell.push(heading);
+    backgroundCol.querySelectorAll('p:not(.button-container)').forEach(p => contentCell.push(p));
+    const buttonContainer = backgroundCol.querySelector('.button-container');
+    if (buttonContainer) contentCell.push(buttonContainer);
+  } else {
+    contentCell = '';
   }
-  if (!block) return; // edge case: block not found
 
-  // Get all direct children of .columns.block, each represents a visual column
-  // In these examples, we expect 2 columns
-  const columns = Array.from(block.children);
-  if (columns.length < 2) return; // edge case: not enough columns
+  // Table header must match: Columns (columns4)
+  const headerRow = ['Columns (columns4)'];
+  const contentRow = [imgCell, contentCell];
 
-  // For each column, find the main content container
-  // Some columns are wrapped in several divs
-  function getMainContent(container) {
-    let curr = container;
-    // drill down for single DIV wrappers, but stop if multiple or non-DIV
-    while (curr && curr.children.length === 1 && curr.firstElementChild.tagName === 'DIV') {
-      curr = curr.firstElementChild;
-    }
-    return curr;
-  }
-
-  const colCells = columns.map(getMainContent);
-
-  // Prepare the block table array
-  const tableRows = [
-    ['Columns (columns4)'], // header EXACT match
-    colCells,
-  ];
-
-  // Create and swap the table
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
+  const cells = [headerRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

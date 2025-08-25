@@ -1,22 +1,25 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the actual columns: two main child divs inside .footer.block
+  // Find the columns block
   const block = element.querySelector('.footer.block');
   if (!block) return;
-  const columns = block.querySelectorAll(':scope > div');
-  if (columns.length < 2) return;
-  // For each column, reference the actual DOM node
-  const leftCol = columns[0];
-  const rightCol = columns[1];
-  // Table header must match the block name exactly
+
+  // Get all direct children as column content
+  const children = Array.from(block.children).filter(child => {
+    // Only include non-empty elements
+    if (child.children.length) return true;
+    // Also include if has meaningful text
+    return child.textContent && child.textContent.trim().length > 0;
+  });
+
+  // Only add a second column if it exists
+  const contentRow = children.length > 1 ? [children[0], children[1]] : [children[0]];
+  
+  // Header row: exactly one column
   const headerRow = ['Columns (columns14)'];
-  // One row: leftCol, rightCol
-  const contentRow = [leftCol, rightCol];
-  // Create block table as described
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
-  // Replace the original element with the new table
+  const cells = [headerRow, contentRow];
+
+  // Create and replace
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }
