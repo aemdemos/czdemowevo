@@ -1,4 +1,3 @@
-/* stylelint-disable no-descending-specificity */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
@@ -847,8 +846,6 @@
     padding: 0.55em 0;
   }
 }
-
-/* Text left, image right */
 .hero > div {
   display: flex;
   flex-direction: column;
@@ -858,10 +855,6 @@
   box-sizing: border-box;
   position: relative;
 }
-
-/* IMAGE COLUMN (first child): right side, bottle positioned lower, wider column */
-
-/* Center and size image: large, bottom-aligned, strongly masked */
 .hero > div:first-child > div {
   width: 100%;
   height: 100%;
@@ -885,10 +878,6 @@
   align-self: flex-end;
   clip-path: ellipse(90% 87% at 65% 13%);
 }
-
-/* TEXT COLUMN (second child): left side, vertically centered, narrower */
-
-/* Headline and subheadline: vertically centered */
 .hero > div:last-child h1,
 .hero > div:last-child h2 {
   font-family: var(--heading-font-family);
@@ -912,8 +901,6 @@
   margin-bottom: 1.6em;
   line-height: 1.19;
 }
-
-/* Button styling (if present): tan, left-aligned */
 .hero > div:last-child .button-container {
   margin-bottom: 2em;
   display: flex;
@@ -943,8 +930,6 @@
 .hero > div:last-child .button-container a.button:hover {
   background: #d6ae84;
 }
-
-/* Banner: straight corners, extra bold, large font, sticky to bottom */
 .hero h3 {
   position: absolute;
   left: 0;
@@ -965,10 +950,6 @@
   z-index: 10;
   border-radius: 0;
 }
-
-/* Make sure banner bar does not overlap content */
-
-/* Responsive stacking for smaller screens */
 @media (width <= 900px) {
   .hero {
     flex-direction: column;
@@ -1021,8 +1002,6 @@
     border-radius: 0;
   }
 }
-
-/* Even smaller screens */
 @media (width <= 600px) {
   .hero > div:last-child h1 {
     font-size: 1.05rem;
@@ -1036,5 +1015,227 @@
     font-size: 0.8rem;
     padding: 0.55em 0;
     border-radius: 0;
+  }
+}
+
+
+.hero {
+  /* Background and width */
+  width: 100vw;
+  min-height: 620px;
+  background: #14294b url('wood-texture.jpg') center/cover;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+}
+
+.hero > .block.hero {
+  display: contents; /* pass grid onto children */
+}
+
+.hero > .block.hero > div {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Image Section (right column) */
+.hero > .block.hero > div:first-child {
+  grid-column: 2;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 2.5vw;
+  position: relative;
+  z-index: 2;
+}
+
+.hero > .block.hero > div:first-child picture,
+.hero > .block.hero > div:first-child img {
+  width: 380px;
+  max-width: 95%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  background: none;
+  border: none;
+  box-shadow: none;
+  clip-path: ellipse(90% 77% at 50% 25%);
+}
+
+/* Text Section (left column) */
+.hero > .block.hero > div:last-child {
+  grid-column: 1;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 5vw;
+  padding-top: 5vw;
+  padding-bottom: 7vw;
+  position: relative;
+  z-index: 3;
+}
+
+.hero > .block.hero > div:last-child > div {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.7rem;
+  background: none;
+  min-height: 320px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Typography */
+.hero > .block.hero h1 {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 2.45rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.4em 0;
+  text-align: left;
+}
+
+.hero > .block.hero h2 {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+  margin: 0 0 1.5rem 0;
+  text-align: left;
+}
+
+.hero > .block.hero .button-container {
+  margin-bottom: 2rem;
+  width: 100%;
+  display: block;
+}
+
+.hero > .block.hero .button-container .button,
+.hero > .block.hero .button-container a.button {
+  background: #e9c7a6;
+  color: #14294b;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-family: var(--heading-font-family);
+  box-shadow: none;
+  border: none;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  display: inline-block;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+/* Bottom Banner */
+.hero > .block.hero h3 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #e9c7a6;
+  color: #14294b;
+  font-size: 1.08rem;
+  font-family: var(--heading-font-family);
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.7em 0;
+  margin: 0;
+  letter-spacing: 0.01em;
+  line-height: 1.21;
+  border-radius: 0;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* Responsive: Stack columns vertically on small screens */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    min-height: 420px;
+  }
+  .hero > .block.hero > div:first-child,
+  .hero > .block.hero > div:last-child {
+    grid-column: 1;
+    grid-row: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 3vw 7vw;
+  }
+  .hero > .block.hero > div:first-child picture,
+  .hero > .block.hero > div:first-child img {
+    width: 80vw;
+    max-width: 380px;
+    height: auto;
+    margin-bottom: 2em;
+    clip-path: ellipse(85% 90% at 60% 15%);
+  }
+  .hero > .block.hero > div:last-child > div {
+    max-width: 96vw;
+    align-items: center;
+  }
+  .hero > .block.hero h1 {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+  .hero > .block.hero h2 {
+    font-size: 0.97rem;
+    text-align: center;
+  }
+  .hero > .block.hero .button-container {
+    text-align: center;
+  }
+  .hero > .block.hero .button-container .button,
+  .hero > .block.hero .button-container a.button {
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+  .hero > .block.hero h3 {
+    position: static;
+    width: 100vw;
+    font-size: 0.97rem;
+    padding: 0.7em 0;
+    margin-top: 2em;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero > .block.hero > div:first-child picture,
+  .hero > .block.hero > div:first-child img {
+    width: 98vw;
+    max-width: 98vw;
+    height: auto;
+  }
+  .hero > .block.hero h1 {
+    font-size: 1.05rem;
+  }
+  .hero > .block.hero h2 {
+    font-size: 0.87rem;
+  }
+  .hero > .block.hero h3 {
+    font-size: 0.8rem;
+    padding: 0.55em 0;
   }
 }
