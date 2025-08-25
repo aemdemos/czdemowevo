@@ -1037,7 +1037,6 @@
   }
 }
 
-/* Remove any unwanted centering from default styles */
 .columns > div,
 .columns > div > div {
   align-items: flex-start;
@@ -1074,7 +1073,179 @@
   }
 }
 
-/* Remove any leftover border-radius from parent containers */
 .columns > div, .columns > div > div, .columns .button-container {
   border-radius: 0;
+}
+
+
+.columns.columns4 {
+  background: #fff;
+  border: 1.3px solid #b09a73;
+  border-radius: 18px;
+  max-width: 1000px;
+  margin: 40px auto 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.columns.columns4 > div {
+  display: flex;
+  flex-direction: row;
+  min-height: 520px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+@media (width <= 900px) {
+  .columns.columns4 > div {
+    flex-direction: column;
+    min-height: unset;
+  }
+}
+
+/* Left: image column */
+.columns.columns4 > div > .columns-img-col {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: none;
+  min-height: 520px;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+}
+
+.columns.columns4 > div > .columns-img-col picture,
+.columns.columns4 > div > .columns-img-col img {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  margin: 0;
+  position: static;
+}
+
+@media (width <= 900px) {
+  .columns.columns4 > div > .columns-img-col {
+    min-height: 220px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .columns.columns4 > div > .columns-img-col picture,
+  .columns.columns4 > div > .columns-img-col img {
+    max-height: 220px;
+    height: auto;
+    min-height: 120px;
+  }
+}
+
+/* Right: content column */
+.columns.columns4 > div > div:not(.columns-img-col) {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;      /* Top align inner content */
+  align-items: flex-start;          /* Left align inner content */
+  padding: 1.5rem 2.5rem 2rem; /* Less top padding to push content up */
+  background: #fff url('https://www.wheatleyvodka.com/distillery-illustration.png') right center no-repeat;
+  background-size: 77% auto;
+  min-height: 520px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+@media (width <= 900px) {
+  .columns.columns4 > div > div:not(.columns-img-col) {
+    min-height: unset;
+    padding: 1.1rem 1rem 1.2rem;
+    background-size: 140% auto;
+    background-position: right 15px center;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
+
+/* Headline */
+.columns.columns4 h2 {
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #24366e;
+  margin: 0 0 1rem;           /* Tighter below headline */
+  line-height: 1.13;
+  letter-spacing: 0.01em;
+  max-width: 18ch;
+  padding-top: 0.3rem;
+}
+
+@media (width <= 900px) {
+  .columns.columns4 h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    padding-top: 0;
+  }
+}
+
+/* Body text */
+.columns.columns4 p {
+  font-size: 1rem;
+  color: #333;
+  font-family: var(--body-font-family), Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+  max-width: 44ch;
+}
+
+@media (width <= 900px) {
+  .columns.columns4 p {
+    font-size: 0.97rem;
+    max-width: 98vw;
+  }
+}
+
+/* Button container (left-aligned) */
+.columns.columns4 .button-container {
+  width: auto;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  margin-top: 1.1rem;
+}
+
+/* CTA Button */
+.columns.columns4 .button-container .button {
+  display: inline-block;
+  background: linear-gradient(90deg, #eab67a 0%, #5d4634 100%);
+  color: #fff;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  min-width: 220px;
+  max-width: 350px;
+  text-align: center;
+  margin: 0;
+  box-shadow: 0 2px 10px 0 rgb(50 30 10 / 7%);
+  transition: filter 0.15s, background 0.2s;
+  white-space: normal;
+  overflow: visible;
+}
+
+.columns.columns4 .button-container .button:hover,
+.columns.columns4 .button-container .button:focus {
+  filter: brightness(0.96);
+  background: linear-gradient(90deg, #d6a460 0%, #684d32 100%);
+  color: #fff;
 }
