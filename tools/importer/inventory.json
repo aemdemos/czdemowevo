@@ -89,9 +89,11 @@
       ]
     },
     {
-      "name": "Hero",
+      "name": "Columns",
       "cluster": 4,
-      "key": "hero4",
+      "source": "Columns",
+      "target": "Columns (columns4)",
+      "key": "columns4",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/",
@@ -220,11 +222,11 @@
       ]
     },
     {
-      "name": "Columns",
+      "name": "Cards (no images)",
       "cluster": 13,
-      "source": "Columns",
-      "target": "Columns (columns13)",
-      "key": "columns13",
+      "source": "Cards",
+      "target": "Cards",
+      "key": "cardsNoImages13",
       "instances": [
         {
           "url": "https://www.wheatleyvodka.com/about-wheatley",
