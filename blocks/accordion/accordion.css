@@ -551,7 +551,6 @@
   padding: 0 8px;
 }
 
-/* Use CSS multi-column for true column-major layout with the given HTML */
 .accordion > .accordion-wrapper > .accordion.block {
   column-count: 2;
   column-gap: 64px;
@@ -559,7 +558,6 @@
   box-sizing: border-box;
 }
 
-/* Accordion items stack vertically in each column */
 .accordion .accordion-item {
   display: block;
   width: 100%;
@@ -571,13 +569,11 @@
   box-sizing: border-box;
 }
 
-/* Remove border from last two items (covers the last item in each column for 12 items) */
 .accordion .accordion-item:last-child,
 .accordion .accordion-item:nth-last-child(2) {
   border-bottom: none;
 }
 
-/* Summary/question row styling */
 .accordion .accordion-item-label {
   display: flex;
   flex-direction: row;
@@ -591,7 +587,6 @@
   box-sizing: border-box;
 }
 
-/* Question text */
 .accordion .accordion-item-label p {
   color: #036;
   font-size: 17px;
@@ -604,13 +599,11 @@
   overflow-wrap: break-word;
 }
 
-/* Hide default marker arrow for summary */
 .accordion details summary::-webkit-details-marker,
 .accordion details summary::marker {
   display: none;
 }
 
-/* Right-side icon (selector for direct child after p) */
 .accordion .accordion-item-label > *:not(p) {
   display: inline-flex;
   align-items: center;
@@ -628,7 +621,6 @@
   box-sizing: border-box;
 }
 
-/* FAQ answer/body */
 .accordion .accordion-item-body {
   font-size: 16px;
   color: #002f5f;
@@ -641,7 +633,6 @@
   box-sizing: border-box;
 }
 
-/* Responsive: stack to one column on small screens */
 @media (width <= 900px) {
   .accordion > .accordion-wrapper > .accordion.block {
     column-count: 1;
@@ -658,5 +649,119 @@
 
   .accordion .accordion-item:last-child {
     border-bottom: none;
+  }
+}
+
+
+.accordion .accordion-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+/* Use CSS Columns for proper vertical fill order */
+.accordion .accordion.block {
+  column-count: 2;
+  column-gap: 48px;
+  max-width: 980px;
+  margin: 40px auto 0;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+
+/* Responsive: stack in one column on small screens */
+@media (width <= 900px) {
+  .accordion .accordion.block {
+    column-count: 1;
+    column-gap: 0;
+    max-width: 98vw;
+    padding: 0 4px;
+  }
+}
+
+.accordion .accordion.block > details.accordion-item {
+  break-inside: avoid;
+  width: 100%;
+  border-bottom: 1px solid #e5eaf0;
+  background: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.accordion .accordion.block .accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.accordion .accordion.block .accordion-item-label p {
+  color: #036;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1 1 0;
+  font-family: var(--body-font-family);
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+/* Plus-in-circle icon (target span/svg/etc., must be in HTML) */
+.accordion .accordion.block .accordion-item-label > *:not(p) {
+  width: 24px;
+  height: 24px;
+  margin-left: 16px;
+  border-radius: 50%;
+  border: 2px solid #036;
+  background: #fff;
+  color: #036;
+  font-size: 18px;
+  font-weight: bold;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hide the default arrow/marker on summary */
+.accordion .accordion.block details summary::-webkit-details-marker,
+.accordion .accordion.block details summary::marker {
+  display: none;
+}
+
+.accordion .accordion.block .accordion-item-body {
+  font-size: 16px;
+  color: #002f5f;
+  font-weight: normal;
+  line-height: 1.5;
+  padding: 0 0 14px;
+  background: none;
+  border: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Remove extra margin from .accordion.block if present */
+.accordion .accordion-wrapper .accordion.block {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Responsive padding */
+@media (width <= 600px) {
+  .accordion .accordion.block {
+    padding: 0 2px;
   }
 }
