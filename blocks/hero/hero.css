@@ -1020,7 +1020,6 @@
 
 
 .hero {
-  /* Background and width */
   width: 100vw;
   min-height: 620px;
   background: #14294b url('wood-texture.jpg') center/cover;
@@ -1033,7 +1032,7 @@
 }
 
 .hero > .block.hero {
-  display: contents; /* pass grid onto children */
+  display: contents;
 }
 
 .hero > .block.hero > div {
@@ -1044,8 +1043,6 @@
   justify-content: center;
   box-sizing: border-box;
 }
-
-/* Image Section (right column) */
 .hero > .block.hero > div:first-child {
   grid-column: 2;
   flex: 1;
@@ -1068,8 +1065,6 @@
   box-shadow: none;
   clip-path: ellipse(90% 77% at 50% 25%);
 }
-
-/* Text Section (left column) */
 .hero > .block.hero > div:last-child {
   grid-column: 1;
   flex: 1;
@@ -1095,8 +1090,6 @@
   margin: 0;
   box-sizing: border-box;
 }
-
-/* Typography */
 .hero > .block.hero h1 {
   color: #fff;
   font-family: var(--heading-font-family);
@@ -1145,8 +1138,6 @@
   letter-spacing: 0.01em;
   text-align: left;
 }
-
-/* Bottom Banner */
 .hero > .block.hero h3 {
   position: absolute;
   left: 0;
@@ -1168,8 +1159,6 @@
   z-index: 10;
   box-sizing: border-box;
 }
-
-/* Responsive: Stack columns vertically on small screens */
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -1237,5 +1226,261 @@
   .hero > .block.hero h3 {
     font-size: 0.8rem;
     padding: 0.55em 0;
+  }
+}
+
+
+.hero {
+  width: 100vw;
+  min-height: 620px;
+  background: #162D47 url('wood-texture.jpg') center/cover;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    min-height: 420px;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+  }
+  .hero > .block.hero {
+    flex-direction: column;
+  }
+}
+
+/* Top-level hero block columns: side-by-side order */
+.hero > .block.hero {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* --- TEXT COLUMN (left side) --- */
+.hero > .block.hero > div:last-child {
+  flex: 1 1 45%;
+  display: flex;
+  align-items: center;   /* Center vertically within column */
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 0 0 2vw;
+  position: relative;
+  height: 100%;
+}
+
+.hero > .block.hero > div:last-child > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center; /* Center text block vertically */
+  gap: 0.5rem;
+  max-width: 410px;
+  min-height: 380px;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .hero > .block.hero > div:last-child {
+    padding: 0 6vw;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    flex: 1 1 100%;
+  }
+  .hero > .block.hero > div:last-child > div {
+    max-width: 98vw;
+    align-items: center;
+    min-height: auto;
+  }
+}
+
+/* --- TEXT STYLES --- */
+.hero > .block.hero h1 {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 2.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.08;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.22em 0;
+  text-align: left;
+}
+
+.hero > .block.hero h2 {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.13;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.42em 0;
+  text-align: left;
+}
+
+@media (max-width: 900px) {
+  .hero > .block.hero h1 {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+  .hero > .block.hero h2 {
+    font-size: 0.97rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero > .block.hero h1 {
+    font-size: 1.04rem;
+  }
+  .hero > .block.hero h2 {
+    font-size: 0.87rem;
+  }
+}
+
+/* --- BUTTON --- */
+.hero > .block.hero .button-container {
+  margin: 0.14em 0 0 0;
+  width: 100%;
+  display: block;
+}
+
+.hero > .block.hero .button-container .button,
+.hero > .block.hero .button-container a.button {
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 1.13rem;
+  font-weight: 900;
+  padding: 0.80em 3em;
+  background: #D6AE7B;
+  color: #1A2C43;
+  box-shadow: none;
+  border: none;
+  margin: 0.13em 0 0.41em 0;
+  display: inline-block;
+  text-align: left;
+  font-family: var(--heading-font-family);
+  letter-spacing: 0.045em;
+}
+
+/* --- IMAGE COLUMN (right side) --- */
+.hero > .block.hero > div:first-child {
+  flex: 1 1 55%;
+  display: flex;
+  align-items: flex-end;    /* Anchor image to bottom */
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 2vw 0 0;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+}
+
+/* Center image at bottom of column */
+.hero > .block.hero > div:first-child > div {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.hero > .block.hero > div:first-child picture,
+.hero > .block.hero > div:first-child img {
+  width: 460px;
+  max-width: 98%;
+  height: 560px;
+  max-height: 82vh;
+  object-fit: cover;
+  display: block;
+  background: none;
+  border-radius: 80px 0 0 0 / 100px 0 0 0;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.09);
+  z-index: 10;
+  margin-bottom: 0;
+}
+
+@media (max-width: 1100px) {
+  .hero > .block.hero > div:first-child picture,
+  .hero > .block.hero > div:first-child img {
+    width: 380px;
+    height: 410px;
+    max-height: 60vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero > .block.hero > div:first-child {
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    flex: 1 1 100%;
+  }
+  .hero > .block.hero > div:first-child picture,
+  .hero > .block.hero > div:first-child img {
+    width: 80vw;
+    max-width: 380px;
+    height: auto;
+    border-radius: 52px 0 0 0 / 44px 0 0 0;
+    margin-bottom: 2em;
+  }
+}
+
+/* --- BOTTOM BAR (h3) --- */
+.hero > .block.hero h3 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #D6AE7B;
+  color: #1A2C43;
+  font-size: 0.91rem;
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.11em 0 0.11em 0;
+  margin: 0;
+  letter-spacing: 0.045em;
+  line-height: 1.18;
+  border-radius: 0;
+  z-index: 9; /* below image */
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .hero > .block.hero h3 {
+    position: static;
+    width: 100vw;
+    font-size: 0.87rem;
+    padding: 0.5em 0 0.4em 0;
+    margin-top: 2em;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero > .block.hero h3 {
+    font-size: 0.72rem;
+    padding: 0.38em 0 0.3em 0;
+    border-radius: 0;
   }
 }
